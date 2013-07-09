@@ -9,4 +9,4 @@ Features
 --------
 
 * Takes Jinja2 template HTML as input.
-* Can output to Amazon S3.
+* Can output to Amazon S3. Well, not yet, but that's half of the plan.
