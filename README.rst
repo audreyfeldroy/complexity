@@ -3,7 +3,7 @@ complexity
 
 A static site generator for those who like to work in HTML.
 
-Of course, [@pydanny](https://twitter.com/pydanny) came up with the name for this.
+Of course, @pydanny (https://twitter.com/pydanny) came up with the name for this.
 
 Features
 --------
