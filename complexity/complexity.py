@@ -47,8 +47,8 @@ def generate_html(pages):
 def command_line_runner():
     """ Entry point for the package, as defined in setup.py. """
 
-    # TODO: automatically determine this from input/
-    pages = ('index', 'about')
+    # List the stem of each file in input/
+    pages = [f.split('.')[0] for f in os.listdir('input/')]
 
     # Generate and serve the HTML site
     generate_html(pages)
