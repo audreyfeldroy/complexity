@@ -44,8 +44,8 @@ def generate_html(pages):
             with open('output/{0}/index.html'.format(page),'w') as fh:
                 fh.write(rendered_html)
 
-
-if __name__ == '__main__':
+def command_line_runner():
+    """ Entry point for the package, as defined in setup.py. """
 
     # TODO: automatically determine this from input/
     pages = ('index', 'about')
@@ -53,3 +53,7 @@ if __name__ == '__main__':
     # Generate and serve the HTML site
     generate_html(pages)
     serve_static_site()
+
+
+if __name__ == '__main__':
+    command_line_runner()
