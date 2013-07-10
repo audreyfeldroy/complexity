@@ -14,20 +14,23 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
+readme = open('README.rst', 'rt').read()
+history = open('HISTORY.rst', 'rt').read()
+license = open('LICENSE', 'rt').read()
+
 setup(
     name='complexity',
     version=complexity.__version__,
     description='A refreshingly simple static site generator, for those who like to work in HTML.',
-    long_description=open('README.rst').read() + '\n\n' +
-                     open('HISTORY.rst').read(),
+    long_description=readme + '\n\n' + history,
     author='Audrey Roy',
     author_email='audreyr@gmail.com',
     url='https://github.com/audreyr/complexity',
     packages=[
         'complexity',
     ],
-    package_data={'': ['LICENSE'], 'complexity': ['*.pem']},
-    package_dir={'complexity': 'complexity'},
+    # package_data={'': ['LICENSE'], 'complexity': ['*.pem']},
+    # package_dir={'complexity': 'complexity'},
     entry_points={
         'console_scripts': [
             'complexity = complexity.complexity:command_line_runner',
@@ -37,7 +40,7 @@ setup(
     install_requires=[
         'jinja2',
     ],
-    license=open('LICENSE').read(),
+    license=license,
     zip_safe=False,
     classifiers=(
         # 'Development Status :: 5 - Production/Stable',
