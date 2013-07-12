@@ -14,7 +14,8 @@ def make_sure_path_exists(path):
         os.makedirs(path)
     except OSError as exception:
         if exception.errno != errno.EEXIST:
-            raise
+            return False
+    return True
 
 def serve_static_site():
     # Serve the output directory
