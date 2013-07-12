@@ -14,9 +14,8 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-readme = open('README.rst', 'rt').read()
+readme = open('README.rst',).read()
 history = open('HISTORY.rst', 'rt').read()
-license = open('LICENSE', 'rt').read()
 
 setup(
     name='complexity',
@@ -29,8 +28,6 @@ setup(
     packages=[
         'complexity',
     ],
-    # package_data={'': ['LICENSE'], 'complexity': ['*.pem']},
-    # package_dir={'complexity': 'complexity'},
     entry_points={
         'console_scripts': [
             'complexity = complexity.complexity:command_line_runner',
@@ -40,21 +37,17 @@ setup(
     install_requires=[
         'jinja2',
     ],
-    license=license,
+    license="BSD",
     zip_safe=False,
-    classifiers=(
-        # 'Development Status :: 5 - Production/Stable',
+    keywords='complexity,static site generator,HTML,Jinja2,templates,S3',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
         "Environment :: Console",
         'Intended Audience :: Developers',
-        'Natural Language :: English',
         'License :: OSI Approved :: BSD License',
-        'Programming Language :: Python',
-        "Programming Language :: Python :: 2",
-        # 'Programming Language :: Python :: 2.6',
+        'Natural Language :: English',
         'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Topic :: Internet :: WWW/HTTP :: Site Management',
-    ),
-    keywords='complexity static site generator HTML Jinja2 templates S3',
+    ]
 )
