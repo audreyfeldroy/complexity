@@ -17,6 +17,7 @@ def make_sure_path_exists(path):
             return False
     return True
 
+
 def serve_static_site():
     # Serve the output directory
     os.chdir('output/')
@@ -25,6 +26,7 @@ def serve_static_site():
     httpd = socketserver.TCPServer(("", PORT), Handler)
     print("serving at port", PORT)
     httpd.serve_forever()
+
 
 def generate_html(pages):
     env = Environment()
@@ -36,14 +38,15 @@ def generate_html(pages):
 
         # Put index in the root. It's a special case.
         if page == 'index':
-            with open('output/index.html','w') as fh:
+            with open('output/index.html', 'w') as fh:
                 fh.write(rendered_html)
 
         # Put other pages in page/index.html, for better URL formatting.
         else:
             make_sure_path_exists('output/{0}/'.format(page))
-            with open('output/{0}/index.html'.format(page),'w') as fh:
+            with open('output/{0}/index.html'.format(page), 'w') as fh:
                 fh.write(rendered_html)
+
 
 def command_line_runner():
     """ Entry point for the package, as defined in setup.py. """

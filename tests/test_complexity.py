@@ -11,6 +11,7 @@ Tests for `complexity` module.
 from complexity import complexity
 import unittest
 
+
 class TestComplexity(unittest.TestCase):
 
     def test_make_sure_path_exists(self):
