@@ -1,5 +1,5 @@
 ==========
-complexity
+Complexity
 ==========
 
 A refreshingly simple static site generator, for those who like to work in HTML.
