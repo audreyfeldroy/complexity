@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import errno
-import http.server
 import os
-import socketserver
+import sys
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
+PY3 = sys.version > '3'
+if PY3:
+    import http.server as httpserver
+    import socketserver
+else:
+    import SimpleHTTPServer as httpserver
+    import SocketServer as socketserver
 
 def make_sure_path_exists(path):
     try:
@@ -22,7 +28,7 @@ def serve_static_site():
     # Serve the output directory
     os.chdir('output/')
     PORT = 9090
-    Handler = http.server.SimpleHTTPRequestHandler
+    Handler = httpserver.SimpleHTTPRequestHandler
     httpd = socketserver.TCPServer(("", PORT), Handler)
     print("serving at port", PORT)
     httpd.serve_forever()
