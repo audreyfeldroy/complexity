@@ -8,7 +8,7 @@ test_complexity
 Tests for `complexity` module.
 """
 
-import complexity
+from complexity import complexity
 import unittest
 
 class TestComplexity(unittest.TestCase):
@@ -17,7 +17,7 @@ class TestComplexity(unittest.TestCase):
         self.assertTrue(complexity.make_sure_path_exists('/usr/'))
         self.assertFalse(
             complexity.make_sure_path_exists(
-                '/it-would-be-really-weird-if-this-directory-existed/'
+                '/this-dir-does-not-exist-and-cant-be-created/'
             )
         )
 
