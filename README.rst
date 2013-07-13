@@ -6,6 +6,11 @@ A refreshingly simple static site generator, for those who like to work in HTML.
 
 Of course, @pydanny (https://twitter.com/pydanny) came up with the name for this.
 
+Documentation
+-------------
+
+The full documentation is at http://complexity.rtfd.org.
+
 Quickstart
 ----------
 
