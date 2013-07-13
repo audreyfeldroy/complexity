@@ -63,3 +63,14 @@ Pull Request Guidelines
 Before you submit a pull request:
 
 1. TODO
+
+Tips
+----
+
+To run a particular test::
+	
+	$ python -m unittest tests.test_complexity.TestComplexity.test_make_sure_path_exists
+	
+To run a subset of tests::
+
+	$ python -m unittest tests.test_complexity

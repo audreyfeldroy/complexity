@@ -28,9 +28,9 @@ def serve_static_site():
     httpd.serve_forever()
 
 
-def generate_html(pages):
+def generate_html(pages, input_dir='input/'):
     env = Environment()
-    env.loader = FileSystemLoader('input/')
+    env.loader = FileSystemLoader(input_dir)
 
     for page in pages:
         tmpl = env.get_template('{0}.html'.format(page))
