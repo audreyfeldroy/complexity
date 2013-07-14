@@ -16,7 +16,7 @@ from complexity import complexity
 
 
 class TestComplexity(unittest.TestCase):
-    
+
     def setUp(self):
         # os.chdir('tests/')
         os.mkdir('output/')
@@ -28,11 +28,17 @@ class TestComplexity(unittest.TestCase):
                 '/this-dir-does-not-exist-and-cant-be-created/'
             )
         )
-        
+
     def test_generate_html(self):
-        complexity.generate_html(['index', 'about'], input_dir='tests/input')
+        complexity.generate_html(['index', 'about'], context=None, input_dir='tests/input')
         self.assertTrue(os.path.isfile('output/index.html'))
         self.assertTrue(os.path.isfile('output/about/index.html'))
+
+    def test_generate_context(self):
+        context = complexity.generate_context(input_dir='tests/input')
+        self.assertEqual(context, {"test": {"1": 2}})
+
+
 
     def tearDown(self):
         shutil.rmtree('output/')
