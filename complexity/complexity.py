@@ -81,10 +81,18 @@ def generate_context(input_dir='input/'):
                         [1, 2, 3, 4]
                     }
     """
+    context = {}
 
-    # Get the contexts for each JSON file in input/
-    return {f[:-5]: json.load(open("{}/{}".format(input_dir, f))) for f \
-                                in os.listdir(input_dir) if f.endswith('json')}
+    # Loop through all the JSON files in the input directory
+    for file_name in [f for f in os.listdir(input_dir) if f.endswith('json')]:
+
+        # Open the JSON file and convert to Python object
+        obj = json.load(open("{}/{}".format(input_dir, file_name)))
+
+        # Add the Python object to the context dictionary
+        context[file_name[:-5]] = obj
+
+    return context
 
 
 def command_line_runner():
