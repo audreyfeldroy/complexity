@@ -28,6 +28,7 @@ Features
 
 * Takes simple HTML templates as input.
 * Template inheritance, filters, etc. (Brought to you by Jinja2.)
+* Data from .json files turns into template context data.
 * Can output to Amazon S3. Well, not yet, but that's half of the plan.
 
 Dependencies
