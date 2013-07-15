@@ -27,13 +27,24 @@ def make_sure_path_exists(path):
 
 
 def serve_static_site():
-    # Serve the output directory
+    """ Serve the output/ directory on port 9090. """
     os.chdir('output/')
     PORT = 9090
     Handler = httpserver.SimpleHTTPRequestHandler
+
+    # See http://stackoverflow.com/questions/16433522/socketserver-getting-rid-of-errno-98-address-already-in-use
+    socketserver.TCPServer.allow_reuse_address = True
+
     httpd = socketserver.TCPServer(("", PORT), Handler)
     print("serving at port", PORT)
-    httpd.serve_forever()
+    
+    try:
+        httpd.serve_forever()
+    except (KeyboardInterrupt, SystemExit):
+        print("Shutting down...")
+        httpd.shutdown()
+        httpd.socket.close()
+        sys.exit()
 
 
 def generate_html(pages, context=None, input_dir='input/'):
