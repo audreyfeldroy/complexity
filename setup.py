@@ -28,6 +28,7 @@ setup(
     packages=[
         'complexity',
     ],
+    package_dir={'complexity': 'complexity'},
     entry_points={
         'console_scripts': [
             'complexity = complexity.complexity:command_line_runner',
