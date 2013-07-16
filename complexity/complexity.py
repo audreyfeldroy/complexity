@@ -115,7 +115,7 @@ def generate_context(input_dir='input/'):
     return context
 
 
-def command_line_runner():
+def main():
     """ Entry point for the package, as defined in setup.py. """
 
     # List the stem of each HTML file in input/
@@ -129,4 +129,4 @@ def command_line_runner():
 
 
 if __name__ == '__main__':
-    command_line_runner()
+    main()

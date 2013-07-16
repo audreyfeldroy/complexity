@@ -31,7 +31,7 @@ setup(
     package_dir={'complexity': 'complexity'},
     entry_points={
         'console_scripts': [
-            'complexity = complexity.complexity:command_line_runner',
+            'complexity = complexity.complexity:main',
         ]
     },
     include_package_data=True,
