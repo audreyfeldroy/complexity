@@ -38,7 +38,9 @@ class TestComplexity(unittest.TestCase):
         context = complexity.generate_context(input_dir='tests/input')
         self.assertEqual(context, {"test": {"1": 2}})
 
-
+    def test_unicode(self):
+        complexity.generate_html(['unicode'], context=None, input_dir='tests/input')
+        complexity.unicode_open("output/unicode/index.html")
 
     def tearDown(self):
         shutil.rmtree('output/')

@@ -15,6 +15,7 @@ if PY3:
 else:
     import SimpleHTTPServer as httpserver
     import SocketServer as socketserver
+    import codecs
 
 
 def make_sure_path_exists(path):
@@ -24,6 +25,14 @@ def make_sure_path_exists(path):
         if exception.errno != errno.EEXIST:
             return False
     return True
+
+
+def unicode_open(filename, *args, **kwargs):
+
+    if PY3:
+        return open(filename, *args, **kwargs)
+    kwargs['encoding'] = "utf-8"
+    return codecs.open(filename, *args, **kwargs)
 
 
 def serve_static_site():
@@ -37,7 +46,7 @@ def serve_static_site():
 
     httpd = socketserver.TCPServer(("", PORT), Handler)
     print("serving at port", PORT)
-    
+
     try:
         httpd.serve_forever()
     except (KeyboardInterrupt, SystemExit):
@@ -58,13 +67,13 @@ def generate_html(pages, context=None, input_dir='input/'):
 
         # Put index in the root. It's a special case.
         if page == 'index':
-            with open('output/index.html', 'w') as fh:
+            with unicode_open('output/index.html', 'w') as fh:
                 fh.write(rendered_html)
 
         # Put other pages in page/index.html, for better URL formatting.
         else:
             make_sure_path_exists('output/{0}/'.format(page))
-            with open('output/{0}/index.html'.format(page), 'w') as fh:
+            with unicode_open('output/{0}/index.html'.format(page), 'w') as fh:
                 fh.write(rendered_html)
 
 
@@ -98,7 +107,7 @@ def generate_context(input_dir='input/'):
     for file_name in [f for f in os.listdir(input_dir) if f.endswith('json')]:
 
         # Open the JSON file and convert to Python object
-        obj = json.load(open("{0}/{1}".format(input_dir, file_name)))
+        obj = json.load(unicode_open("{0}/{1}".format(input_dir, file_name)))
 
         # Add the Python object to the context dictionary
         context[file_name[:-5]] = obj
