@@ -17,6 +17,11 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst', 'rt').read()
 history = open('HISTORY.rst', 'rt').read()
 
+requirements = ['jinja2==2.7']
+
+if sys.version_info[:2] < (2, 7):
+    requirements.append('argparse')
+    
 setup(
     name='complexity',
     version=complexity.__version__,
@@ -35,9 +40,7 @@ setup(
         ]
     },
     include_package_data=True,
-    install_requires=[
-        'jinja2',
-    ],
+    install_requires=requirements,
     license="BSD",
     zip_safe=False,
     keywords='complexity,static site generator,HTML,Jinja2,templates,S3',
