@@ -15,7 +15,7 @@ if sys.argv[-1] == 'publish':
     sys.exit()
 
 readme = open('README.rst', 'rt').read()
-history = open('HISTORY.rst', 'rt').read()
+history = open('HISTORY.rst', 'rt').read().replace(".. :changelog:", "")
 
 requirements = ['jinja2==2.7']
 
