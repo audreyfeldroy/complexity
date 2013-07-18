@@ -14,8 +14,12 @@ if sys.argv[-1] == 'publish':
     os.system('python setup.py sdist upload')
     sys.exit()
 
-readme = open('README.rst', 'rt').read()
-history = open('HISTORY.rst', 'rt').read().replace(".. :changelog:", "")
+with open('README.rst') as f:
+    readme = f.read()
+    
+with open('HISTORY.rst') as f:
+    history = f.read()
+history.replace(".. :changelog:", "")
 
 requirements = ['jinja2==2.7']
 
