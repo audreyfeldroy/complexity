@@ -31,19 +31,12 @@ def main():
         help='Port number to serve files on.'
     )
     args = parser.parse_args()
-    
-    # List the stem of each input HTML file
-    input_file_list = os.listdir(args.input_dir)
-    pages = []
-    for f in input_file_list:
-        if f.endswith('html'):
-            file_stem = f.split('.')[0]
-            pages.append(file_stem)
-    
+        
+    # Generate the context data
     context = generate_context(args.input_dir)
 
     # Generate and serve the HTML site
-    generate_html(args.input_dir, args.output_dir, pages, context)
+    generate_html(args.input_dir, args.output_dir, context)
     serve_static_site(args.output_dir, args.port)
 
 

@@ -8,7 +8,17 @@ from jinja2.environment import Environment
 
 from complexity.utils import make_sure_path_exists, unicode_open
 
-def generate_html(input_dir, output_dir, pages, context=None):
+def generate_html(input_dir, output_dir, context=None):
+
+    # List the stem of each input HTML file
+    input_file_list = os.listdir(input_dir)
+
+    pages = []
+    for f in input_file_list:
+        if f.endswith('html'):
+            file_stem = f.split('.')[0]
+            pages.append(file_stem)
+            
     context = context or {}
     env = Environment()
     env.loader = FileSystemLoader(input_dir)
@@ -24,7 +34,7 @@ def generate_html(input_dir, output_dir, pages, context=None):
                 fh.write(rendered_html)
 
         # Put other pages in page/index.html, for better URL formatting.
-        else:
+        elif page != 'base':
             output_filename = os.path.join(output_dir, '{0}/index.html'.format(page))
             make_sure_path_exists(os.path.dirname(output_filename))
             with unicode_open(output_filename, 'w') as fh:
