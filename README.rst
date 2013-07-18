@@ -45,7 +45,7 @@ Sure, they could have all been built into Complexity, but decoupling them
 seemed like a nice thing to do.
 
 .. _`Simplicity`: https://github.com/pydanny/simplicity
-.. _`A Lot if Effort`: https://github.com/audreyr/alotofeffort
+.. _`A Lot of Effort`: https://github.com/audreyr/alotofeffort
 .. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
 
 Dependencies
