@@ -7,6 +7,7 @@ import string
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
+from complexity.exceptions import NonHTMLFileException, MissingTemplateDirException
 from complexity.utils import make_sure_path_exists, unicode_open
 
 
@@ -16,8 +17,9 @@ def render_and_write_html_file(f, output_dir, env, context):
     """
 
     if not f.endswith('html'):
-        raise TypeError(
-            'Non-HTML template found. Make sure all files in templates/ are .html files.'
+        raise NonHTMLFileException(
+            'Non-HTML file found. Make sure all files in templates/ are \
+            .html files.'
         )
 
     # Ignore any template starting with "base". 
@@ -48,25 +50,31 @@ def generate_html(input_dir, output_dir, context=None):
     Renders the HTML templates from input_dir, and writes them to output_dir.
     """
             
+    templates_dir = os.path.join(input_dir, 'templates/')
+    if not os.path.exists(templates_dir):
+        raise MissingTemplateDirException(
+            'Your project is missing a templates/ directory containing your \
+            HTML templates.'
+        )
+    
     context = context or {}
     env = Environment()
-    env.loader = FileSystemLoader(input_dir)
+    env.loader = FileSystemLoader(templates_dir)
 
     # Create the output dir if it doesn't already exist
-    make_sure_path_exists(output_dir)
-
-    # input_file_list = os.listdir(input_dir)
-            
-    # for f in input_file_list:
+    make_sure_path_exists(output_dir)    
     
-    for root, dirs, files in os.walk(input_dir):
+    for root, dirs, files in os.walk(templates_dir):
         for f in files:
+            print(f)
             render_and_write_html_file(f, output_dir, env, context)
 
 
 def generate_context(input_dir):
     """
     Generates the context for all complexity pages.
+    :param input_dir: The Complexity project directory.
+    :paramtype input_dir: directory
 
     Description:
 
@@ -77,8 +85,8 @@ def generate_context(input_dir):
 
         Assume the following files exist:
 
-            input/names.json
-            input/numbers.json
+            input/json/names.json
+            input/json/numbers.json
 
         Depending on their content, might generate a context as follows:
 
