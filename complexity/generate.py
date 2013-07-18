@@ -8,7 +8,7 @@ from jinja2.environment import Environment
 
 from complexity.utils import make_sure_path_exists, unicode_open
 
-def generate_html(pages, context=None, input_dir='input/'):
+def generate_html(input_dir, output_dir, pages, context=None):
     context = context or {}
     env = Environment()
     env.loader = FileSystemLoader(input_dir)
@@ -19,17 +19,19 @@ def generate_html(pages, context=None, input_dir='input/'):
 
         # Put index in the root. It's a special case.
         if page == 'index':
-            with unicode_open('output/index.html', 'w') as fh:
+            output_filename = os.path.join(output_dir, 'index.html')
+            with unicode_open(output_filename, 'w') as fh:
                 fh.write(rendered_html)
 
         # Put other pages in page/index.html, for better URL formatting.
         else:
-            make_sure_path_exists('output/{0}/'.format(page))
-            with unicode_open('output/{0}/index.html'.format(page), 'w') as fh:
+            output_filename = os.path.join(output_dir, '{0}/index.html'.format(page))
+            make_sure_path_exists(os.path.dirname(output_filename))
+            with unicode_open(output_filename, 'w') as fh:
                 fh.write(rendered_html)
 
 
-def generate_context(input_dir='input/'):
+def generate_context(input_dir):
     """
     Generates the context for all complexity pages.
 
