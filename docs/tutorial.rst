@@ -2,8 +2,8 @@
 Tutorial
 ========
 
-Overview
---------
+Part 0: Overview
+----------------
 
 This is the directory structure for a Complexity site::
 
@@ -32,15 +32,20 @@ This is the directory structure for a Complexity site::
 Part 1: Setup
 -------------
 
-Create a `project/` directory with subfolders for your work:
+First, grab a copy of the example Complexity site::
 
-* In `templates/`, create templates.
+    git clone https://github.com/audreyr/complexity-example.git
 
-* Put static files into the `stylesheets/`, `js/`, and `img/` directories of
-`assets/`. 
+Open everything in a text editor. You should see a main `project/` directory
+with subfolders for your work:
 
-* Creating additional directories in `assets` like `ico/` is fine; they'll get
-copied over to www without modification.
+* Study the template files in `templates/`. Notice how `index.html` and 
+  `about.html` both share a common parent template, `base.html`.
+
+* Notice the `assets/` directory. That is where you put your static files.
+
+* Creating additional directories in `assets/` (e.g. `ico/`) is fine; they'll get
+  copied over to `www/` without modification.
 
 At the same level as `project/`, a `www/` directory will be auto-generated.
 It will contain your final rendered templates and optimized static assets.
@@ -57,13 +62,29 @@ Run the `complexity` command, passing it input and output directories::
 
 This results in the following:
 
-* Templates are rendered and output to files.
-* CSS is minified and concatenated.
-* JS is minified, concatenated, and obfuscated.
+* Templates are rendered and output to files smartly:
+
+    * Any templates starting with "base" are assumed to be parent templates
+      and not rendered on their own (e.g. `base.html`, `base_section.html`)
+    * Templates named `index.html` are output to the same corresponding
+      locations in `www/`.
+    * Other templates are expanded in order to hide the ".html" extension.
+      For example, `about.html` is expanded to `about/index.html`.
+
 * A lightweight server starts up locally, serving your site so that you can see
   how it looks and check that everything works.
-
+  
 Open a web browser to http://127.0.0.1:9090. You should see your newly generated site!
+
+In the next release, the following will also occur during Complexity's
+generation process:
+
+* CSS will be minified and concatenated.
+* SCSS will compiled to CSS, then minified and concatenated.
+* JS will minified, concatenated, and obfuscated.
+
+Development is happening at a rapid pace, so stay tuned. To keep updated, watch
+and star https://github.com/audreyr/complexity on GitHub.
 
 Part 3: Upload the Site to Amazon S3
 -------------------------------------
