@@ -25,20 +25,19 @@ def generate_html(input_dir, output_dir, context=None):
             
     for f in input_file_list:
         if f.endswith('html'):
-            page = f.split('.')[0]
-        
             tmpl = env.get_template(f)
             rendered_html = tmpl.render(**context)
 
             # Don't write base.html. It's a special case.
-            if page == 'base':
+            if f == 'base.html':
                 continue
             # Put index in the root. It's a special case.
-            elif page == 'index':
+            elif f == 'index.html':
                 output_filename = os.path.join(output_dir, 'index.html')
             # Put other pages in page/index.html, for better URL formatting.
             else:
-                output_filename = os.path.join(output_dir, '{0}/index.html'.format(page))
+                stem = f.split('.')[0]
+                output_filename = os.path.join(output_dir, '{0}/index.html'.format(stem))
                 make_sure_path_exists(os.path.dirname(output_filename))
             
             # Write the generated file
