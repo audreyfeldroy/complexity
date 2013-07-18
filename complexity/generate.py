@@ -1,60 +1,12 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import errno
 import json
 import os
-import sys
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
-PY3 = sys.version > '3'
-if PY3:
-    import http.server as httpserver
-    import socketserver
-else:
-    import SimpleHTTPServer as httpserver
-    import SocketServer as socketserver
-    import codecs
-
-
-def make_sure_path_exists(path):
-    try:
-        os.makedirs(path)
-    except OSError as exception:
-        if exception.errno != errno.EEXIST:
-            return False
-    return True
-
-
-def unicode_open(filename, *args, **kwargs):
-
-    if PY3:
-        return open(filename, *args, **kwargs)
-    kwargs['encoding'] = "utf-8"
-    return codecs.open(filename, *args, **kwargs)
-
-
-def serve_static_site():
-    """ Serve the output/ directory on port 9090. """
-    os.chdir('output/')
-    PORT = 9090
-    Handler = httpserver.SimpleHTTPRequestHandler
-
-    # See http://stackoverflow.com/questions/16433522/socketserver-getting-rid-of-errno-98-address-already-in-use
-    socketserver.TCPServer.allow_reuse_address = True
-
-    httpd = socketserver.TCPServer(("", PORT), Handler)
-    print("serving at port", PORT)
-
-    try:
-        httpd.serve_forever()
-    except (KeyboardInterrupt, SystemExit):
-        print("Shutting down...")
-        httpd.shutdown()
-        httpd.socket.close()
-        sys.exit()
-
+from complexity.utils import make_sure_path_exists, unicode_open
 
 def generate_html(pages, context=None, input_dir='input/'):
     context = context or {}
@@ -113,20 +65,3 @@ def generate_context(input_dir='input/'):
         context[file_name[:-5]] = obj
 
     return context
-
-
-def main():
-    """ Entry point for the package, as defined in setup.py. """
-
-    # List the stem of each HTML file in input/
-    pages = [f.split('.')[0] for f in os.listdir('input/') if f.endswith('html')]
-
-    context = generate_context()
-
-    # Generate and serve the HTML site
-    generate_html(pages, context)
-    serve_static_site()
-
-
-if __name__ == '__main__':
-    main()
