@@ -31,7 +31,7 @@ class TestUtils(unittest.TestCase):
     def test_unicode_open(self):
         """ Test unicode_open(filename, *args, **kwargs). """
 
-        unicode_text = """Polish: Ą Ł Ż
+        unicode_text = u"""Polish: Ą Ł Ż
 Chinese: 倀 倁 倂 倃 倄 倅 倆 倇 倈
 Musical Notes: ♬ ♫ ♯"""
 
