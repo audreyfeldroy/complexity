@@ -29,14 +29,15 @@ class TestUtils(unittest.TestCase):
         )
 
     def test_unicode_open(self):
-        """
-        Test unicode_open(filename, *args, **kwargs).
-        
-        ..todo:: Remove dependency on generate here. Not a true unit test.
-        
-        """
-        generate.generate_html(['unicode'], context=None, input_dir='tests/input')
-        utils.unicode_open("output/unicode/index.html")
+        """ Test unicode_open(filename, *args, **kwargs). """
+
+        unicode_text = """Polish: Ą Ł Ż
+Chinese: 倀 倁 倂 倃 倄 倅 倆 倇 倈
+Musical Notes: ♬ ♫ ♯"""
+
+        with utils.unicode_open('tests/files/unicode.txt') as f:
+            opened_text = f.read()
+            self.assertEqual(unicode_text, opened_text)
 
     def tearDown(self):
         shutil.rmtree('output/')
