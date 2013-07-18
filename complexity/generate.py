@@ -54,14 +54,19 @@ def generate_context(input_dir='input/'):
                     }
     """
     context = {}
+    
+    all_input_files = os.listdir(input_dir)
 
-    # Loop through all the JSON files in the input directory
-    for file_name in [f for f in os.listdir(input_dir) if f.endswith('json')]:
+    for file_name in all_input_files:
+        
+        if file_name.endswith('json'):
 
-        # Open the JSON file and convert to Python object
-        obj = json.load(unicode_open("{0}/{1}".format(input_dir, file_name)))
+            # Open the JSON file and convert to Python object
+            json_file = "{0}/{1}".format(input_dir, file_name)
+            with unicode_open(json_file) as f:
+                obj = json.load(f)
 
-        # Add the Python object to the context dictionary
-        context[file_name[:-5]] = obj
+            # Add the Python object to the context dictionary
+            context[file_name[:-5]] = obj
 
     return context
