@@ -35,11 +35,11 @@ Best Used With
 
 Complexity is designed to be used with these packages:
 
-* `Simplicity`: Converts ReStructuredText into JSON, which Complexity can use
+* `Simplicity`_: Converts ReStructuredText into JSON, which Complexity can use
   as input.
-* `A Lot of Effort`: Deploys a static website (e.g. the output of Complexity)
+* `A Lot of Effort`_: Deploys a static website (e.g. the output of Complexity)
   to Amazon S3.
-* `Cookiecutter`: Creates projects from project templates.
+* `Cookiecutter`_: Creates projects from project templates.
 
 Sure, they could have all been built into Complexity, but decoupling them
 seemed like a nice thing to do.
