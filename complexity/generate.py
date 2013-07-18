@@ -8,35 +8,40 @@ from jinja2.environment import Environment
 
 from complexity.utils import make_sure_path_exists, unicode_open
 
+
 def generate_html(input_dir, output_dir, context=None):
-
-    # List the stem of each input HTML file
-    input_file_list = os.listdir(input_dir)
-
-    pages = []
-    for f in input_file_list:
-        if f.endswith('html'):
-            file_stem = f.split('.')[0]
-            pages.append(file_stem)
+    """
+    Renders the HTML templates from input_dir, and writes them to output_dir.
+    """
             
     context = context or {}
     env = Environment()
     env.loader = FileSystemLoader(input_dir)
 
-    for page in pages:
-        tmpl = env.get_template('{0}.html'.format(page))
-        rendered_html = tmpl.render(**context)
+    # Create the output dir if it doesn't already exist
+    make_sure_path_exists(output_dir)
 
-        # Put index in the root. It's a special case.
-        if page == 'index':
-            output_filename = os.path.join(output_dir, 'index.html')
-            with unicode_open(output_filename, 'w') as fh:
-                fh.write(rendered_html)
+    input_file_list = os.listdir(input_dir)
+            
+    for f in input_file_list:
+        if f.endswith('html'):
+            page = f.split('.')[0]
+        
+            tmpl = env.get_template(f)
+            rendered_html = tmpl.render(**context)
 
-        # Put other pages in page/index.html, for better URL formatting.
-        elif page != 'base':
-            output_filename = os.path.join(output_dir, '{0}/index.html'.format(page))
-            make_sure_path_exists(os.path.dirname(output_filename))
+            # Don't write base.html. It's a special case.
+            if page == 'base':
+                continue
+            # Put index in the root. It's a special case.
+            elif page == 'index':
+                output_filename = os.path.join(output_dir, 'index.html')
+            # Put other pages in page/index.html, for better URL formatting.
+            else:
+                output_filename = os.path.join(output_dir, '{0}/index.html'.format(page))
+                make_sure_path_exists(os.path.dirname(output_filename))
+            
+            # Write the generated file
             with unicode_open(output_filename, 'w') as fh:
                 fh.write(rendered_html)
 

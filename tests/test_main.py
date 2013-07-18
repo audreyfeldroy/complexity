@@ -8,8 +8,6 @@ test_main
 Tests for `complexity.main` module.
 """
 
-import os
-import shutil
 import unittest
 
 from complexity import main
