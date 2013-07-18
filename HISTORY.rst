@@ -3,6 +3,15 @@
 History
 -------
 
+0.3 (2013-07-18)
+++++++++++++++++++
+
+* Graceful shutdown/restart of dev server.
+* Required input and output dir arguments.
+* Optional port argument.
+* Improved server start/stop messages.
+* Major internal refactor.
+
 0.2.1 (2013-07-15)
 ++++++++++++++++
 

@@ -29,7 +29,24 @@ Features
 * Takes simple HTML templates as input.
 * Template inheritance, filters, etc. (Brought to you by Jinja2.)
 * Data from .json files turns into template context data.
-* Can output to Amazon S3. Well, not yet, but that's half of the plan.
+
+Best Used With
+--------------
+
+Complexity is designed to be used with these packages:
+
+* `Simplicity`: Converts ReStructuredText into JSON, which Complexity can use
+  as input.
+* `A Lot of Effort`: Deploys a static website (e.g. the output of Complexity)
+  to Amazon S3.
+* `Cookiecutter`: Creates projects from project templates.
+
+Sure, they could have all been built into Complexity, but decoupling them
+seemed like a nice thing to do.
+
+.. _`Simplicity`: https://github.com/pydanny/simplicity
+.. _`A Lot if Effort`: https://github.com/audreyr/alotofeffort
+.. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
 
 Dependencies
 ------------
