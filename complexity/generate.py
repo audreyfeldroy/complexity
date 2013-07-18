@@ -2,11 +2,45 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import string
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
 from complexity.utils import make_sure_path_exists, unicode_open
+
+
+def render_and_write_html_file(f, output_dir, env, context):
+    """
+        Renders and writes a single HTML file to its corresponding output location.
+    """
+
+    if not f.endswith('html'):
+        raise TypeError(
+            'Non-HTML template found. Make sure all files in templates/ are .html files.'
+        )
+
+    # Ignore any template starting with "base". 
+    # Complexity treats them as special cases.
+    if f.startswith('base'):
+        return False
+            
+    tmpl = env.get_template(f)
+    rendered_html = tmpl.render(**context)
+
+    # Put index in the root. It's a special case.
+    if f == 'index.html':
+        output_filename = os.path.join(output_dir, 'index.html')
+    # Put other pages in page/index.html, for better URL formatting.
+    else:
+        stem = f.split('.')[0]
+        output_filename = os.path.join(output_dir, '{0}/index.html'.format(stem))
+        make_sure_path_exists(os.path.dirname(output_filename))
+
+    # Write the generated file
+    with unicode_open(output_filename, 'w') as fh:
+        fh.write(rendered_html)
+        return True
 
 
 def generate_html(input_dir, output_dir, context=None):
@@ -21,28 +55,13 @@ def generate_html(input_dir, output_dir, context=None):
     # Create the output dir if it doesn't already exist
     make_sure_path_exists(output_dir)
 
-    input_file_list = os.listdir(input_dir)
+    # input_file_list = os.listdir(input_dir)
             
-    for f in input_file_list:
-        if f.endswith('html'):
-            tmpl = env.get_template(f)
-            rendered_html = tmpl.render(**context)
-
-            # Don't write base.html. It's a special case.
-            if f == 'base.html':
-                continue
-            # Put index in the root. It's a special case.
-            elif f == 'index.html':
-                output_filename = os.path.join(output_dir, 'index.html')
-            # Put other pages in page/index.html, for better URL formatting.
-            else:
-                stem = f.split('.')[0]
-                output_filename = os.path.join(output_dir, '{0}/index.html'.format(stem))
-                make_sure_path_exists(os.path.dirname(output_filename))
-            
-            # Write the generated file
-            with unicode_open(output_filename, 'w') as fh:
-                fh.write(rendered_html)
+    # for f in input_file_list:
+    
+    for root, dirs, files in os.walk(input_dir):
+        for f in files:
+            render_and_write_html_file(f, output_dir, env, context)
 
 
 def generate_context(input_dir):

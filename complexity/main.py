@@ -16,12 +16,12 @@ def main():
     )
     parser.add_argument(
         'input_dir',
-        default='input/',
+        default='project/',
         help='Your project directory containing the files to be processed by Complexity.'
     )
     parser.add_argument(
         'output_dir',
-        default='output/',
+        default='www/',
         help='Name of directory to output generated files to, e.g. www.'
     )
     parser.add_argument(

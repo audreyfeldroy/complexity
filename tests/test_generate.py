@@ -19,17 +19,17 @@ class TestGenerate(unittest.TestCase):
 
     def test_generate_html(self):
         generate.generate_html(
-            input_dir='tests/input/',
-            output_dir='tests/output/',
+            input_dir='tests/project/templates/',
+            output_dir='tests/www/',
             context=None
         )
-        self.assertTrue(os.path.isfile('tests/output/index.html'))
-        self.assertTrue(os.path.isfile('tests/output/about/index.html'))
-        self.assertFalse(os.path.isfile('tests/output/base/index.html'))
-        shutil.rmtree('tests/output')
+        self.assertTrue(os.path.isfile('tests/www/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/about/index.html'))
+        self.assertFalse(os.path.isfile('tests/www/base/index.html'))
+        shutil.rmtree('tests/www')
 
     def test_generate_context(self):
-        context = generate.generate_context(input_dir='tests/input/')
+        context = generate.generate_context(input_dir='tests/project/json/')
         self.assertEqual(context, {"test": {"1": 2}})
 
 if __name__ == '__main__':
