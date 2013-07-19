@@ -47,7 +47,7 @@ class TestGenerate(unittest.TestCase):
         shutil.rmtree('tests/www')
 
     def test_generate_context(self):
-        context = generate.generate_context(input_dir='tests/project/json/')
+        context = generate.generate_context(input_dir='tests/project/')
         self.assertEqual(context, {"test": {"1": 2}})
 
     def test_copy_assets(self):
