@@ -57,7 +57,10 @@ seemed like a nice thing to do.
 .. _`A Lot of Effort`: https://github.com/audreyr/alotofeffort
 .. _`Cookiecutter`: https://github.com/audreyr/cookiecutter
 
-Dependencies
-------------
+Community
+---------
 
-* Jinja2
+You can help make Complexity even better:
+
+* Contribute issues or pull requests. Instructions:
+  https://github.com/audreyr/complexity/blob/master/CONTRIBUTING.rst

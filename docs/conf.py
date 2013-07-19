@@ -192,7 +192,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'complexity.tex', u'complexity Documentation',
+  ('index', 'complexity.tex', u'Complexity Documentation',
    u'Audrey Roy', 'manual'),
 ]
 
@@ -222,7 +222,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'complexity', u'complexity Documentation',
+    ('index', 'complexity', u'Complexity Documentation',
      [u'Audrey Roy'], 1)
 ]
 
@@ -236,7 +236,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'complexity', u'complexity Documentation',
+  ('index', 'complexity', u'Complexity Documentation',
    u'Audrey Roy', 'complexity', 'One line description of project.',
    'Miscellaneous'),
 ]

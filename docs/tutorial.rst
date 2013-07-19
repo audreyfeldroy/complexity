@@ -5,15 +5,14 @@ Tutorial
 Part 0: Overview
 ----------------
 
-This is the directory structure for a Complexity site::
+This is the directory structure for a minimal Complexity site::
 
     my_repo/
     ├── project/       <--------- input
     │   ├── assets/
-    │   │   ├── stylesheets/
+    │   │   ├── css/
     │   │   ├── js/
-    │   │   ├── img/
-    │   │   └── ico/
+    │   │   └── img/
     │   │   
     │   └── templates/
     │       ├── base.html
@@ -26,8 +25,7 @@ This is the directory structure for a Complexity site::
         │   └── index.html
         ├── css/
         ├── js/
-        ├── img/
-        └── ico/
+        └── img/
  
 Part 1: Setup
 -------------
@@ -76,11 +74,11 @@ This results in the following:
   
 Open a web browser to http://127.0.0.1:9090. You should see your newly generated site!
 
-In the next release, the following will also occur during Complexity's
+In an upcoming release, the following will also occur during Complexity's
 generation process:
 
 * CSS will be minified and concatenated.
-* SCSS will compiled to CSS, then minified and concatenated.
+* SCSS and/or LESS will compiled to CSS, then minified and concatenated.
 * JS will minified, concatenated, and obfuscated.
 
 Development is happening at a rapid pace, so stay tuned. To keep updated, watch

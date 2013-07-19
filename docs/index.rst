@@ -14,6 +14,7 @@ Contents:
    readme
    installation
    tutorial
+   advanced_usage
    contributing
    authors
    history
