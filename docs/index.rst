@@ -3,10 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to complexity's documentation!
-======================================
+Complexity
+==========
 
-Contents:
+A refreshingly simple static site generator, for those who like to work in HTML.
+--------------------------------------------------------------------------------
+
+This friendly guide contains everything you need to know to create and publish
+static HTML websites with Complexity.
 
 .. toctree::
    :maxdepth: 2

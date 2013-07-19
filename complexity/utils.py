@@ -56,9 +56,9 @@ def query_yes_no(question, default="yes"):
     while True:
         sys.stdout.write(question + prompt)
         try:
-            choice = input().lower()
-        except ImportError:
             choice = raw_input().lower()
+        except ImportError:
+            choice = input().lower()
 
         if default is not None and choice == '':
             return valid[default]
