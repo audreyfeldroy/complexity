@@ -2,6 +2,15 @@
 Complexity
 ==========
 
+.. image:: https://badge.fury.io/py/complexity.png
+    :target: http://badge.fury.io/py/complexity
+    
+.. image:: https://travis-ci.org/audreyr/complexity.png?branch=master
+        :target: https://travis-ci.org/audreyr/complexity
+
+.. image:: https://pypip.in/v/complexity/badge.png
+        :target: https://crate.io/packages/complexity?version=latest
+
 A refreshingly simple static site generator, for those who like to work in HTML.
 
 Of course, @pydanny (https://twitter.com/pydanny) came up with the name for this.
@@ -14,14 +23,14 @@ The full documentation is at http://complexity.rtfd.org.
 Quickstart
 ----------
 
-Using Complexity is easy! Try it out::
+Try it out::
 
     $ pip install complexity
-    $ git clone git@github.com:audreyr/complexity-example.git my_project
-    $ cd my_project
-    $ complexity
+    $ git clone git@github.com:audreyr/complexity-example.git my_proj
+    $ cd my_proj
+    $ complexity project/ www/
 
-Open a web browser to http://127.0.0.1:9090 to see your newly generated Complexity static site.
+Open a web browser to http://127.0.0.1:9090 to see the newly generated Complexity static site.
 
 Features
 --------
