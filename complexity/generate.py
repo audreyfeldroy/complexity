@@ -11,9 +11,15 @@ from complexity.exceptions import NonHTMLFileException, MissingTemplateDirExcept
 from complexity.utils import make_sure_path_exists, unicode_open
 
 
-def render_and_write_html_file(f, output_dir, env, context):
+def generate_html_file(f, output_dir, env, context):
     """
-        Renders and writes a single HTML file to its corresponding output location.
+    Renders and writes a single HTML file to its corresponding output location.
+    :param f: Name of input file to be rendered.
+    :param output_dir: The Complexity www (output) directory.
+    :paramtype output_dir: directory
+    :param env: Jinja2 environment with a loader already set up.
+    :param context: Jinja2 context that holds template variables. See 
+        http://jinja.pocoo.org/docs/api/#the-context
     """
 
     if not f.endswith('html'):
@@ -22,8 +28,7 @@ def render_and_write_html_file(f, output_dir, env, context):
             .html files.'
         )
 
-    # Ignore any template starting with "base". 
-    # Complexity treats them as special cases.
+    # Ignore templates starting with "base". They're treated as special cases.
     if f.startswith('base'):
         return False
             
@@ -48,6 +53,12 @@ def render_and_write_html_file(f, output_dir, env, context):
 def generate_html(input_dir, output_dir, context=None):
     """
     Renders the HTML templates from input_dir, and writes them to output_dir.
+    :param input_dir: The Complexity project (input) directory.
+    :paramtype input_dir: directory
+    :param output_dir: The Complexity www (output) directory.
+    :paramtype output_dir: directory
+    :param context: Jinja2 context that holds template variables. See 
+        http://jinja.pocoo.org/docs/api/#the-context
     """
             
     templates_dir = os.path.join(input_dir, 'templates/')
@@ -67,7 +78,7 @@ def generate_html(input_dir, output_dir, context=None):
     for root, dirs, files in os.walk(templates_dir):
         for f in files:
             print(f)
-            render_and_write_html_file(f, output_dir, env, context)
+            generate_html_file(f, output_dir, env, context)
 
 
 def generate_context(input_dir):
