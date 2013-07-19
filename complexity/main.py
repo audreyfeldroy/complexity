@@ -4,9 +4,9 @@ import argparse
 import os
 import sys
 
-from complexity.generate import generate_context, copy_assets, generate_html
-from complexity.prep import prompt_and_delete_cruft
-from complexity.serve import serve_static_site
+from .generate import generate_context, copy_assets, generate_html
+from .prep import prompt_and_delete_cruft
+from .serve import serve_static_site
 
 
 def main():
