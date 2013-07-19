@@ -2,8 +2,10 @@
 # -*- coding: utf-8 -*-
 import argparse
 import os
+import sys
 
 from complexity.generate import generate_context, copy_assets, generate_html
+from complexity.prep import prompt_and_delete_cruft
 from complexity.serve import serve_static_site
 
 
@@ -31,6 +33,10 @@ def main():
         help='Port number to serve files on.'
     )
     args = parser.parse_args()
+    
+    # If output_dir exists, prompt before deleting. Abort if it can't be deleted.
+    if not prompt_and_delete_cruft(args.output_dir):
+        sys.exit()
         
     # Generate the context data
     context = generate_context(args.input_dir)
