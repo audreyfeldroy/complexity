@@ -13,8 +13,6 @@ Complexity
 
 A refreshingly simple static site generator, for those who like to work in HTML.
 
-Of course, @pydanny (https://twitter.com/pydanny) came up with the name for this.
-
 Documentation
 -------------
 
@@ -30,7 +28,7 @@ Try it out::
     $ cd my_proj
     $ complexity project/ www/
 
-Open a web browser to http://127.0.0.1:9090 to see the newly generated Complexity static site.
+Once you've done that, open a web browser to http://127.0.0.1:9090 to see the newly generated Complexity static site.
 
 Features
 --------
@@ -61,7 +59,7 @@ seemed like a nice thing to do.
 Community
 ---------
 
-You can help make Complexity even better:
+* Stuck? Don't know where to begin? File an issue and we'll help you.
+* We love contributions. Read about `how to contribute`_.
 
-* Contribute issues or pull requests. Instructions:
-  https://github.com/audreyr/complexity/blob/master/CONTRIBUTING.rst
+.. _`how to contribute`: https://github.com/audreyr/complexity/blob/master/CONTRIBUTING.rst
