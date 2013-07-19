@@ -50,5 +50,17 @@ class TestGenerate(unittest.TestCase):
         context = generate.generate_context(input_dir='tests/project/json/')
         self.assertEqual(context, {"test": {"1": 2}})
 
+    def test_copy_assets(self):
+        generate.copy_assets(
+            input_dir='tests/project/',
+            output_dir='tests/www/'
+        )
+        self.assertTrue(os.path.isfile('tests/www/css/bootstrap-responsive.min.css'))
+        self.assertTrue(os.path.isfile('tests/www/css/bootstrap.min.css'))
+        self.assertTrue(os.path.isfile('tests/www/img/glyphicons-halflings.png'))
+        self.assertTrue(os.path.isfile('tests/www/js/bootstrap.min.js'))
+        shutil.rmtree('tests/www')
+
+
 if __name__ == '__main__':
     unittest.main()

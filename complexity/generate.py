@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import json
 import os
+import shutil
 import string
 
 from jinja2 import FileSystemLoader
@@ -124,3 +125,23 @@ def generate_context(input_dir):
             context[file_name[:-5]] = obj
 
     return context
+
+
+def copy_assets(input_dir, output_dir):
+    """
+    Copies static assets over from input_dir/assets/ to output_dir/.
+    :param input_dir: The Complexity project (input) directory.
+    :paramtype input_dir: directory
+    :param output_dir: The Complexity www (output) directory.
+    :paramtype output_dir: directory
+    """
+    assets = os.path.join(input_dir, 'assets')
+    all_asset_dirs = os.listdir(assets)
+    for d in all_asset_dirs:
+        old_dir = os.path.join(assets, d)
+
+        # Only copy allowed dirs
+        if os.path.isdir(old_dir) and d != 'scss' and d != 'less':
+            new_dir = os.path.join(output_dir, d)
+            print('Copying {0} to {1}'.format(d, new_dir))
+            shutil.copytree(old_dir, new_dir)

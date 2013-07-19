@@ -3,7 +3,7 @@
 import argparse
 import os
 
-from complexity.generate import generate_context, generate_html
+from complexity.generate import generate_context, copy_assets, generate_html
 from complexity.serve import serve_static_site
 
 
@@ -37,6 +37,7 @@ def main():
 
     # Generate and serve the HTML site
     generate_html(args.input_dir, args.output_dir, context)
+    copy_assets(args.input_dir, args.output_dir)
     serve_static_site(args.output_dir, args.port)
 
 
