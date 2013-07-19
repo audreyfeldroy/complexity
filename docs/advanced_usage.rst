@@ -53,7 +53,7 @@ For example, suppose you have this in `books.json`:
 
 Then you can refer to the books in a template like this:
 
-.. code-block:: html+django
+.. code-block:: html+jinja
 
     {% extends 'base.html' %}
 
