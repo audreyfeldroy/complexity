@@ -36,20 +36,24 @@ JSON Auto-Loading
 
 Data from .json files automatically turns into template context data.
 
-For example, suppose you have this in `books.json`::
+For example, suppose you have this in `books.json`:
 
-    [
-        {
-            'title': 'Two Scoops of Django',
-            'url': 'http://www.amazon.com/Two-Scoops-Django-Best-Practices/dp/1481879707/'
-        },
-        {
-            'title': 'A Very Magical Caterpillar Tale',
-            'url': 'http://www.amazon.com/Very-Magical-Caterpillar-Tale-Butterfly/dp/1453714081/'
-        }
-    ]
+.. code-block:: javascript
 
-Then you can refer to the books in a template like this::
+  [
+    {
+      "url": "http://www.amazon.com/Two-Scoops-Django-Best-Practices/dp/1481879707/",
+      "title": "Two Scoops of Django"
+    },
+    {
+      "url": "http://www.amazon.com/Very-Magical-Caterpillar-Tale-Butterfly/dp/1453714081/",
+      "title": "A Very Magical Caterpillar Tale"
+    }
+  ]
+
+Then you can refer to the books in a template like this:
+
+.. code-block:: html+django
 
     {% extends 'base.html' %}
 

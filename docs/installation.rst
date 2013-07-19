@@ -32,7 +32,7 @@ Then unzip and install Complexity::
 
 
 Alternate Method 2: Easy Install
--------------------------------
+--------------------------------
 
 If neither of the above methods work for some reason, try this::
 
