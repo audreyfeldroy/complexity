@@ -3,7 +3,7 @@
 import os
 import shutil
 
-from complexity import utils
+from . import utils
 
 
 def prompt_and_delete_cruft(output_dir):

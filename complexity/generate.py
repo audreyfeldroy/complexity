@@ -8,8 +8,8 @@ import string
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
-from complexity.exceptions import NonHTMLFileException, MissingTemplateDirException
-from complexity.utils import make_sure_path_exists, unicode_open
+from .exceptions import NonHTMLFileException, MissingTemplateDirException
+from .utils import make_sure_path_exists, unicode_open
 
 
 def generate_html_file(f, output_dir, env, context):
@@ -110,14 +110,15 @@ def generate_context(input_dir):
     """
     context = {}
     
-    all_input_files = os.listdir(input_dir)
+    json_dir = os.path.join(input_dir, 'json/')
+    json_files = os.listdir(json_dir)
 
-    for file_name in all_input_files:
+    for file_name in json_files:
         
         if file_name.endswith('json'):
 
             # Open the JSON file and convert to Python object
-            json_file = "{0}/{1}".format(input_dir, file_name)
+            json_file = os.path.join(json_dir, file_name)
             with unicode_open(json_file) as f:
                 obj = json.load(f)
 
