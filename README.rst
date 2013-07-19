@@ -8,7 +8,7 @@ Complexity
 .. image:: https://travis-ci.org/audreyr/complexity.png?branch=master
         :target: https://travis-ci.org/audreyr/complexity
 
-.. image:: https://pypip.in/v/complexity/badge.png
+.. image:: https://pypip.in/d/complexity/badge.png
         :target: https://crate.io/packages/complexity?version=latest
 
 A refreshingly simple static site generator, for those who like to work in HTML.
