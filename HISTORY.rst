@@ -3,6 +3,11 @@
 History
 -------
 
+0.4.1 (2013-07-19)
+++++++++++++++++++
+
+* Fix reading of JSON files from `json/`.
+
 0.4 (2013-07-19)
 ++++++++++++++++++
 
@@ -14,6 +19,8 @@ History
     │   │   ├── css/
     │   │   ├── js/
     │   │   └── img/
+    │   ├── json/
+    │   │   └── stuff.json
     │   └── templates/
     │       ├── base.html
     │       ├── index.html
