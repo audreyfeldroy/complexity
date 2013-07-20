@@ -97,6 +97,9 @@ You can simply hook into Complexity's library API:
     # Copy assets over
     generate.copy_assets(input_dir='project/', output_dir='www/')
 
+This allows you to use Complexity just like any other Python package. You
+can simply call Complexity functions from your own code.
+
 .. note:: As of this release, the API works, but it is subject to change.
    Please pin your dependencies if you need this to be stable, and keep an eye
    on this section for changes when you upgrade.
