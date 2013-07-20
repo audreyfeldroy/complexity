@@ -33,7 +33,7 @@ Once you've done that, open a web browser to http://127.0.0.1:9090 to see the ne
 Features
 --------
 
-* Works on Python 2.6, 2.7, and 3.3.
+* Works on Python 2.6, 2.7, and 3.3, and on PyPy.
 * Takes simple HTML templates as input.
 * Data from .json files turns into template context data.
 * Template inheritance, filters, etc. (Brought to you by Jinja2.)
