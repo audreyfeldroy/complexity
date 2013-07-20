@@ -2,18 +2,57 @@
 Contributing
 ============
 
-Contributions are welcome!
+Contributions are welcome, and they are greatly appreciated! Every
+little bit helps, and credit will always be given. 
 
-Submitting Feedback
--------------------
+You can contribute in many ways:
 
-The best way to send feedback is to file an issue at https://github.com/audreyr/complexity/issues.
+Types of Contributions
+----------------------
+
+Report Bugs
+~~~~~~~~~~~
+
+Report bugs at https://github.com/audreyr/complexity/issues.
 
 If you are reporting a bug, please include:
 
 * Your operating system name and version.
 * Any details about your local setup that might be helpful in troubleshooting.
 * Detailed steps to reproduce the bug.
+
+Fix Bugs
+~~~~~~~~
+
+Look through the GitHub issues for bugs. Anything tagged with "bug"
+is open to whoever wants to implement it.
+
+Implement Features
+~~~~~~~~~~~~~~~~~~
+
+Look through the GitHub issues for features. Anything tagged with "feature"
+is open to whoever wants to implement it.
+
+Write Documentation
+~~~~~~~~~~~~~~~~~~~
+
+Complexity could always use more documentation, whether as part of the 
+official Complexity docs, in docstrings, or even on the web in blog posts,
+articles, and such.
+
+Create Examples
+~~~~~~~~~~~~~~~
+
+Some examples of real Complexity sites, whether open-source or closed-source,
+would be awesome.
+
+If you create an example Complexity site, file an issue so that it can be
+linked from the docs.
+
+Submit Feedback
+~~~~~~~~~~~~~~~
+
+The best way to send feedback is to file an issue at https://github.com/audreyr/complexity/issues.
 
 If you are proposing a feature:
 
@@ -22,10 +61,10 @@ If you are proposing a feature:
 * Remember that this is a volunteer-driven project, and that contributions
   are welcome :)
 
-Getting Started
+Get Started!
 ---------------
 
-Here's how to set up `complexity` for local development.
+Ready to contribute? Here's how to set up `complexity` for local development.
 
 1. Fork the `complexity` repo on GitHub.
 2. Clone your fork locally::
