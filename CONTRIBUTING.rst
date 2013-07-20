@@ -25,9 +25,9 @@ If you are proposing a feature:
 Getting Started
 ---------------
 
-Here's how to set up `design` for local development.
+Here's how to set up `complexity` for local development.
 
-1. Fork the `design` repo on GitHub.
+1. Fork the `complexity` repo on GitHub.
 2. Clone your fork locally::
 
     $ git clone git@github.com:your_name_here/complexity.git
