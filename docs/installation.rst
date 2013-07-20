@@ -37,3 +37,5 @@ Alternate Method 2: Easy Install
 If neither of the above methods work for some reason, try this::
 
     $ easy_install complexity
+
+And if that doesn't work, see :doc:`troubleshooting`.
