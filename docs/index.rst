@@ -19,6 +19,7 @@ static HTML websites with Complexity.
    installation
    tutorial
    advanced_usage
+   troubleshooting
    contributing
    authors
    history
