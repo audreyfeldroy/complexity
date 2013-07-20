@@ -35,8 +35,11 @@ Features
 
 * Works on Python 2.6, 2.7, and 3.3.
 * Takes simple HTML templates as input.
-* Template inheritance, filters, etc. (Brought to you by Jinja2.)
 * Data from .json files turns into template context data.
+* Template inheritance, filters, etc. (Brought to you by Jinja2.)
+* Can optionally be used as a library instead of from the command line. See
+  `Using Complexity as a Library` for details.
+.. _`Using Complexity as a Library`: http://complexity.readthedocs.org/en/latest/advanced_usage.html#using-complexity-as-a-library
 
 Best Used With
 --------------

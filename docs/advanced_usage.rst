@@ -79,3 +79,24 @@ it will get copied over to `www/` when you generate your site.
    upcoming release, including CSS/JS minification, image optimization,
    and SASS and/or LESS compilation.
 
+Using Complexity as a Library
+------------------------------
+
+You can simply hook into Complexity's library API:
+
+.. code-block:: python
+
+    from complexity import generate
+
+    # Optionally generate context if you need to
+    context = generate_context(input_dir='project/')
+
+    # Generate HTML from your templates (and context, if you have it)
+    generate.generate_html(input_dir='project/', output_dir='www/', context=context)
+
+    # Copy assets over
+    generate.copy_assets(input_dir='project/', output_dir='www/')
+
+.. note:: As of this release, the API works, but it is subject to change.
+   Please pin your dependencies if you need this to be stable, and keep an eye
+   on this section for changes when you upgrade.
