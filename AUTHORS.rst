@@ -22,5 +22,5 @@ Special Thanks
   `Armin Ronacher's Flasky theme`_.
 
 .. _`@pydanny`: https://twitter.com/pydanny
-.. _`Kenneth Reitz's Requests theme`: 
+.. _`Kenneth Reitz's Requests theme`: http://python-requests.org
 .. _`Armin Ronacher's Flasky theme`: http://flask.pocoo.org/
