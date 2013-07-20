@@ -9,6 +9,7 @@ if PY3:
     pass
 else:
     import codecs
+    input = raw_input
 
 
 def make_sure_path_exists(path):
@@ -55,10 +56,7 @@ def query_yes_no(question, default="yes"):
 
     while True:
         sys.stdout.write(question + prompt)
-        try:
-            choice = raw_input().lower()
-        except ImportError:
-            choice = input().lower()
+        choice = input().lower()
 
         if default is not None and choice == '':
             return valid[default]
