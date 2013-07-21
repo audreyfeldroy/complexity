@@ -3,6 +3,11 @@
 History
 -------
 
+0.4.2 (2013-07-21)
+++++++++++++++++++
+
+* Make reading of JSON files from `json/` optional.
+
 0.4.1 (2013-07-19)
 ++++++++++++++++++
 
