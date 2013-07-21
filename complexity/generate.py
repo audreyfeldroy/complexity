@@ -3,7 +3,6 @@
 import json
 import os
 import shutil
-import string
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
@@ -19,7 +18,7 @@ def generate_html_file(f, output_dir, env, context):
     :param output_dir: The Complexity www (output) directory.
     :paramtype output_dir: directory
     :param env: Jinja2 environment with a loader already set up.
-    :param context: Jinja2 context that holds template variables. See 
+    :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
     """
 
@@ -32,7 +31,7 @@ def generate_html_file(f, output_dir, env, context):
     # Ignore templates starting with "base". They're treated as special cases.
     if f.startswith('base'):
         return False
-            
+
     tmpl = env.get_template(f)
     rendered_html = tmpl.render(**context)
 
@@ -42,7 +41,10 @@ def generate_html_file(f, output_dir, env, context):
     # Put other pages in page/index.html, for better URL formatting.
     else:
         stem = f.split('.')[0]
-        output_filename = os.path.join(output_dir, '{0}/index.html'.format(stem))
+        output_filename = os.path.join(
+            output_dir,
+            '{0}/index.html'.format(stem)
+        )
         make_sure_path_exists(os.path.dirname(output_filename))
 
     # Write the generated file
@@ -58,24 +60,24 @@ def generate_html(input_dir, output_dir, context=None):
     :paramtype input_dir: directory
     :param output_dir: The Complexity www (output) directory.
     :paramtype output_dir: directory
-    :param context: Jinja2 context that holds template variables. See 
+    :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
     """
-            
+
     templates_dir = os.path.join(input_dir, 'templates/')
     if not os.path.exists(templates_dir):
         raise MissingTemplateDirException(
             'Your project is missing a templates/ directory containing your \
             HTML templates.'
         )
-    
+
     context = context or {}
     env = Environment()
     env.loader = FileSystemLoader(templates_dir)
 
     # Create the output dir if it doesn't already exist
-    make_sure_path_exists(output_dir)    
-    
+    make_sure_path_exists(output_dir)
+
     for root, dirs, files in os.walk(templates_dir):
         for f in files:
             print(f)
@@ -90,8 +92,9 @@ def generate_context(json_dir):
 
     Description:
 
-        Iterates through the contents of the input_dir and finds all JSON files.
-        Loads the JSON file as a Python object with the key being the JSON file name.
+        Iterates through the contents of the input_dir and finds all JSON
+        files. Loads the JSON file as a Python object with the key being the
+        JSON file name.
 
     Example:
 
@@ -109,11 +112,11 @@ def generate_context(json_dir):
                     }
     """
     context = {}
-    
+
     json_files = os.listdir(json_dir)
 
     for file_name in json_files:
-        
+
         if file_name.endswith('json'):
 
             # Open the JSON file and convert to Python object

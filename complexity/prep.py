@@ -15,7 +15,7 @@ def prompt_and_delete_cruft(output_dir):
     """
     if not os.path.exists(output_dir):
         return True
-        
+
     ok_to_delete = utils.query_yes_no(
         'Is it okay to delete {0}?'.format(output_dir)
     )
@@ -23,5 +23,8 @@ def prompt_and_delete_cruft(output_dir):
         shutil.rmtree(output_dir)
         return True
     else:
-        print("Aborting. Please manually remove {0} and restart Complexity.".format(output_dir))
+        print(
+            "Aborting. Please manually remove {0} and retry."
+            .format(output_dir)
+        )
         return False

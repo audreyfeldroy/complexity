@@ -11,15 +11,17 @@ from .serve import serve_static_site
 
 def main():
     """ Entry point for the package, as defined in setup.py. """
-    
+
     # Get command line input/output arguments
     parser = argparse.ArgumentParser(
-        description='A refreshingly simple static site generator, for those who like to work in HTML.'
+        description='A refreshingly simple static site generator, for those'
+        'who like to work in HTML.'
     )
     parser.add_argument(
         'input_dir',
         default='project/',
-        help='Your project directory containing the files to be processed by Complexity.'
+        help='Your project directory containing the files to be processed by'
+        'Complexity.'
     )
     parser.add_argument(
         'output_dir',
@@ -33,14 +35,15 @@ def main():
         help='Port number to serve files on.'
     )
     args = parser.parse_args()
-    
-    # If output_dir exists, prompt before deleting. Abort if it can't be deleted.
+
+    # If output_dir exists, prompt before deleting.
+    # Abort if it can't be deleted.
     if not prompt_and_delete_cruft(args.output_dir):
         sys.exit()
-        
+
     # Generate the context data
     json_dir = os.path.join(args.input_dir, 'json/')
-    
+
     context = None
     if os.path.exists(json_dir):
         context = generate_context(json_dir)

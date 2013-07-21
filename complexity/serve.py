@@ -11,7 +11,7 @@ if PY3:
 else:
     import SimpleHTTPServer as httpserver
     import SocketServer as socketserver
-    
+
 
 def serve_static_site(output_dir, port=9090):
     """
@@ -21,7 +21,8 @@ def serve_static_site(output_dir, port=9090):
     os.chdir(output_dir)
     Handler = httpserver.SimpleHTTPRequestHandler
 
-    # See http://stackoverflow.com/questions/16433522/socketserver-getting-rid-of-errno-98-address-already-in-use
+    # See http://stackoverflow.com/questions/16433522/socketserver-getting-rid-
+    #      of-errno-98-address-already-in-use
     socketserver.TCPServer.allow_reuse_address = True
 
     httpd = socketserver.TCPServer(("", port), Handler)
