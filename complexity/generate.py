@@ -82,11 +82,11 @@ def generate_html(input_dir, output_dir, context=None):
             generate_html_file(f, output_dir, env, context)
 
 
-def generate_context(input_dir):
+def generate_context(json_dir):
     """
     Generates the context for all complexity pages.
-    :param input_dir: The Complexity project directory.
-    :paramtype input_dir: directory
+    :param json_dir: Directory containing .json file(s).
+    :paramtype json_dir: directory
 
     Description:
 
@@ -97,8 +97,8 @@ def generate_context(input_dir):
 
         Assume the following files exist:
 
-            input/json/names.json
-            input/json/numbers.json
+            json/names.json
+            json/numbers.json
 
         Depending on their content, might generate a context as follows:
 
@@ -110,7 +110,6 @@ def generate_context(input_dir):
     """
     context = {}
     
-    json_dir = os.path.join(input_dir, 'json/')
     json_files = os.listdir(json_dir)
 
     for file_name in json_files:

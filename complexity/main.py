@@ -39,7 +39,11 @@ def main():
         sys.exit()
         
     # Generate the context data
-    context = generate_context(args.input_dir)
+    json_dir = os.path.join(args.input_dir, 'json/')
+    
+    context = None
+    if os.path.exists(json_dir):
+        context = generate_context(json_dir)
 
     # Generate and serve the HTML site
     generate_html(args.input_dir, args.output_dir, context)
