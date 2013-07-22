@@ -92,7 +92,7 @@ def generate_context(json_dir):
 
     Description:
 
-        Iterates through the contents of the input_dir and finds all JSON
+        Iterates through the contents of json_dir and finds all JSON
         files. Loads the JSON file as a Python object with the key being the
         JSON file name.
 
