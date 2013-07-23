@@ -48,7 +48,7 @@ def unicode_open(filename, *args, **kwargs):
 
 def query_yes_no(question, default="yes"):
     """
-    Ask a yes/no question via raw_input() and return their answer.
+    Ask a yes/no question via `raw_input()` and return their answer.
     
     :param question: A string that is presented to the user.
     :param default: The presumed answer if the user just hits <Enter>.

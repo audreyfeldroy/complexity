@@ -5,7 +5,7 @@
 complexity.main
 ---------------
 
-Main entry point for the "complexity" command.
+Main entry point for the `complexity` command.
 
 The code in this module is also a good example of how to use Complexity as a
 library rather than a script.
@@ -21,7 +21,7 @@ from .serve import serve_static_site
 
 
 def main():
-    """ Entry point for the package, as defined in setup.py. """
+    """ Entry point for the package, as defined in `setup.py`. """
 
     # Get command line input/output arguments
     parser = argparse.ArgumentParser(

@@ -24,7 +24,7 @@ def generate_html_file(f, output_dir, env, context):
     Renders and writes a single HTML file to its corresponding output location.
     
     :param f: Name of input file to be rendered.
-    :param output_dir: The Complexity www (output) directory.
+    :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     :param env: Jinja2 environment with a loader already set up.
     :param context: Jinja2 context that holds template variables. See
@@ -64,11 +64,11 @@ def generate_html_file(f, output_dir, env, context):
 
 def generate_html(input_dir, output_dir, context=None):
     """
-    Renders the HTML templates from input_dir, and writes them to output_dir.
+    Renders the HTML templates from `input_dir`, and writes them to `output_dir`.
     
-    :param input_dir: The Complexity project (input) directory.
+    :param input_dir: The Complexity input directory, e.g. `project/`.
     :paramtype input_dir: directory
-    :param output_dir: The Complexity www (output) directory.
+    :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
@@ -96,31 +96,33 @@ def generate_html(input_dir, output_dir, context=None):
 
 def generate_context(json_dir):
     """
-    Generates the context for all complexity pages.
+    Generates the context for all Complexity pages.
     
-    :param json_dir: Directory containing .json file(s).
+    :param json_dir: Directory containing `.json` file(s).
     :paramtype json_dir: directory
 
     Description:
 
-        Iterates through the contents of json_dir and finds all JSON
+        Iterates through the contents of `json_dir` and finds all JSON
         files. Loads the JSON file as a Python object with the key being the
         JSON file name.
 
     Example:
 
-        Assume the following files exist:
+        Assume the following files exist::
 
-            json/names.json
-            json/numbers.json
+            json/
+            ├── names.json
+            └── numbers.json
 
         Depending on their content, might generate a context as follows:
 
-        contexts = {"names":
-                        ['Audrey', 'Danny']
-                    "numbers":
-                        [1, 2, 3, 4]
-                    }
+        .. code-block:: json
+
+            contexts = {
+                    "names": ['Audrey', 'Danny'],
+                    "numbers": [1, 2, 3, 4]
+                   }
     """
     context = {}
 
@@ -143,11 +145,11 @@ def generate_context(json_dir):
 
 def copy_assets(input_dir, output_dir):
     """
-    Copies static assets over from input_dir/assets/ to output_dir/.
+    Copies static assets over from `input_dir/assets/` to `output_dir/`.
     
-    :param input_dir: The Complexity project (input) directory.
+    :param input_dir: The Complexity input directory, e.g. `project/`.
     :paramtype input_dir: directory
-    :param output_dir: The Complexity www (output) directory.
+    :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     """
     assets = os.path.join(input_dir, 'assets')
