@@ -39,10 +39,8 @@ Project Info
    authors
    history
 
-Indices and tables
-==================
+Index
+-----
 
 * :ref:`genindex`
 * :ref:`modindex`
-* :ref:`search`
-
