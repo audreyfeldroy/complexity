@@ -19,7 +19,7 @@ def prompt_and_delete_cruft(output_dir):
     """
     Asks if it's okay to delete `output_dir/`.
     If so, go ahead and delete it.
-    
+
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     """

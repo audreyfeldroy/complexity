@@ -23,7 +23,7 @@ else:
 def make_sure_path_exists(path):
     """
     Ensures that a directory exists.
-    
+
     :param path: A directory path.
     """
     try:
@@ -37,7 +37,7 @@ def make_sure_path_exists(path):
 def unicode_open(filename, *args, **kwargs):
     """
     Opens a file as usual on Python 3, and with UTF-8 encoding on Python 2.
-    
+
     :param filename: Name of file to open.
     """
     if PY3:
@@ -49,7 +49,7 @@ def unicode_open(filename, *args, **kwargs):
 def query_yes_no(question, default="yes"):
     """
     Ask a yes/no question via `raw_input()` and return their answer.
-    
+
     :param question: A string that is presented to the user.
     :param default: The presumed answer if the user just hits <Enter>.
         It must be "yes" (the default), "no" or None (meaning

@@ -22,7 +22,7 @@ from .utils import make_sure_path_exists, unicode_open
 def generate_html_file(f, output_dir, env, context):
     """
     Renders and writes a single HTML file to its corresponding output location.
-    
+
     :param f: Name of input file to be rendered.
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
@@ -64,8 +64,9 @@ def generate_html_file(f, output_dir, env, context):
 
 def generate_html(input_dir, output_dir, context=None):
     """
-    Renders the HTML templates from `input_dir`, and writes them to `output_dir`.
-    
+    Renders the HTML templates from `input_dir`, and writes them to
+    `output_dir`.
+
     :param input_dir: The Complexity input directory, e.g. `project/`.
     :paramtype input_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
@@ -97,7 +98,7 @@ def generate_html(input_dir, output_dir, context=None):
 def generate_context(json_dir):
     """
     Generates the context for all Complexity pages.
-    
+
     :param json_dir: Directory containing `.json` file(s).
     :paramtype json_dir: directory
 
@@ -146,7 +147,7 @@ def generate_context(json_dir):
 def copy_assets(input_dir, output_dir):
     """
     Copies static assets over from `input_dir/assets/` to `output_dir/`.
-    
+
     :param input_dir: The Complexity input directory, e.g. `project/`.
     :paramtype input_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
