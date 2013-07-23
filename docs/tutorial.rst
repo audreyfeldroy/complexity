@@ -37,8 +37,7 @@ First, grab a copy of the example Complexity site::
 Open everything in a text editor. You should see a main `project/` directory
 with subfolders for your work:
 
-* Study the template files in `templates/`. Notice how `index.html` and 
-  `about.html` both share a common parent template, `base.html`.
+* Study the template files in `templates/`. We'll go over them shortly.
 
 * Notice the `assets/` directory. That is where you put your static files.
 
@@ -51,7 +50,82 @@ It will contain your final rendered templates and optimized static assets.
 When you're done, you should have a project structure like that in
 https://github.com/audreyr/complexity-example.
 
-Part 2: Generate the Site and Serve It Locally
+Part 2: What's in a Complexity Site?
+------------------------------------
+
+Here's what a very simple Complexity site looks like:
+
+`project/templates/base.html`:
+
+.. code-block:: html+jinja
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>{% block title %}{% endblock %} - Built with Complexity</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Bootstrap -->
+        <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <div class="container">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a class="brand" href="#">Complexity</a>
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about/">About</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            {% block content %}
+            {% endblock %}
+        </div>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    </body>
+    </html>
+
+`project/templates/index.html`:
+
+.. code-block:: html+jinja
+
+    {% extends "base.html" %}
+
+    {% block title %}Home{% endblock %}
+
+    {% block content %}
+    <div class="row">
+        <div class="span12">
+            <h1>Home</h1>
+            <p>This is the Home page of your website.</p>
+        </div>
+    </div>
+    {% endblock %}
+
+`project/templates/about.html`:
+
+.. code-block:: html+jinja
+
+    {% extends "base.html" %}
+
+    {% block title %}About{% endblock %}
+
+    {% block content %}
+    <div class="row">
+        <div class="span12">
+            <h1>About</h1>
+            <p>This is the About page of your website.</p>
+        </div>
+    </div>
+    {% endblock %}
+
+Notice how `index.html` and `about.html` both share a common parent template,
+`base.html`.
+
+Part 3: Generate the Site and Serve It Locally
 ----------------------------------------------
 
 Run the `complexity` command, passing it input and output directories::
@@ -84,7 +158,7 @@ generation process:
 Development is happening at a rapid pace, so stay tuned. To keep updated, watch
 and star https://github.com/audreyr/complexity on GitHub.
 
-Part 3: Upload the Site to Amazon S3
+Part 4: Upload the Site to Amazon S3
 -------------------------------------
 
 Use the "alotofeffort" tool::
