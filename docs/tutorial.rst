@@ -165,3 +165,8 @@ Use the "alotofeffort" tool::
 
     $ pip install alotofeffort
     $ alotofeffort www/ your-s3-bucketname
+
+Your site is now live! Go to the URL that `alotofeffort` prints out after
+it finishes uploading.
+
+Point your domain name at that URL, and you'll be done.
