@@ -20,16 +20,24 @@ static HTML websites with Complexity.
    tutorial
    advanced_usage
    troubleshooting
-   contributing
-   authors
-   history
 
 API Reference
 -------------
 
 .. toctree::
+   :maxdepth: 2
 
    complexity
+
+Project Info
+------------
+
+.. toctree::
+   :maxdepth: 2
+   
+   contributing
+   authors
+   history
 
 Indices and tables
 ==================

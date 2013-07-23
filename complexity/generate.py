@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+complexity.generate
+-------------------
+
+Functions for static site generation.
+"""
+
 import json
 import os
 import shutil

@@ -1,5 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+complexity.main
+---------------
+
+Main entry point for the "complexity" command.
+
+The code in this module is also a good example of how to use Complexity as a
+library rather than a script.
+"""
+
 import argparse
 import os
 import sys

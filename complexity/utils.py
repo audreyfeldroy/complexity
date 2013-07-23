@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+complexity.utils
+----------------
+
+Helper functions used throughout Complexity.
+"""
+
 import errno
 import os
 import sys

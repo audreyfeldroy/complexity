@@ -5,7 +5,7 @@
 complexity.exceptions
 ---------------------
 
-Complexity-specific exceptions.
+All exceptions used in the Complexity code base are defined here.
 """
 
 

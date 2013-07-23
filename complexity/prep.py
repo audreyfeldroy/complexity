@@ -1,5 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+complexity.prep
+---------------
+
+Functions for preparing a Complexity project for static site generation,
+before it actually happens.
+"""
+
 import os
 import shutil
 

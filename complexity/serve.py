@@ -1,5 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+"""
+complexity.serve
+-------------------
+
+Functions for serving a static HTML website locally.
+"""
+
 import os
 import sys
 
