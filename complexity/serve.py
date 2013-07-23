@@ -16,6 +16,7 @@ else:
 def serve_static_site(output_dir, port=9090):
     """
     Serve a directory containing static HTML files, on a specified port.
+    
     :param output_dir: Output directory to be served.
     """
     os.chdir(output_dir)

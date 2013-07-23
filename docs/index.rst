@@ -24,6 +24,13 @@ static HTML websites with Complexity.
    authors
    history
 
+API Reference
+-------------
+
+.. toctree::
+
+   complexity
+
 Indices and tables
 ==================
 
