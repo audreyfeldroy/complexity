@@ -89,7 +89,7 @@ You can simply hook into Complexity's library API:
     from complexity import generate
 
     # Optionally generate context if you need to
-    context = generate_context(input_dir='project/')
+    context = generate_context(json_dir='project/json/')
 
     # Generate HTML from your templates (and context, if you have it)
     generate.generate_html(input_dir='project/', output_dir='www/', context=context)
