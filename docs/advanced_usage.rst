@@ -88,7 +88,7 @@ You can simply call the Complexity API like this:
 
 .. code-block:: python
 
-    from complexity import complexity
+    from complexity.main import complexity
     
     complexity('project/', 'www/')
 

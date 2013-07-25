@@ -12,7 +12,7 @@ import os
 import shutil
 import unittest
 
-from complexity import complexity
+from complexity.main import complexity
 
 
 class TestExamples(unittest.TestCase):
