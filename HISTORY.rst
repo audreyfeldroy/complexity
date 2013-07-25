@@ -3,6 +3,13 @@
 History
 -------
 
+0.5 (2013-07-25)
+++++++++++++++++
+
+* Improved static site generation API - better parameters are used.
+* Files in the root of `assets/` (or the asset directory) now get copied over to the output.
+* Much more documentation.
+
 0.4.2 (2013-07-21)
 ++++++++++++++++++
 

@@ -13,7 +13,7 @@ import os
 from .generate import generate_context, copy_assets, generate_html
 
 
-__version__ = '0.4.2'
+__version__ = '0.5'
 
 
 def complexity(project_dir, output_dir):
