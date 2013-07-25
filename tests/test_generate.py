@@ -97,6 +97,7 @@ class TestGenerate(unittest.TestCase):
         self.assertEqual(context, {"test": {"1": 2}})
 
     def test_copy_assets(self):
+        os.mkdir('tests/www/')
         generate.copy_assets(
             assets_dir='tests/project/assets/',
             output_dir='tests/www/'
