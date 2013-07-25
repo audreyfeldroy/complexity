@@ -11,7 +11,8 @@ Now here is an example of a more advanced Complexity site::
     │   │   ├── css/
     │   │   ├── js/
     │   │   ├── img/
-    │   │   └── ico/
+    │   │   ├── ico/
+    │   │   └── robots.txt
     │   ├── json/
     │   │   ├── books.json
     │   │   └── movies.json
@@ -69,11 +70,13 @@ Then you can refer to the books in a template like this:
 The contents of `books.json` get turned into `{{ books }}`, which in this case
 is a list that you can iterate over.
 
-Other Asset Directories
------------------------
+Other Asset Directories and Files
+---------------------------------
 
-You can create any type of asset directory that you want in `assets/` and
-it will get copied over to `www/` when you generate your site.
+You can create any type of asset directory or file that you want in `assets/`
+(or your desired assets directory).
+
+All assets will get copied over to `www/` when you generate your site.
 
 .. note:: Better handling/processing of assets will be implemented in an
    upcoming release, including CSS/JS minification, image optimization,
