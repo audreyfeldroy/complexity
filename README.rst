@@ -39,6 +39,7 @@ Features
 * Template inheritance, filters, etc. (Brought to you by Jinja2.)
 * Can optionally be used as a library instead of from the command line. See
   `Using Complexity as a Library`_ for details.
+
 .. _`Using Complexity as a Library`: http://complexity.readthedocs.org/en/latest/advanced_usage.html#using-complexity-as-a-library
 
 Best Used With
