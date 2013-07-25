@@ -153,12 +153,18 @@ def copy_assets(assets_dir, output_dir):
     :paramtype output_dir: directory
     """
     
-    all_asset_dirs = os.listdir(assets_dir)
-    for d in all_asset_dirs:
-        old_dir = os.path.join(assets_dir, d)
+    assets = os.listdir(assets_dir)
+    for item in assets:
+        item_path = os.path.join(assets_dir, item)
 
         # Only copy allowed dirs
-        if os.path.isdir(old_dir) and d != 'scss' and d != 'less':
-            new_dir = os.path.join(output_dir, d)
-            print('Copying {0} to {1}'.format(d, new_dir))
-            shutil.copytree(old_dir, new_dir)
+        if os.path.isdir(item_path) and item != 'scss' and item != 'less':
+            new_dir = os.path.join(output_dir, item)
+            print('Copying directory {0} to {1}'.format(item, new_dir))
+            shutil.copytree(item_path, new_dir)
+            
+        # Copy over files in the root of assets_dir
+        if os.path.isfile(item_path):
+            new_file = os.path.join(output_dir, item)
+            print('Copying file {0} to {1}'.format(item, new_file))
+            shutil.copyfile(item_path, new_file)

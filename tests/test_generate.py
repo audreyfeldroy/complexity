@@ -59,6 +59,7 @@ class TestGenerate(unittest.TestCase):
         self.assertTrue(os.path.isfile('tests/www/css/bootstrap.min.css'))
         self.assertTrue(os.path.isfile('tests/www/img/glyphicons-halflings.png'))
         self.assertTrue(os.path.isfile('tests/www/js/bootstrap.min.js'))
+        self.assertTrue(os.path.isfile('tests/www/robots.txt'))
         shutil.rmtree('tests/www')
 
 
