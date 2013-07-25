@@ -88,6 +88,8 @@ class TestGenerate(unittest.TestCase):
         self.assertFalse(os.path.isfile('tests/www/base/index.html'))
         self.assertTrue(os.path.isfile('tests/www/art/index.html'))
         self.assertTrue(os.path.isfile('tests/www/art/color/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/art/cupcakes/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/art/cupcakes/chocolate/index.html'))
         shutil.rmtree('tests/www')
 
     def test_generate_context(self):
