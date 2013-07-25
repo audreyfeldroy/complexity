@@ -37,6 +37,7 @@ Features
 * Takes simple HTML templates as input.
 * Data from .json files turns into template context data.
 * Template inheritance, filters, etc. (Brought to you by Jinja2.)
+* Auto-expands .html file URLs into cleaner URLs (e.g. about.html gets expanded to /about/)
 * Can optionally be used as a library instead of from the command line. See
   `Using Complexity as a Library`_ for details.
 
