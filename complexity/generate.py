@@ -19,11 +19,43 @@ from .exceptions import NonHTMLFileException, MissingTemplateDirException
 from .utils import make_sure_path_exists, unicode_open
 
 
-def generate_html_file(f, output_dir, env, context):
+def get_output_filename(template_filepath, output_dir):
+    """
+    Given an input filename, return the corresponding output filename.
+    
+    :param template_filepath: Name of template file relative to template dir,
+                          e.g. art/index.html
+    :param output_dir: The Complexity output directory, e.g. `www/`.
+    :paramtype output_dir: directory
+    """
+
+    template_filepath = os.path.normpath(template_filepath)
+
+    basename = os.path.basename(template_filepath)
+    dirname = os.path.dirname(template_filepath)
+
+    # Base files don't have output.
+    if basename.startswith('base'):
+        return False
+    # Put index in the root. It's a special case.
+    elif basename == 'index.html':
+        output_filename = os.path.join(output_dir, template_filepath)
+    # Put other pages in page/index.html, for better URL formatting.
+    else:
+        stem = basename.split('.')[0]
+        output_filename = os.path.join(
+            output_dir,
+            dirname,
+            '{0}/index.html'.format(stem)
+        )
+    return output_filename
+
+def generate_html_file(template_filepath, output_dir, env, context):
     """
     Renders and writes a single HTML file to its corresponding output location.
 
-    :param f: Name of input file to be rendered.
+    :param template_filepath: Name of template file to be rendered. Should be
+                              relative to template dir, e.g. art/index.html
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     :param env: Jinja2 environment with a loader already set up.
@@ -31,35 +63,27 @@ def generate_html_file(f, output_dir, env, context):
         http://jinja.pocoo.org/docs/api/#the-context
     """
 
-    if not f.endswith('html'):
+    if not template_filepath.endswith('html'):
         raise NonHTMLFileException(
             'Non-HTML file found. Make sure all files in templates/ are \
             .html files.'
         )
 
     # Ignore templates starting with "base". They're treated as special cases.
-    if f.startswith('base'):
+    if template_filepath.startswith('base'):
         return False
 
-    tmpl = env.get_template(f)
+    tmpl = env.get_template(template_filepath)
     rendered_html = tmpl.render(**context)
 
-    # Put index in the root. It's a special case.
-    if f == 'index.html':
-        output_filename = os.path.join(output_dir, 'index.html')
-    # Put other pages in page/index.html, for better URL formatting.
-    else:
-        stem = f.split('.')[0]
-        output_filename = os.path.join(
-            output_dir,
-            '{0}/index.html'.format(stem)
-        )
+    output_filename = get_output_filename(template_filepath, output_dir)
+    if output_filename:
         make_sure_path_exists(os.path.dirname(output_filename))
 
-    # Write the generated file
-    with unicode_open(output_filename, 'w') as fh:
-        fh.write(rendered_html)
-        return True
+        # Write the generated file
+        with unicode_open(output_filename, 'w') as fh:
+            fh.write(rendered_html)
+            return True
 
 
 def generate_html(templates_dir, output_dir, context=None):
@@ -83,6 +107,8 @@ def generate_html(templates_dir, output_dir, context=None):
 
     context = context or {}
     env = Environment()
+    # os.chdir(templates_dir)
+    print('Templates dir is {0}'.format(templates_dir))
     env.loader = FileSystemLoader(templates_dir)
 
     # Create the output dir if it doesn't already exist
@@ -90,8 +116,12 @@ def generate_html(templates_dir, output_dir, context=None):
 
     for root, dirs, files in os.walk(templates_dir):
         for f in files:
-            print(f)
-            generate_html_file(f, output_dir, env, context)
+            # print(f)
+            template_filepath = os.path.relpath(os.path.join(root, f), templates_dir)
+
+            outfile = get_output_filename(template_filepath, output_dir)
+            print('Copying {0} to {1}'.format(template_filepath, outfile))
+            generate_html_file(template_filepath, output_dir, env, context)
 
 
 def generate_context(json_dir):

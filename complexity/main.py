@@ -40,7 +40,7 @@ def complexity(project_dir, output_dir):
     templates_dir = os.path.join(project_dir, 'templates/')
     generate_html(templates_dir, output_dir, context)
     
-    assets_dir = os.path.join(project_dir, 'assets')
+    assets_dir = os.path.join(project_dir, 'assets/')
     copy_assets(assets_dir, output_dir)
 
 
