@@ -62,20 +62,19 @@ def generate_html_file(f, output_dir, env, context):
         return True
 
 
-def generate_html(input_dir, output_dir, context=None):
+def generate_html(templates_dir, output_dir, context=None):
     """
-    Renders the HTML templates from `input_dir`, and writes them to
+    Renders the HTML templates from `templates_dir`, and writes them to
     `output_dir`.
 
-    :param input_dir: The Complexity input directory, e.g. `project/`.
-    :paramtype input_dir: directory
+    :param templates_dir: The Complexity templates directory, e.g. `project/templates/`.
+    :paramtype templates_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
     """
 
-    templates_dir = os.path.join(input_dir, 'templates/')
     if not os.path.exists(templates_dir):
         raise MissingTemplateDirException(
             'Your project is missing a templates/ directory containing your \

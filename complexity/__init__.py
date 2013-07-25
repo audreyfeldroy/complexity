@@ -33,5 +33,6 @@ def complexity(project_dir, output_dir):
         context = generate_context(json_dir)
 
     # Generate and serve the HTML site
-    generate_html(project_dir, output_dir, context)
+    templates_dir = os.path.join(project_dir, 'templates/')
+    generate_html(templates_dir, output_dir, context)
     copy_assets(project_dir, output_dir)

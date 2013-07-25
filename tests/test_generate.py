@@ -37,7 +37,7 @@ class TestGenerate(unittest.TestCase):
 
     def test_generate_html(self):
         generate.generate_html(
-            input_dir='tests/project/',
+            templates_dir='tests/project/templates/',
             output_dir='tests/www/',
             context=None
         )

@@ -102,7 +102,7 @@ Calling other Complexity API functions is just as straightforward:
     context = generate_context(json_dir='project/json/')
 
     # Generate HTML from your templates (and context, if you have it)
-    generate.generate_html(input_dir='project/', output_dir='www/', context=context)
+    generate.generate_html(templates_dir='project/templates/', output_dir='www/', context=context)
 
     # Copy assets over
     generate.copy_assets(input_dir='project/', output_dir='www/')
