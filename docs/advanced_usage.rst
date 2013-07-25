@@ -82,7 +82,17 @@ it will get copied over to `www/` when you generate your site.
 Using Complexity as a Library
 ------------------------------
 
-You can simply hook into Complexity's library API:
+Complexity can be used just like any other Python package.
+
+You can simply call the Complexity API like this:
+
+.. code-block:: python
+
+    from complexity import complexity
+    
+    complexity('project/', 'www/')
+
+Calling other Complexity API functions is just as straightforward:
 
 .. code-block:: python
 
@@ -97,8 +107,7 @@ You can simply hook into Complexity's library API:
     # Copy assets over
     generate.copy_assets(input_dir='project/', output_dir='www/')
 
-This allows you to use Complexity just like any other Python package. You
-can simply call Complexity functions from your own code.
+This allows you to use Complexity as a dependency in your own Python projects.
 
 .. note:: As of this release, the API works, but it is subject to change.
    Please pin your dependencies if you need this to be stable, and keep an eye
