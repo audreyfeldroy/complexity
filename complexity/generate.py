@@ -143,19 +143,19 @@ def generate_context(json_dir):
     return context
 
 
-def copy_assets(input_dir, output_dir):
+def copy_assets(assets_dir, output_dir):
     """
-    Copies static assets over from `input_dir/assets/` to `output_dir/`.
+    Copies static assets over from `assets_dir` to `output_dir`.
 
-    :param input_dir: The Complexity input directory, e.g. `project/`.
-    :paramtype input_dir: directory
+    :param assets_dir: The Complexity project assets directory, e.g. `project/assets/`.
+    :paramtype assets_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     """
-    assets = os.path.join(input_dir, 'assets')
-    all_asset_dirs = os.listdir(assets)
+    
+    all_asset_dirs = os.listdir(assets_dir)
     for d in all_asset_dirs:
-        old_dir = os.path.join(assets, d)
+        old_dir = os.path.join(assets_dir, d)
 
         # Only copy allowed dirs
         if os.path.isdir(old_dir) and d != 'scss' and d != 'less':

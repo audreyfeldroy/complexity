@@ -105,7 +105,7 @@ Calling other Complexity API functions is just as straightforward:
     generate.generate_html(templates_dir='project/templates/', output_dir='www/', context=context)
 
     # Copy assets over
-    generate.copy_assets(input_dir='project/', output_dir='www/')
+    generate.copy_assets(assets_dir='project/assets/', output_dir='www/')
 
 This allows you to use Complexity as a dependency in your own Python projects.
 

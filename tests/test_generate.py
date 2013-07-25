@@ -52,7 +52,7 @@ class TestGenerate(unittest.TestCase):
 
     def test_copy_assets(self):
         generate.copy_assets(
-            input_dir='tests/project/',
+            assets_dir='tests/project/assets/',
             output_dir='tests/www/'
         )
         self.assertTrue(os.path.isfile('tests/www/css/bootstrap-responsive.min.css'))
