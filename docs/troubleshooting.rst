@@ -46,6 +46,21 @@ Alternate Solution: Install Systemwide
 
     $ sudo easy_install complexity
 
+Site Generation Problems
+------------------------
+
+Problem: Site Generation Fails
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you get an error like this::
+
+    jinja2.exceptions.TemplateSyntaxError: Unexpected end of template. Jinja
+    was looking for the following tags: 'endblock'. The innermost block that
+    needs to be closed is 'block'.
+    
+Then check your templates carefully and make sure that you've closed all
+blocks properly with `{% endblock %}`.
+
 Still Having Problems?
 ----------------------
 

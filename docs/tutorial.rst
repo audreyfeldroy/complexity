@@ -161,9 +161,23 @@ and star https://github.com/audreyr/complexity on GitHub.
 Part 4: Upload the Site to Amazon S3
 -------------------------------------
 
-Use the "alotofeffort" tool::
+For site deployment we'll use the "alotofeffort" tool. It is designed for
+use with Complexity, but it works with non-Complexity sites just as well.
+
+Install it::
 
     $ pip install alotofeffort
+
+Save the following in `~/.boto`::
+
+    [Credentials]
+    aws_access_key_id = ...
+    aws_secret_access_key = ...
+    
+Replace `...` with your AWS access credentials, of course.
+
+Then deploy the `www/` directory to any S3 bucket that you own::
+
     $ alotofeffort www/ your-s3-bucketname
 
 Your site is now live! Go to the URL that `alotofeffort` prints out after
