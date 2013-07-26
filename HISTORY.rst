@@ -3,6 +3,12 @@
 History
 -------
 
+0.6 (2013-07-26)
+++++++++++++++++
+
+* Support for multi-level template directories.
+* Skip non-HTML files in `templates/` rather than raising `NonHTMLFileException`.
+
 0.5 (2013-07-25)
 ++++++++++++++++
 
