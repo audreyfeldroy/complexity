@@ -64,10 +64,8 @@ def generate_html_file(template_filepath, output_dir, env, context):
     """
 
     if not template_filepath.endswith('html'):
-        raise NonHTMLFileException(
-            'Non-HTML file found. Make sure all files in templates/ are \
-            .html files.'
-        )
+        print('Non-HTML file found: {0}. Skipping this one.')
+        return False
 
     # Ignore templates starting with "base". They're treated as special cases.
     if template_filepath.startswith('base'):
