@@ -22,14 +22,10 @@ class TestExamples(unittest.TestCase):
         Tests that https://github.com/audreyr/complexity-example.git works.
         """
         os.system('git clone https://github.com/audreyr/complexity-example.git')
-        os.chdir('complexity-example')
-        complexity('project/', 'www/')
-        self.assertTrue(os.path.isfile('www/index.html'))
-        self.assertTrue(os.path.isfile('www/about/index.html'))
-        self.assertTrue(os.path.isfile('www/css/bootstrap.min.css'))
-        self.assertTrue(os.path.isfile('www/js/bootstrap.min.js'))
-        self.assertTrue(os.path.isfile('www/img/glyphicons-halflings.png'))
-        os.chdir(os.pardir)
+        complexity('complexity-example/project/', 'complexity-example/www/')
+        self.assertTrue(os.path.isfile('complexity-example/www/index.html'))
+        self.assertTrue(os.path.isfile('complexity-example/www/about/index.html'))
+        self.assertTrue(os.path.isfile('complexity-example/www/img/glyphicons-halflings.png'))
         shutil.rmtree('complexity-example')
 
 if __name__ == '__main__':
