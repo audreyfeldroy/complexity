@@ -18,7 +18,7 @@ from jinja2.environment import Environment
 from complexity import generate
 
 
-class TestGenerate(unittest.TestCase):
+class TestGetOutputFilename(unittest.TestCase):
 
     def test_get_output_filename(self):
         outfile = generate.get_output_filename('./index.html', 'www')
@@ -46,6 +46,8 @@ class TestGenerate(unittest.TestCase):
         outfile = generate.get_output_filename('./art/color.html', 'www')
         self.assertEqual(outfile, 'www/art/color/index.html')
 
+
+class TestGenerateHTMLFile(unittest.TestCase):
     def test_generate_html_file(self):
         os.mkdir('tests/www/')
         env = Environment()
@@ -94,6 +96,7 @@ class TestGenerate(unittest.TestCase):
                 self.assertEqual(infile.read(), outfile.read())
         shutil.rmtree('tests/www')
 
+class TestGenerateHTML(unittest.TestCase):
     def test_generate_html(self):
         generate.generate_html(
             templates_dir='tests/project/templates/',
@@ -109,10 +112,12 @@ class TestGenerate(unittest.TestCase):
         self.assertTrue(os.path.isfile('tests/www/art/cupcakes/chocolate/index.html'))
         shutil.rmtree('tests/www')
 
+class TestGenerateContext(unittest.TestCase):
     def test_generate_context(self):
         context = generate.generate_context(json_dir='tests/project/json/')
         self.assertEqual(context, {"test": {"1": 2}})
         
+class TestCopyAssets(unittest.TestCase):
     def test_copy_assets(self):
         os.mkdir('tests/www/')
         generate.copy_assets(
