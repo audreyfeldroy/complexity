@@ -77,6 +77,23 @@ class TestGenerate(unittest.TestCase):
         self.assertFalse(os.path.isfile('tests/www/base/index.html'))
         shutil.rmtree('tests/www')
 
+
+    def test_generate_html_file_unicode(self):
+        os.mkdir('tests/www/')
+        env = Environment()
+        env.loader = FileSystemLoader('tests/files/')
+        generate.generate_html_file(
+            template_filepath='unicode.html', 
+            output_dir='tests/www/',
+            env=env,
+            context={}
+        )
+        self.assertTrue(os.path.isfile('tests/www/unicode/index.html'))
+        with open('tests/files/unicode.html') as infile:
+            with open('tests/www/unicode/index.html') as outfile:
+                self.assertEqual(infile.read(), outfile.read())
+        shutil.rmtree('tests/www')
+
     def test_generate_html(self):
         generate.generate_html(
             templates_dir='tests/project/templates/',
@@ -95,7 +112,7 @@ class TestGenerate(unittest.TestCase):
     def test_generate_context(self):
         context = generate.generate_context(json_dir='tests/project/json/')
         self.assertEqual(context, {"test": {"1": 2}})
-
+        
     def test_copy_assets(self):
         os.mkdir('tests/www/')
         generate.copy_assets(
