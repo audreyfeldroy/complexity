@@ -48,52 +48,56 @@ class TestGetOutputFilename(unittest.TestCase):
 
 
 class TestGenerateHTMLFile(unittest.TestCase):
-    def test_generate_html_file(self):
+    def setUp(self):
         os.mkdir('tests/www/')
-        env = Environment()
-        env.loader = FileSystemLoader('tests/project/templates/')
+        self.env = Environment()
+        self.env.loader = FileSystemLoader('tests/project/templates/')
+        
+    def test_generate_html_file(self):
         generate.generate_html_file(
             template_filepath='index.html', 
             output_dir='tests/www/',
-            env=env,
+            env=self.env,
             context={}
         )
         self.assertTrue(os.path.isfile('tests/www/index.html'))
         self.assertFalse(os.path.isfile('tests/www/about/index.html'))
         self.assertFalse(os.path.isfile('tests/www/base/index.html'))
-        shutil.rmtree('tests/www')
 
     def test_generate_html_file_art(self):
-        os.mkdir('tests/www/')
-        env = Environment()
-        env.loader = FileSystemLoader('tests/project/templates/')
         generate.generate_html_file(
             template_filepath='art/index.html', 
             output_dir='tests/www/',
-            env=env,
+            env=self.env,
             context={}
         )
         self.assertTrue(os.path.isfile('tests/www/art/index.html'))
         self.assertFalse(os.path.isfile('tests/www/index.html'))
         self.assertFalse(os.path.isfile('tests/www/about/index.html'))
         self.assertFalse(os.path.isfile('tests/www/base/index.html'))
-        shutil.rmtree('tests/www')
 
+    def tearDown(self):
+        shutil.rmtree('tests/www')        
+
+class TestGenerateHTMLFileUnicode(unittest.TestCase):
+    def setUp(self):
+        os.mkdir('tests/www/')
+        self.env = Environment()
+        self.env.loader = FileSystemLoader('tests/files/')
 
     def test_generate_html_file_unicode(self):
-        os.mkdir('tests/www/')
-        env = Environment()
-        env.loader = FileSystemLoader('tests/files/')
         generate.generate_html_file(
             template_filepath='unicode.html', 
             output_dir='tests/www/',
-            env=env,
+            env=self.env,
             context={}
         )
         self.assertTrue(os.path.isfile('tests/www/unicode/index.html'))
         with open('tests/files/unicode.html') as infile:
             with open('tests/www/unicode/index.html') as outfile:
                 self.assertEqual(infile.read(), outfile.read())
+
+    def tearDown(self):
         shutil.rmtree('tests/www')
 
 class TestGenerateHTML(unittest.TestCase):
