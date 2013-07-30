@@ -97,6 +97,29 @@ class TestGenerateHTMLFileUnicode(unittest.TestCase):
             with open('tests/www/unicode/index.html') as outfile:
                 self.assertEqual(infile.read(), outfile.read())
 
+    def test_generate_html_file_unicode2(self):
+        generate.generate_html_file(
+            template_filepath='unicode2.html', 
+            output_dir='tests/www/',
+            env=self.env,
+            context={}
+        )
+        self.assertTrue(os.path.isfile('tests/www/unicode2/index.html'))
+        expected = """<!DOCTYPE html>
+<html>
+<body>
+
+<p>This is the unicode test page.</p>
+<p>Polish: Ą Ł Ż</p>
+<p>Chinese: 倀 倁 倂 倃 倄 倅 倆 倇 倈</p>
+<p>Musical Notes: ♬ ♫ ♯</p>
+<p>Croatian: š š</p>
+
+</body>
+</html>"""
+        with open('tests/www/unicode2/index.html') as outfile:
+            self.assertEqual(expected, outfile.read())
+
     def tearDown(self):
         shutil.rmtree('tests/www')
 
