@@ -2,7 +2,10 @@
 Installation
 ============
 
-.. note:: Mac users may need to use "sudo" before the install commands.
+.. note:: Mac users may need to use "sudo" before the install commands. But
+   use `virtualenv`_ if you don't want to sudo -- it's great.
+
+.. _`virtualenv`: http://www.virtualenv.org/en/latest/
 
 Best Method: Pip
 -----------------
