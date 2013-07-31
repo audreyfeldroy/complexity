@@ -6,7 +6,8 @@ History
 0.6 (2013-07-26)
 ++++++++++++++++
 
-* Support for multi-level template directories.
+* Support for multi-level template directories. (Upgrade to at least 0.6 if
+  you want to have folders within folders and beyond in `templates/`.)
 * Skip non-HTML files in `templates/` rather than raising `NonHTMLFileException`.
 
 0.5 (2013-07-25)
