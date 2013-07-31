@@ -20,6 +20,22 @@ from .prep import prompt_and_delete_cruft
 from .serve import serve_static_site
 
 
+class ComplexitySite(object):
+    """
+    The central object holding all essential state for a Complexity site.
+    """
+    
+    def __init__(self, templates_dir="templates", assets_dir="assets",
+                 output_dir="../www"):
+        """
+        Initialize all variables holding Complexity state.
+        """
+        
+        self.templates_dir = templates_dir
+        self.assets_dir = assets_dir
+        self.output_dir = output_dir
+
+
 def complexity(project_dir, output_dir):
     """
     API equivalent to using complexity at the command line.
