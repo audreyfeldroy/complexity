@@ -8,14 +8,22 @@ test_conf
 Tests for `complexity.conf` module.
 """
 
+import logging
 import shutil
 import unittest
 
 from complexity import conf
 
 
+# Log debug and above to console
+logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+
 class TestConf(unittest.TestCase):
 
     def test_read_conf(self):
-        conf_dict = conf.read_conf()
-        self.assertFalse(conf_dict)
+        conf_dict = conf.read_conf('tests/conf_proj')
+        logging.debug("read_conf returned {0}".format(conf_dict))
+        self.assertTrue(conf_dict)
+
+if __name__ == '__main__':
+    unittest.main()

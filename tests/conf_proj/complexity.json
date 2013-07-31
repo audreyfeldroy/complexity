@@ -1,0 +1,5 @@
+{
+  "templates_dir": "templates",
+  "assets_dir": "assets",
+  "output_dir": "../www"
+}
