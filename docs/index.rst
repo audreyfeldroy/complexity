@@ -17,6 +17,7 @@ static HTML websites with Complexity.
 
    readme
    installation
+   upgrading
    tutorial
    advanced_usage
    troubleshooting
