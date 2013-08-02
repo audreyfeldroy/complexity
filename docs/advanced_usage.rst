@@ -102,7 +102,7 @@ Calling other Complexity API functions is just as straightforward:
     from complexity import generate
 
     # Optionally generate context if you need to
-    context = generate_context(json_dir='project/json/')
+    context = generate_context(context_dir='project/context/')
 
     # Generate HTML from your templates (and context, if you have it)
     generate.generate_html(templates_dir='project/templates/', output_dir='www/', context=context)

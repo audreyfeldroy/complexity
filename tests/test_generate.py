@@ -142,7 +142,7 @@ class TestGenerateHTML(unittest.TestCase):
 
 class TestGenerateContext(unittest.TestCase):
     def test_generate_context(self):
-        context = generate.generate_context(json_dir='tests/project/json/')
+        context = generate.generate_context(context_dir='tests/project/context/')
         self.assertEqual(context, {"test": {"1": 2}})
         
 class TestCopyAssets(unittest.TestCase):

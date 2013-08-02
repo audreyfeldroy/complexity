@@ -122,16 +122,16 @@ def generate_html(templates_dir, output_dir, context=None):
             generate_html_file(template_filepath, output_dir, env, context)
 
 
-def generate_context(json_dir):
+def generate_context(context_dir):
     """
     Generates the context for all Complexity pages.
 
-    :param json_dir: Directory containing `.json` file(s).
-    :paramtype json_dir: directory
+    :param context_dir: Directory containing `.json` file(s) to be turned into
+                        context variables for Jinja2.
 
     Description:
 
-        Iterates through the contents of `json_dir` and finds all JSON
+        Iterates through the contents of `context_dir` and finds all JSON
         files. Loads the JSON file as a Python object with the key being the
         JSON file name.
 
@@ -139,7 +139,7 @@ def generate_context(json_dir):
 
         Assume the following files exist::
 
-            json/
+            context/
             ├── names.json
             └── numbers.json
 
@@ -147,21 +147,21 @@ def generate_context(json_dir):
 
         .. code-block:: json
 
-            contexts = {
+            context = {
                     "names": ['Audrey', 'Danny'],
                     "numbers": [1, 2, 3, 4]
                    }
     """
     context = {}
 
-    json_files = os.listdir(json_dir)
+    json_files = os.listdir(context_dir)
 
     for file_name in json_files:
 
         if file_name.endswith('json'):
 
             # Open the JSON file and convert to Python object
-            json_file = os.path.join(json_dir, file_name)
+            json_file = os.path.join(context_dir, file_name)
             with unicode_open(json_file) as f:
                 obj = json.load(f)
 
