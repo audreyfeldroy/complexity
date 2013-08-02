@@ -30,7 +30,7 @@ def complexity(project_dir, output_dir):
     """
 
     # Generate the context data
-    json_dir = os.path.join(project_dir, 'json/')
+    json_dir = os.path.join(project_dir, 'context/')
 
     context = None
     if os.path.exists(json_dir):
