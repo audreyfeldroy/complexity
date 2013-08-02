@@ -30,11 +30,11 @@ def complexity(project_dir, output_dir):
     """
 
     # Generate the context data
-    json_dir = os.path.join(project_dir, 'context/')
+    context_dir = os.path.join(project_dir, 'context/')
 
     context = None
-    if os.path.exists(json_dir):
-        context = generate_context(json_dir)
+    if os.path.exists(context_dir):
+        context = generate_context(context_dir)
 
     # Generate and serve the HTML site
     templates_dir = os.path.join(project_dir, 'templates/')
