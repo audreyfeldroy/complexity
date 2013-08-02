@@ -46,6 +46,7 @@ class TestExample2(unittest.TestCase):
         complexity('complexity-example2/project/', 'complexity-example2/www/')
         self.assertTrue(os.path.isfile('complexity-example2/www/index.html'))
         self.assertTrue(os.path.isfile('complexity-example2/www/about/index.html'))
+        self.assertTrue(os.path.isfile('complexity-example2/www/repos/index.html'))
         self.assertTrue(os.path.isfile('complexity-example2/www/img/glyphicons-halflings.png'))
         self.assertTrue(os.path.isfile('complexity-example2/www/charts/index.html'))
         self.assertTrue(os.path.isfile('complexity-example2/www/charts/bar/index.html'))
