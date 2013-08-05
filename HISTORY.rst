@@ -3,6 +3,20 @@
 History
 -------
 
+0.7 (2013-08-05)
+++++++++++++++++
+
+A couple of small but important renames. If you rely on either of the following
+defaults, you will need to rename them in your Complexity project.
+
+* Directory parameter for .json files to be turned into context data has been
+  renamed from `json_dir` to `context_dir`.
+* Default context directory value `json/` has been changed to `context/`.
+
+Sometimes you want your .json files to be turned into context variables, and
+sometimes you don't. This rename alleviates confusion when working with
+non-context .json files.
+
 0.6 (2013-07-26)
 ++++++++++++++++
 
