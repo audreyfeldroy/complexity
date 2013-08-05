@@ -13,7 +13,7 @@ Now here is an example of a more advanced Complexity site::
     │   │   ├── img/
     │   │   ├── ico/
     │   │   └── robots.txt
-    │   ├── json/
+    │   ├── context/
     │   │   ├── books.json
     │   │   └── movies.json
     │   └── templates/
@@ -35,9 +35,10 @@ Let's explore some of Complexity's advanced features.
 JSON Auto-Loading
 ----------------------
 
-Data from .json files automatically turns into template context data.
+Data from .json files in your context directory automatically turns into
+template context data.
 
-For example, suppose you have this in `books.json`:
+For example, suppose you have this in `context/books.json`:
 
 .. code-block:: javascript
 
@@ -69,6 +70,15 @@ Then you can refer to the books in a template like this:
     
 The contents of `books.json` get turned into `{{ books }}`, which in this case
 is a list that you can iterate over.
+
+What About Static JSON Files?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you have .json files that you want served as static assets rather than
+turned into context data, that's fine. 
+
+Just put them in `assets/js/` (or anywhere in `assets/`), and they'll get
+copied over to the output directory like any other static asset.
 
 Other Asset Directories and Files
 ---------------------------------
