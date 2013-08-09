@@ -15,12 +15,13 @@ import argparse
 import os
 import sys
 
+from .conf import read_conf
 from .generate import generate_context, copy_assets, generate_html
 from .prep import prompt_and_delete_cruft
 from .serve import serve_static_site
 
 
-def complexity(project_dir, output_dir):
+def complexity(project_dir):
     """
     API equivalent to using complexity at the command line.
     
@@ -29,18 +30,29 @@ def complexity(project_dir, output_dir):
        code if desired.
     """
 
+    # Get the configuration dictionary, if config exists
+    defaults = {
+        "templates_dir": "templates/",
+        "assets_dir": "assets/",
+        "context_dir": "context/",
+        "output_dir": "../www/"
+    }
+    # conf_dict = read_conf(project_dir) or defaults
+    conf_dict = defaults
+
     # Generate the context data
-    context_dir = os.path.join(project_dir, 'context/')
+    context_dir = os.path.join(project_dir, conf_dict['context_dir'])
 
     context = None
     if os.path.exists(context_dir):
         context = generate_context(context_dir)
 
     # Generate and serve the HTML site
-    templates_dir = os.path.join(project_dir, 'templates/')
+    templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
+    output_dir = os.path.join(project_dir, conf_dict['output_dir'])
     generate_html(templates_dir, output_dir, context)
     
-    assets_dir = os.path.join(project_dir, 'assets/')
+    assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
     copy_assets(assets_dir, output_dir)
 
 
@@ -58,12 +70,6 @@ def get_complexity_args():
         default='project/',
         help='Your project directory containing the files to be processed by'
         'Complexity.'
-    )
-    parser.add_argument(
-        'output_dir',
-        nargs='?',
-        default='www/',
-        help='Name of directory to output generated files to, e.g. www.'
     )
     parser.add_argument(
         '--port',
@@ -85,8 +91,8 @@ def main():
     if not prompt_and_delete_cruft(args.output_dir):
         sys.exit()
 
-    complexity(args.project_dir, args.output_dir)
-    serve_static_site(args.output_dir, args.port)
+    output_dir = complexity(args.project_dir)
+    serve_static_site(output_dir, args.port)
     
 
 if __name__ == '__main__':
