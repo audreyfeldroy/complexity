@@ -33,25 +33,6 @@ Now here is an example of a more advanced Complexity site::
 
 Let's explore some of Complexity's advanced features.
 
-Change Output Directory Name
-----------------------------
-
-By default when you do this:
-
-.. code-block:: bash
-
-    $ complexity project/
-
-a `www/` directory gets created, containing your generated static HTML.
-
-Don't want it to be called `www/`? Then pass in a second argument like this:
-
-.. code-block:: bash
-
-    $ complexity project/ www-something-else/
-
-Or, better yet, configure it in a `complexity.json` file.
-
 Config Using complexity.json
 ----------------------------
 
@@ -64,7 +45,7 @@ this:
     "templates_dir": "templates",
     "assets_dir": "assets",
     "context_dir": "context",
-    "output_dir": "../www"
+    "output_dir": "www"
   }
 
 Put `complexity.json` in your project root (e.g. in project/).
