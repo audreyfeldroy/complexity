@@ -25,6 +25,9 @@ def complexity(project_dir):
     """
     API equivalent to using complexity at the command line.
     
+    :param project_dir: The Complexity project directory, e.g. `project/`.
+    :paramtype project_dir: directory
+
     .. note:: You must delete `output_dir` before calling this. This also does
        not start the Complexity development server; you can do that from your
        code if desired.
