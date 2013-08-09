@@ -1,4 +1,4 @@
 {
   "templates_dir": "templates",
-  "output_dir": "tests/www"
+  "output_dir": "../www"
 }
