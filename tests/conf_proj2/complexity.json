@@ -1,0 +1,6 @@
+{
+  "templates_dir": "templatez",
+  "assets_dir": "assetz",
+  "context_dir": "contextz",
+  "output_dir": "wwwz"
+}
