@@ -45,7 +45,7 @@ this:
     "templates_dir": "templates",
     "assets_dir": "assets",
     "context_dir": "context",
-    "output_dir": "www"
+    "output_dir": "../www"
   }
 
 Put `complexity.json` in your project root (e.g. in project/).
