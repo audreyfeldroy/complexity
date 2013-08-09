@@ -130,9 +130,11 @@ Part 3: Generate the Site and Serve It Locally
 
 Run the `complexity` command, passing it input and output directories::
 
-    $ complexity project/ www/
+    $ complexity project/
 
 This results in the following:
+
+* A `www/` directory gets created, containing your generated static HTML site.
 
 * Templates are rendered and output to files smartly:
 

@@ -16,10 +16,11 @@ Now here is an example of a more advanced Complexity site::
     │   ├── context/
     │   │   ├── books.json
     │   │   └── movies.json
-    │   └── templates/
-    │       ├── base.html
-    │       ├── index.html
-    │       └── about.html
+    │   ├── templates/
+    │   │   ├── base.html
+    │   │   ├── index.html
+    │   │   └── about.html
+    │   └── complexity.json
     │
     └── www/          <---------- output
         ├── index.html
@@ -31,6 +32,42 @@ Now here is an example of a more advanced Complexity site::
         └── ico/
 
 Let's explore some of Complexity's advanced features.
+
+Change Output Directory Name
+----------------------------
+
+By default when you do this:
+
+.. code-block:: bash
+
+    $ complexity project/
+
+a `www/` directory gets created, containing your generated static HTML.
+
+Don't want it to be called `www/`? Then pass in a second argument like this:
+
+.. code-block:: bash
+
+    $ complexity project/ www-something-else/
+
+Or, better yet, configure it in a `complexity.json` file.
+
+Config Using complexity.json
+----------------------------
+
+You can configure a Complexity project with a `complexity.json` file like 
+this:
+
+.. code-block:: javascript
+
+  {
+    "templates_dir": "templates",
+    "assets_dir": "assets",
+    "context_dir": "context",
+    "output_dir": "../www"
+  }
+
+Put `complexity.json` in your project root (e.g. in project/).
 
 JSON Auto-Loading
 ----------------------
