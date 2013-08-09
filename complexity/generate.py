@@ -9,6 +9,7 @@ Functions for static site generation.
 """
 
 import json
+import logging
 import os
 import shutil
 
@@ -97,6 +98,7 @@ def generate_html(templates_dir, output_dir, context=None):
         http://jinja.pocoo.org/docs/api/#the-context
     """
 
+    logging.debug('Templates dir is {0}'.format(templates_dir))
     if not os.path.exists(templates_dir):
         raise MissingTemplateDirException(
             'Your project is missing a templates/ directory containing your \
@@ -106,7 +108,6 @@ def generate_html(templates_dir, output_dir, context=None):
     context = context or {}
     env = Environment()
     # os.chdir(templates_dir)
-    print('Templates dir is {0}'.format(templates_dir))
     env.loader = FileSystemLoader(templates_dir)
 
     # Create the output dir if it doesn't already exist
