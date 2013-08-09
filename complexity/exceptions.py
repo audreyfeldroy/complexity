@@ -26,3 +26,9 @@ class NonHTMLFileException(ComplexityException):
     """
     Raised when a project's `templates/` directory contains a non-HTML file.
     """
+
+
+class OutputDirExistsException(ComplexityException):
+    """
+    Raised when a project's output_dir exists and no_input=True.
+    """

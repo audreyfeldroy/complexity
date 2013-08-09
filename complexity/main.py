@@ -16,17 +16,22 @@ import os
 import sys
 
 from .conf import read_conf
+from .exceptions import OutputDirExistsException
 from .generate import generate_context, copy_assets, generate_html
 from .prep import prompt_and_delete_cruft
 from .serve import serve_static_site
 
 
-def complexity(project_dir):
+def complexity(project_dir, no_input=True):
     """
     API equivalent to using complexity at the command line.
     
     :param project_dir: The Complexity project directory, e.g. `project/`.
     :paramtype project_dir: directory
+
+    :param no_input: If true, don't prompt about whether to delete
+        pre-existing `www/` directory. Instead, throw exception if one is
+        found.
 
     .. note:: You must delete `output_dir` before calling this. This also does
        not start the Complexity development server; you can do that from your
@@ -42,6 +47,17 @@ def complexity(project_dir):
     }
     conf_dict = read_conf(project_dir) or defaults
 
+    output_dir = os.path.normpath(os.path.join(project_dir, conf_dict['output_dir']))
+
+    # If output_dir exists, prompt before deleting.
+    # Abort if it can't be deleted.
+    if no_input:
+        if os.path.exists(output_dir):
+            raise OutputDirExistsException('Please delete {0} manually and try again.')
+    else:
+        if not prompt_and_delete_cruft(output_dir):
+            sys.exit()
+
     # Generate the context data
     context = None
     if 'context_dir' in conf_dict:
@@ -51,12 +67,13 @@ def complexity(project_dir):
 
     # Generate and serve the HTML site
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
-    output_dir = os.path.join(project_dir, conf_dict['output_dir'])
     generate_html(templates_dir, output_dir, context)
     
     if 'assets_dir' in conf_dict:
         assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
         copy_assets(assets_dir, output_dir)
+    
+    return output_dir
 
 
 def get_complexity_args():
@@ -89,13 +106,8 @@ def main():
 
     args = get_complexity_args()
 
-    # If output_dir exists, prompt before deleting.
-    # Abort if it can't be deleted.
-    if not prompt_and_delete_cruft(args.output_dir):
-        sys.exit()
-
-    output_dir = complexity(args.project_dir)
-    serve_static_site(output_dir, args.port)
+    output_dir = complexity(project_dir=args.project_dir, no_input=False)
+    serve_static_site(output_dir=output_dir, port=args.port)
     
 
 if __name__ == '__main__':
