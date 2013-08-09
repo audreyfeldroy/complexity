@@ -40,19 +40,20 @@ def complexity(project_dir):
     conf_dict = read_conf(project_dir) or defaults
 
     # Generate the context data
-    context_dir = os.path.join(project_dir, conf_dict['context_dir'])
-
     context = None
-    if os.path.exists(context_dir):
-        context = generate_context(context_dir)
+    if 'context_dir' in conf_dict:
+        context_dir = os.path.join(project_dir, conf_dict['context_dir'])
+        if os.path.exists(context_dir):
+            context = generate_context(context_dir)
 
     # Generate and serve the HTML site
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
     output_dir = os.path.join(project_dir, conf_dict['output_dir'])
     generate_html(templates_dir, output_dir, context)
     
-    assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
-    copy_assets(assets_dir, output_dir)
+    if 'assets_dir' in conf_dict:
+        assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
+        copy_assets(assets_dir, output_dir)
 
 
 def get_complexity_args():
