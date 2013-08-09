@@ -3,6 +3,23 @@
 History
 -------
 
+0.8.0 (2013-08-10)
+++++++++++++++++++
+
+* USAGE CHANGE: At the command line, Complexity no longer takes an output_dir
+  argument. It now assumes that your output_dir is `www/` by default, but you
+  can customize it in `complexity.json`.
+* Support for configuration via `complexity.json`: you can specify any or all
+  of the following key/value pairs:
+
+  - `output_dir`
+  - `templates_dir`
+  - `assets_dir`
+  - `context_dir`
+
+See http://complexity.readthedocs.org/en/latest/advanced_usage.html#config-using-complexity-json
+for more info.
+
 0.7 (2013-08-05)
 ++++++++++++++++
 
