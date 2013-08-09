@@ -44,10 +44,11 @@ def complexity(project_dir, output_dir):
     copy_assets(assets_dir, output_dir)
 
 
-def main():
-    """ Entry point for the package, as defined in `setup.py`. """
-
-    # Get command line input/output arguments
+def get_complexity_args():
+    """
+    Get the command line input/output arguments passed in to Complexity.
+    """
+    
     parser = argparse.ArgumentParser(
         description='A refreshingly simple static site generator, for those'
         'who like to work in HTML.'
@@ -60,6 +61,7 @@ def main():
     )
     parser.add_argument(
         'output_dir',
+        nargs='?',
         default='www/',
         help='Name of directory to output generated files to, e.g. www.'
     )
@@ -70,6 +72,13 @@ def main():
         help='Port number to serve files on.'
     )
     args = parser.parse_args()
+    return args
+
+
+def main():
+    """ Entry point for the package, as defined in `setup.py`. """
+
+    args = get_complexity_args()
 
     # If output_dir exists, prompt before deleting.
     # Abort if it can't be deleted.
