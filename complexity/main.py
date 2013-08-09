@@ -37,8 +37,7 @@ def complexity(project_dir):
         "context_dir": "context/",
         "output_dir": "../www/"
     }
-    # conf_dict = read_conf(project_dir) or defaults
-    conf_dict = defaults
+    conf_dict = read_conf(project_dir) or defaults
 
     # Generate the context data
     context_dir = os.path.join(project_dir, conf_dict['context_dir'])
