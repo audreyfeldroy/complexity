@@ -25,7 +25,7 @@ class TestExample(unittest.TestCase):
         Tests that https://github.com/audreyr/complexity-example.git works.
         """
         
-        complexity('complexity-example/project/', 'complexity-example/www/')
+        complexity('complexity-example/project/')
         self.assertTrue(os.path.isfile('complexity-example/www/index.html'))
         self.assertTrue(os.path.isfile('complexity-example/www/about/index.html'))
         self.assertTrue(os.path.isfile('complexity-example/www/img/glyphicons-halflings.png'))
@@ -43,7 +43,7 @@ class TestExample2(unittest.TestCase):
         Tests that https://github.com/audreyr/complexity-example2.git works.
         """
         
-        complexity('complexity-example2/project/', 'complexity-example2/www/')
+        complexity('complexity-example2/project/')
         self.assertTrue(os.path.isfile('complexity-example2/www/index.html'))
         self.assertTrue(os.path.isfile('complexity-example2/www/about/index.html'))
         self.assertTrue(os.path.isfile('complexity-example2/www/repos/index.html'))

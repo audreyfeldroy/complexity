@@ -9,6 +9,7 @@ Tests for `complexity.conf` module.
 """
 
 import logging
+import os
 import shutil
 import unittest
 
@@ -24,6 +25,8 @@ class TestConf(unittest.TestCase):
         conf_dict = conf.read_conf('tests/conf_proj')
         logging.debug("read_conf returned {0}".format(conf_dict))
         self.assertTrue(conf_dict)
+        self.assertEqual(conf_dict, {'output_dir': '../www', 'templates_dir': 'templates'})
+
 
 if __name__ == '__main__':
     unittest.main()
