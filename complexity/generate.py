@@ -16,14 +16,14 @@ import shutil
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
-from .exceptions import NonHTMLFileException, MissingTemplateDirException
+from .exceptions import MissingTemplateDirException
 from .utils import make_sure_path_exists, unicode_open
 
 
 def get_output_filename(template_filepath, output_dir):
     """
     Given an input filename, return the corresponding output filename.
-    
+
     :param template_filepath: Name of template file relative to template dir,
                           e.g. art/index.html
     :param output_dir: The Complexity output directory, e.g. `www/`.
@@ -50,6 +50,7 @@ def get_output_filename(template_filepath, output_dir):
             '{0}/index.html'.format(stem)
         )
     return output_filename
+
 
 def generate_html_file(template_filepath, output_dir, env, context):
     """
@@ -90,7 +91,8 @@ def generate_html(templates_dir, output_dir, context=None):
     Renders the HTML templates from `templates_dir`, and writes them to
     `output_dir`.
 
-    :param templates_dir: The Complexity templates directory, e.g. `project/templates/`.
+    :param templates_dir: The Complexity templates directory,
+        e.g. `project/templates/`.
     :paramtype templates_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
@@ -116,7 +118,10 @@ def generate_html(templates_dir, output_dir, context=None):
     for root, dirs, files in os.walk(templates_dir):
         for f in files:
             # print(f)
-            template_filepath = os.path.relpath(os.path.join(root, f), templates_dir)
+            template_filepath = os.path.relpath(
+                os.path.join(root, f),
+                templates_dir
+            )
 
             outfile = get_output_filename(template_filepath, output_dir)
             print('Copying {0} to {1}'.format(template_filepath, outfile))
@@ -176,12 +181,13 @@ def copy_assets(assets_dir, output_dir):
     """
     Copies static assets over from `assets_dir` to `output_dir`.
 
-    :param assets_dir: The Complexity project assets directory, e.g. `project/assets/`.
+    :param assets_dir: The Complexity project assets directory,
+        e.g. `project/assets/`.
     :paramtype assets_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
     """
-    
+
     assets = os.listdir(assets_dir)
     for item in assets:
         item_path = os.path.join(assets_dir, item)
@@ -191,7 +197,7 @@ def copy_assets(assets_dir, output_dir):
             new_dir = os.path.join(output_dir, item)
             print('Copying directory {0} to {1}'.format(item, new_dir))
             shutil.copytree(item_path, new_dir)
-            
+
         # Copy over files in the root of assets_dir
         if os.path.isfile(item_path):
             new_file = os.path.join(output_dir, item)

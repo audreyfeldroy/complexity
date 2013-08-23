@@ -25,7 +25,7 @@ from .serve import serve_static_site
 def complexity(project_dir, no_input=True):
     """
     API equivalent to using complexity at the command line.
-    
+
     :param project_dir: The Complexity project directory, e.g. `project/`.
     :paramtype project_dir: directory
 
@@ -47,13 +47,17 @@ def complexity(project_dir, no_input=True):
     }
     conf_dict = read_conf(project_dir) or defaults
 
-    output_dir = os.path.normpath(os.path.join(project_dir, conf_dict['output_dir']))
+    output_dir = os.path.normpath(
+        os.path.join(project_dir, conf_dict['output_dir'])
+    )
 
     # If output_dir exists, prompt before deleting.
     # Abort if it can't be deleted.
     if no_input:
         if os.path.exists(output_dir):
-            raise OutputDirExistsException('Please delete {0} manually and try again.')
+            raise OutputDirExistsException(
+                'Please delete {0} manually and try again.'
+            )
     else:
         if not prompt_and_delete_cruft(output_dir):
             sys.exit()
@@ -68,11 +72,11 @@ def complexity(project_dir, no_input=True):
     # Generate and serve the HTML site
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
     generate_html(templates_dir, output_dir, context)
-    
+
     if 'assets_dir' in conf_dict:
         assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
         copy_assets(assets_dir, output_dir)
-    
+
     return output_dir
 
 
@@ -80,7 +84,7 @@ def get_complexity_args():
     """
     Get the command line input/output arguments passed in to Complexity.
     """
-    
+
     parser = argparse.ArgumentParser(
         description='A refreshingly simple static site generator, for those'
         'who like to work in HTML.'
@@ -108,7 +112,7 @@ def main():
 
     output_dir = complexity(project_dir=args.project_dir, no_input=False)
     serve_static_site(output_dir=output_dir, port=args.port)
-    
+
 
 if __name__ == '__main__':
     main()
