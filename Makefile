@@ -21,6 +21,12 @@ test:
 testall:
 	tox
 
+coverage:
+	coverage run --source complexity setup.py test
+	coverage report -m
+	coverage html
+	open htmlcov/index.html
+
 docs:
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
