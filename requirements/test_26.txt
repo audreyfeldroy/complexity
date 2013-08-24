@@ -1,0 +1,4 @@
+# Requirements for testing Complexity on Python 2.6.
+
+-r base_test.txt
+unittest2

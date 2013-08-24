@@ -1,0 +1,3 @@
+# Requirements for testing Complexity on Python 2.7.
+
+-r base_test.txt
