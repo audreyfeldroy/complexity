@@ -9,6 +9,14 @@ complexity Package
     :undoc-members:
     :show-inheritance:
 
+:mod:`conf` Module
+------------------
+
+.. automodule:: complexity.conf
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 :mod:`exceptions` Module
 ------------------------
 

@@ -18,7 +18,7 @@ lint:
 test:
 	python setup.py test
 
-testall:
+test-all:
 	tox
 
 coverage:
@@ -28,6 +28,9 @@ coverage:
 	open htmlcov/index.html
 
 docs:
+	rm docs/complexity.rst
+	rm docs/modules.rst
+	sphinx-apidoc -o docs/ complexity
 	$(MAKE) -C docs clean
 	$(MAKE) -C docs html
 	open docs/_build/html/index.html
