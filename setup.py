@@ -22,10 +22,12 @@ with open('HISTORY.rst') as f:
 history = history.replace(".. :changelog:", "")
 
 requirements = ['jinja2==2.7']
+test_requirements = []
 
 if sys.version_info[:2] < (2, 7):
     requirements.append('argparse')
-    
+    test_requirements.append('unittest2')
+
 setup(
     name='complexity',
     version=complexity.__version__,
@@ -60,4 +62,5 @@ setup(
         'Topic :: Internet :: WWW/HTTP :: Site Management',
     ],
     test_suite='tests',
+    tests_require=test_requirements
 )
