@@ -26,7 +26,22 @@ class TestConf(unittest.TestCase):
         self.assertTrue(conf_dict)
         self.assertEqual(
             conf_dict,
-            {'output_dir': '../www', 'templates_dir': 'templates'}
+            {
+                'output_dir': '../www',
+                'templates_dir': 'templates',
+                'unexpanded_templates': ['404.html', '500.html']
+            }
+        )
+
+    def test_get_unexpanded_list(self):
+        conf_dict = {
+            'output_dir': '../www',
+            'templates_dir': 'templates',
+            'unexpanded_templates': ['404.html', '500.html']
+        }
+        self.assertEqual(
+            conf.get_unexpanded_list(conf_dict),
+            ['404.html', '500.html']
         )
 
 

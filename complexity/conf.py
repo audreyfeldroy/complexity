@@ -30,3 +30,12 @@ def read_conf(directory):
             conf_dict = json.load(f)
             return conf_dict
     return False
+
+
+def get_unexpanded_list(conf_dict):
+    """
+    Given a configuration dict, returns the list of templates that were
+    specified as unexpanded.
+    """
+    
+    return conf_dict['unexpanded_templates']

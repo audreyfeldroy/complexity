@@ -1,4 +1,8 @@
 {
   "templates_dir": "templates",
-  "output_dir": "../www"
+  "output_dir": "../www",
+  "unexpanded_templates": [
+    "404.html",
+    "500.html"
+  ]
 }
