@@ -21,29 +21,57 @@ from complexity import generate
 class TestGetOutputFilename(unittest.TestCase):
 
     def test_get_output_filename(self):
-        outfile = generate.get_output_filename('./index.html', 'www')
+        outfile = generate.get_output_filename(
+            './index.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertEqual(outfile, 'www/index.html')
 
     def test_get_output_filename_about(self):
-        outfile = generate.get_output_filename('./about.html', 'www')
+        outfile = generate.get_output_filename(
+            './about.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertEqual(outfile, 'www/about/index.html')
 
     def test_get_output_filename_base(self):
-        outfile = generate.get_output_filename('./base.html', 'www')
+        outfile = generate.get_output_filename(
+            './base.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertFalse(outfile)
 
     def test_get_output_filename_base_design(self):
-        outfile = generate.get_output_filename('./base_design.html', 'www')
+        outfile = generate.get_output_filename(
+            './base_design.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertFalse(outfile)
 
     def test_get_output_filename_art(self):
-        outfile = generate.get_output_filename('./art/index.html', 'www')
+        outfile = generate.get_output_filename(
+            './art/index.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertEqual(outfile, 'www/art/index.html')
-        outfile = generate.get_output_filename('art/index.html', 'www')
+        outfile = generate.get_output_filename(
+            'art/index.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertEqual(outfile, 'www/art/index.html')
 
     def test_get_output_filename_color(self):
-        outfile = generate.get_output_filename('./art/color.html', 'www')
+        outfile = generate.get_output_filename(
+            './art/color.html',
+            'www',
+            force_unexpanded=False
+        )
         self.assertEqual(outfile, 'www/art/color/index.html')
 
 
