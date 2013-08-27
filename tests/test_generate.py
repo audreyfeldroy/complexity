@@ -132,7 +132,7 @@ class TestGenerateHTML(unittest.TestCase):
             templates_dir='tests/project/templates/',
             output_dir='tests/www/',
             context=None,
-            unexpanded_templates=None
+            unexpanded_templates=[]
         )
         self.assertTrue(os.path.isfile('tests/www/index.html'))
         self.assertTrue(os.path.isfile('tests/www/about/index.html'))
@@ -143,6 +143,7 @@ class TestGenerateHTML(unittest.TestCase):
         self.assertTrue(
             os.path.isfile('tests/www/art/cupcakes/chocolate/index.html')
         )
+        self.assertFalse(os.path.isfile('tests/www/bad_templated_binary.png'))
         shutil.rmtree('tests/www')
 
 

@@ -13,6 +13,7 @@ import logging
 import os
 import shutil
 
+from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
@@ -64,10 +65,6 @@ def generate_html_file(template_filepath, output_dir, env, context, force_unexpa
     :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
     """
-
-    if not template_filepath.endswith('html'):
-        print('Non-HTML file found: {0}. Skipping.'.format(template_filepath))
-        return False
 
     # Ignore templates starting with "base". They're treated as special cases.
     if template_filepath.startswith('base'):
@@ -130,9 +127,12 @@ def generate_html(templates_dir, output_dir, context=None, unexpanded_templates=
                 force_unexpanded
             ))
 
-            outfile = get_output_filename(template_filepath, output_dir, force_unexpanded)
-            print('Copying {0} to {1}'.format(template_filepath, outfile))
-            generate_html_file(template_filepath, output_dir, env, context, force_unexpanded)
+            if is_binary(os.path.join(templates_dir, template_filepath)):
+                print('Non-text file found: {0}. Skipping.'.format(template_filepath))
+            else:
+                outfile = get_output_filename(template_filepath, output_dir, force_unexpanded)
+                print('Copying {0} to {1}'.format(template_filepath, outfile))
+                generate_html_file(template_filepath, output_dir, env, context, force_unexpanded)
 
 
 def generate_context(context_dir):
