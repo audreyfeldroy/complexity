@@ -45,7 +45,7 @@ class TestConf(unittest.TestCase):
         )
 
     def test_get_unexpanded_list_empty(self):
-        self.assertEqual(conf.get_unexpanded_list({}), None)
+        self.assertEqual(conf.get_unexpanded_list({}), [])
 
 if __name__ == '__main__':
     unittest.main()
