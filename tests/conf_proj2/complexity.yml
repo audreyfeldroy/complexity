@@ -1,0 +1,7 @@
+# Config file for a Complexity project
+
+# Directories are relative to current (project) dir
+templates_dir: "templatez"
+assets_dir: "assetz"
+context_dir: "contextz"
+output_dir: "wwwz"

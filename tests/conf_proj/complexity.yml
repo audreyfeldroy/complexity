@@ -1,0 +1,10 @@
+# Config file for a Complexity project
+
+# Directories are relative to current (project) dir
+templates_dir: "templates"
+output_dir: "../www"
+
+# List of templates that should not be expanded to pretty-format URLs
+unexpanded_templates:
+ - "404.html"
+ - "500.html"
