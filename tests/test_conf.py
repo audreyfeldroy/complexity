@@ -44,6 +44,8 @@ class TestConf(unittest.TestCase):
             ['404.html', '500.html']
         )
 
+    def test_get_unexpanded_list_empty(self):
+        self.assertEqual(conf.get_unexpanded_list({}), None)
 
 if __name__ == '__main__':
     unittest.main()
