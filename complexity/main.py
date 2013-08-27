@@ -15,7 +15,7 @@ import argparse
 import os
 import sys
 
-from .conf import read_conf
+from .conf import read_conf, get_unexpanded_list
 from .exceptions import OutputDirExistsException
 from .generate import generate_context, copy_assets, generate_html
 from .prep import prompt_and_delete_cruft
