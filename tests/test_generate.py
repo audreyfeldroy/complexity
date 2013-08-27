@@ -131,7 +131,8 @@ class TestGenerateHTML(unittest.TestCase):
         generate.generate_html(
             templates_dir='tests/project/templates/',
             output_dir='tests/www/',
-            context=None
+            context=None,
+            unexpanded_templates=None
         )
         self.assertTrue(os.path.isfile('tests/www/index.html'))
         self.assertTrue(os.path.isfile('tests/www/about/index.html'))
@@ -144,6 +145,30 @@ class TestGenerateHTML(unittest.TestCase):
         )
         shutil.rmtree('tests/www')
 
+
+class TestGenerateHTMLUnexpanded(unittest.TestCase):
+    def test_generate_html_unexpanded(self):
+        generate.generate_html(
+            templates_dir='tests/project/templates/',
+            output_dir='tests/www',
+            context=None,
+            unexpanded_templates=['404.html', '500.html']
+        )
+        self.assertTrue(os.path.isfile('tests/www/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/about/index.html'))
+        self.assertFalse(os.path.isfile('tests/www/base/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/art/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/art/color/index.html'))
+        self.assertTrue(os.path.isfile('tests/www/art/cupcakes/index.html'))
+        self.assertTrue(
+            os.path.isfile('tests/www/art/cupcakes/chocolate/index.html')
+        )
+        self.assertTrue(os.path.isfile('tests/www/404.html'))
+        self.assertTrue(os.path.isfile('tests/www/500.html'))
+
+    def tearDown(self):
+        if os.path.isdir('tests/www'):
+            shutil.rmtree('tests/www')
 
 class TestGenerateContext(unittest.TestCase):
     def test_generate_context(self):

@@ -20,7 +20,7 @@ from .exceptions import MissingTemplateDirException
 from .utils import make_sure_path_exists, unicode_open
 
 
-def get_output_filename(template_filepath, output_dir):
+def get_output_filename(template_filepath, output_dir, force_unexpanded):
     """
     Given an input filename, return the corresponding output filename.
 
@@ -38,8 +38,8 @@ def get_output_filename(template_filepath, output_dir):
     # Base files don't have output.
     if basename.startswith('base'):
         return False
-    # Put index in the root. It's a special case.
-    elif basename == 'index.html':
+    # Put index and unexpanded templates in the root.
+    elif force_unexpanded or basename == 'index.html':
         output_filename = os.path.join(output_dir, template_filepath)
     # Put other pages in page/index.html, for better URL formatting.
     else:
@@ -52,7 +52,7 @@ def get_output_filename(template_filepath, output_dir):
     return output_filename
 
 
-def generate_html_file(template_filepath, output_dir, env, context):
+def generate_html_file(template_filepath, output_dir, env, context, force_unexpanded=False):
     """
     Renders and writes a single HTML file to its corresponding output location.
 
@@ -76,7 +76,7 @@ def generate_html_file(template_filepath, output_dir, env, context):
     tmpl = env.get_template(template_filepath)
     rendered_html = tmpl.render(**context)
 
-    output_filename = get_output_filename(template_filepath, output_dir)
+    output_filename = get_output_filename(template_filepath, output_dir, force_unexpanded)
     if output_filename:
         make_sure_path_exists(os.path.dirname(output_filename))
 
@@ -86,7 +86,7 @@ def generate_html_file(template_filepath, output_dir, env, context):
             return True
 
 
-def generate_html(templates_dir, output_dir, context=None):
+def generate_html(templates_dir, output_dir, context=None, unexpanded_templates=None):
     """
     Renders the HTML templates from `templates_dir`, and writes them to
     `output_dir`.
@@ -123,9 +123,16 @@ def generate_html(templates_dir, output_dir, context=None):
                 templates_dir
             )
 
-            outfile = get_output_filename(template_filepath, output_dir)
+            force_unexpanded = template_filepath in unexpanded_templates
+            logging.debug('Is {0} in {1}? {2}'.format(
+                template_filepath,
+                unexpanded_templates,
+                force_unexpanded
+            ))
+
+            outfile = get_output_filename(template_filepath, output_dir, force_unexpanded)
             print('Copying {0} to {1}'.format(template_filepath, outfile))
-            generate_html_file(template_filepath, output_dir, env, context)
+            generate_html_file(template_filepath, output_dir, env, context, force_unexpanded)
 
 
 def generate_context(context_dir):
