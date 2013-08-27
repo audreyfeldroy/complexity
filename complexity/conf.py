@@ -5,7 +5,7 @@
 complexity.conf
 -------------------
 
-Functions for reading a `complexity.json` configuration file and doing various
+Functions for reading a `complexity.yml` configuration file and doing various
 configuration-related things.
 """
 
@@ -16,14 +16,14 @@ import os
 
 def read_conf(directory):
     """
-    Reads and parses the `complexity.json` configuration file from a
+    Reads and parses the `complexity.yml` configuration file from a
     directory, if one is present.
-    :param directory: Directory to look for a `complexity.json` file.
-    :returns: A conf dict, or False if no `complexity.json` is present.
+    :param directory: Directory to look for a `complexity.yml` file.
+    :returns: A conf dict, or False if no `complexity.yml` is present.
     """
 
     logging.debug("About to look for a conf file in {0}".format(directory))
-    conf_file = os.path.join(directory, 'complexity.json')
+    conf_file = os.path.join(directory, 'complexity.yml')
 
     if os.path.isfile(conf_file):
         with open(conf_file) as f:
