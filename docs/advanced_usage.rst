@@ -20,7 +20,7 @@ Now here is an example of a more advanced Complexity site::
     │   │   ├── base.html
     │   │   ├── index.html
     │   │   └── about.html
-    │   └── complexity.json
+    │   └── complexity.yml
     │
     └── www/          <---------- output
         ├── index.html
@@ -33,22 +33,52 @@ Now here is an example of a more advanced Complexity site::
 
 Let's explore some of Complexity's advanced features.
 
-Config Using complexity.json
+Config Using complexity.yml
 ----------------------------
 
-You can configure a Complexity project with a `complexity.json` file like 
+You can configure a Complexity project with a `complexity.yml` file like
 this:
 
-.. code-block:: javascript
+.. code-block:: yaml
 
-  {
-    "templates_dir": "templates",
-    "assets_dir": "assets",
-    "context_dir": "context",
-    "output_dir": "../www"
-  }
+    # Config file for a Complexity project
 
-Put `complexity.json` in your project root (e.g. in project/).
+    # Directories are relative to current (project) dir
+    templates_dir: "templates"
+    assets_dir: "assets"
+    context_dir: "context"
+    output_dir: "../www"
+
+    # List of templates that should not be expanded to pretty-format URLs
+    unexpanded_templates:
+     - "404.html"
+     - "500.html"
+
+Put `complexity.yml` in your project root (e.g. in project/).
+
+Here is what you can configure:
+
+* `templates_dir`: Directory containing templates. Anything that needs to be
+  templated goes here.
+* `assets_dir`: Directory containing static assets (to be copied over without
+  templating).
+* `context_dir`: Directory containing `.json` files to be turned into context
+  variables for the templates.
+* `output_dir`: Directory where the generated website will be output.
+* `unexpanded_templates`: List of HTML templates for which you want to keep
+  the URLs unexpanded (e.g. `404.html` instead of `404/index.html`).
+
+All of the above are optional.
+
+Complexity uses sensible defaults. If you don't specify a `complexity.yml`,
+this is the assumed default config:
+
+.. code-block:: yaml
+
+    templates_dir: "templates"
+    assets_dir: "assets"
+    context_dir: "context"
+    output_dir: "../www"
 
 JSON Auto-Loading
 ----------------------
