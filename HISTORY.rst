@@ -9,6 +9,8 @@ History
 * CONFIG CHANGE: Configuration is now via a `complexity.yml` file inside the
   project, instead of a `complexity.json` file.
 * Support for an `unexpanded_templates` config option (#23).
+* Support for non-HTML files in `templates/` (or whatever you set
+  `templates_dir` to be).
 
 See http://complexity.readthedocs.org/en/latest/advanced_usage.html#config-using-complexity-yml
 for more info.
