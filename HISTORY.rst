@@ -3,6 +3,16 @@
 History
 -------
 
+0.9.0 (2013-08-28)
+++++++++++++++++++
+
+* CONFIG CHANGE: Configuration is now via a `complexity.yml` file inside the
+  project, instead of a `complexity.json` file.
+* Support for an `unexpanded_templates` config option (#23).
+
+See http://complexity.readthedocs.org/en/latest/advanced_usage.html#config-using-complexity-yml
+for more info.
+
 0.8.0 (2013-08-10)
 ++++++++++++++++++
 
