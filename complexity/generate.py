@@ -83,7 +83,7 @@ def generate_html_file(template_filepath, output_dir, env, context, force_unexpa
             return True
 
 
-def generate_html(templates_dir, output_dir, context=None, unexpanded_templates=[]):
+def generate_html(templates_dir, output_dir, context=None, unexpanded_templates=()):
     """
     Renders the HTML templates from `templates_dir`, and writes them to
     `output_dir`.

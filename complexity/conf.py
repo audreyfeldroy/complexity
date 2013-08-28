@@ -38,4 +38,4 @@ def get_unexpanded_list(conf_dict):
     specified as unexpanded.
     """
     
-    return conf_dict.get('unexpanded_templates', [])
+    return conf_dict.get('unexpanded_templates', ())
