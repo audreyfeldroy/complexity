@@ -3,8 +3,6 @@
 import os
 import sys
 
-import complexity
-
 try:
     from setuptools import setup
 except ImportError:
@@ -23,6 +21,7 @@ history = history.replace(".. :changelog:", "")
 
 requirements = [
     'jinja2==2.7',
+    'binaryornot>=0.1.1',
     'PyYAML>=3.10'
 ]
 test_requirements = []
@@ -33,7 +32,7 @@ if sys.version_info[:2] < (2, 7):
 
 setup(
     name='complexity',
-    version=complexity.__version__,
+    version='0.8.0',
     description='A refreshingly simple static site generator, for those who like to work in HTML.',
     long_description=readme + '\n\n' + history,
     author='Audrey Roy',
