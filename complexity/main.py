@@ -12,6 +12,7 @@ library rather than a script.
 """
 
 import argparse
+import logging
 import os
 import sys
 
@@ -21,6 +22,8 @@ from .generate import generate_context, copy_assets, generate_html
 from .prep import prompt_and_delete_cruft
 from .serve import serve_static_site
 
+
+logger = logging.getLogger(__name__)
 
 def complexity(project_dir, no_input=True):
     """
