@@ -27,7 +27,7 @@ def read_conf(directory):
 
     if os.path.isfile(conf_file):
         with open(conf_file) as f:
-            conf_dict = yaml.safe_load(f)
+            conf_dict = yaml.safe_load(f.read())
             return conf_dict
     return False
 
