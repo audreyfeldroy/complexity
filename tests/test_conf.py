@@ -9,9 +9,14 @@ Tests for `complexity.conf` module.
 """
 
 import logging
-import unittest
+import sys
 
 from complexity import conf
+
+if sys.version_info[:2] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
 
 
 # Log debug and above to console

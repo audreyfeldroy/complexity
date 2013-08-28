@@ -10,12 +10,17 @@ Tests for `complexity.generate` module.
 
 import os
 import shutil
-import unittest
+import sys
 
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
 
 from complexity import generate
+
+if sys.version_info[:2] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
 
 
 class TestGetOutputFilename(unittest.TestCase):

@@ -11,13 +11,18 @@ Tests for `complexity.main` module.
 import logging
 import os
 import shutil
-import unittest
+import sys
 
 from complexity import main
 
+if sys.version_info[:2] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
+
 
 # Log debug and above to console
-logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
+# logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
 
 
 class TestMain(unittest.TestCase):

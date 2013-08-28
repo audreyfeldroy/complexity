@@ -10,9 +10,14 @@ Tests for the Complexity example repos.
 
 import os
 import shutil
-import unittest
+import sys
 
-from complexity.main import complexity
+from complexity import main
+
+if sys.version_info[:2] < (2, 7):
+    import unittest2 as unittest
+else:
+    import unittest
 
 
 class TestExample(unittest.TestCase):
@@ -27,7 +32,7 @@ class TestExample(unittest.TestCase):
         Tests that https://github.com/audreyr/complexity-example.git works.
         """
 
-        complexity('complexity-example/project/')
+        main.complexity('complexity-example/project/')
         self.assertTrue(os.path.isfile('complexity-example/www/index.html'))
         self.assertTrue(
             os.path.isfile('complexity-example/www/about/index.html')
@@ -54,7 +59,7 @@ class TestExample2(unittest.TestCase):
         Tests that https://github.com/audreyr/complexity-example2.git works.
         """
 
-        complexity('complexity-example2/project/')
+        main.complexity('complexity-example2/project/')
         self.assertTrue(
             os.path.isfile('complexity-example2/www/index.html')
         )
