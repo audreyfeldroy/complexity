@@ -21,7 +21,10 @@ with open('HISTORY.rst') as f:
     history = f.read()
 history = history.replace(".. :changelog:", "")
 
-requirements = ['jinja2==2.7']
+requirements = [
+    'jinja2==2.7',
+    'PyYAML>=3.10'
+]
 test_requirements = []
 
 if sys.version_info[:2] < (2, 7):

@@ -9,9 +9,9 @@ Functions for reading a `complexity.yml` configuration file and doing various
 configuration-related things.
 """
 
-import json
 import logging
 import os
+import yaml
 
 
 def read_conf(directory):
@@ -27,7 +27,7 @@ def read_conf(directory):
 
     if os.path.isfile(conf_file):
         with open(conf_file) as f:
-            conf_dict = json.load(f)
+            conf_dict = yaml.safe_load(f)
             return conf_dict
     return False
 
