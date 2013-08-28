@@ -186,7 +186,11 @@ class TestGenerateHTMLUnexpanded(unittest.TestCase):
             templates_dir='tests/project/templates/',
             output_dir='tests/www',
             context=None,
-            unexpanded_templates=['404.html', '500.html']
+            unexpanded_templates=[
+                '404.html',
+                '500.html',
+                "long/path/to/folder/dont-expand.html"
+            ]
         )
         self.assertTrue(os.path.isfile('tests/www/index.html'))
         self.assertTrue(os.path.isfile('tests/www/about/index.html'))
@@ -199,10 +203,14 @@ class TestGenerateHTMLUnexpanded(unittest.TestCase):
         )
         self.assertTrue(os.path.isfile('tests/www/404.html'))
         self.assertTrue(os.path.isfile('tests/www/500.html'))
+        self.assertTrue(
+            os.path.isfile('tests/www/long/path/to/folder/dont-expand.html')
+        )
 
     def tearDown(self):
         if os.path.isdir('tests/www'):
             shutil.rmtree('tests/www')
+
 
 class TestGenerateContext(unittest.TestCase):
     def test_generate_context(self):
