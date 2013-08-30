@@ -105,6 +105,11 @@ def get_complexity_args():
         default=9090,
         help='Port number to serve files on.'
     )
+    parser.add_argument(
+        '--noserver',
+        action='store_true',
+        help='Don\'t run the server.'
+    )
     args = parser.parse_args()
     return args
 
@@ -115,7 +120,8 @@ def main():
     args = get_complexity_args()
 
     output_dir = complexity(project_dir=args.project_dir, no_input=False)
-    serve_static_site(output_dir=output_dir, port=args.port)
+    if not args.noserver:
+        serve_static_site(output_dir=output_dir, port=args.port)
 
 
 if __name__ == '__main__':
