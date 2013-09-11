@@ -41,6 +41,5 @@ def serve_static_site(output_dir, port=9090):
         httpd.serve_forever()
     except (KeyboardInterrupt, SystemExit):
         print("Shutting down...")
-        httpd.shutdown()
         httpd.socket.close()
         sys.exit()
