@@ -5,7 +5,7 @@ Credits
 Development Lead
 ----------------
 
-* Audrey Roy <audreyr@gmail.com>
+* Audrey Roy (`@audreyr`_)
 
 Contributors
 ------------
@@ -22,6 +22,7 @@ Special Thanks
   `Kenneth Reitz's Requests theme`_, which itself is a modified version of
   `Armin Ronacher's Flasky theme`_.
 
+.. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@friedcell`: https://github.com/friedcell
 .. _`Kenneth Reitz's Requests theme`: http://python-requests.org
