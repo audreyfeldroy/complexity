@@ -10,17 +10,19 @@ Development Lead
 Contributors
 ------------
 
-* Daniel Greenfeld (@pydanny) <3
+* Daniel Greenfeld (`@pydanny`_)
+* Marko Mrdjenovic (`@friedcell`_)
 
 Special Thanks
 --------------
 
-* Daniel Greenfeld (`@pydanny`_) has done a lot to help get Complexity to
-  where it is now. He even came up with the name "Complexity".
-* The Complexity Sphinx theme is a heavily customized version of 
+* Daniel Greenfeld greatly helped during Complexity's initial development and
+  came up with the name.
+* Complexity Sphinx theme is a heavily customized version of 
   `Kenneth Reitz's Requests theme`_, which itself is a modified version of
   `Armin Ronacher's Flasky theme`_.
 
-.. _`@pydanny`: https://twitter.com/pydanny
+.. _`@pydanny`: https://github.com/pydanny
+.. _`@friedcell`: https://github.com/friedcell
 .. _`Kenneth Reitz's Requests theme`: http://python-requests.org
 .. _`Armin Ronacher's Flasky theme`: http://flask.pocoo.org/
