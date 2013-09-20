@@ -12,6 +12,7 @@ Contributors
 
 * Daniel Greenfeld (`@pydanny`_)
 * Marko Mrdjenovic (`@friedcell`_)
+* Alja Isakovic (`@ialja`_)
 
 Special Thanks
 --------------
@@ -25,5 +26,6 @@ Special Thanks
 .. _`@audreyr`: https://github.com/audreyr
 .. _`@pydanny`: https://github.com/pydanny
 .. _`@friedcell`: https://github.com/friedcell
+.. _`@ialja`: https://github.com/ialja
 .. _`Kenneth Reitz's Requests theme`: http://python-requests.org
 .. _`Armin Ronacher's Flasky theme`: http://flask.pocoo.org/
