@@ -32,7 +32,7 @@ if sys.version_info[:2] < (2, 7):
 
 setup(
     name='complexity',
-    version='0.9.0',
+    version='0.9.1',
     description='A refreshingly simple static site generator, for those who like to work in HTML.',
     long_description=readme + '\n\n' + history,
     author='Audrey Roy',
