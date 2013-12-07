@@ -12,6 +12,7 @@ import json
 import logging
 import os
 import shutil
+import re
 
 from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
@@ -53,7 +54,20 @@ def get_output_filename(template_filepath, output_dir, force_unexpanded):
     return output_filename
 
 
-def generate_html_file(template_filepath, output_dir, env, context, force_unexpanded=False):
+def minify_html(html):
+    """
+    Removes spaces and new lines from a HTML file
+
+    :param html: HTML that should be minified
+    """
+
+    # Removes whitespaces, and new lines between tags using this RE
+    return re.sub(r">\s+<", '><', html)
+
+
+def generate_html_file(template_filepath,
+                       output_dir, env,
+                       context, force_unexpanded=False, minify=True):
     """
     Renders and writes a single HTML file to its corresponding output location.
 
@@ -73,7 +87,11 @@ def generate_html_file(template_filepath, output_dir, env, context, force_unexpa
     tmpl = env.get_template(template_filepath)
     rendered_html = tmpl.render(**context)
 
-    output_filename = get_output_filename(template_filepath, output_dir, force_unexpanded)
+    if minify:
+        rendered_html = minify_html(rendered_html)
+
+    output_filename = get_output_filename(template_filepath,
+                                          output_dir, force_unexpanded)
     if output_filename:
         make_sure_path_exists(os.path.dirname(output_filename))
 
@@ -83,7 +101,8 @@ def generate_html_file(template_filepath, output_dir, env, context, force_unexpa
             return True
 
 
-def generate_html(templates_dir, output_dir, context=None, unexpanded_templates=()):
+def generate_html(templates_dir, output_dir, context=None,
+                  unexpanded_templates=()):
     """
     Renders the HTML templates from `templates_dir`, and writes them to
     `output_dir`.
@@ -128,11 +147,14 @@ def generate_html(templates_dir, output_dir, context=None, unexpanded_templates=
             ))
 
             if is_binary(os.path.join(templates_dir, template_filepath)):
-                print('Non-text file found: {0}. Skipping.'.format(template_filepath))
+                print('Non-text file found: {0}. Skipping.'.
+                      format(template_filepath))
             else:
-                outfile = get_output_filename(template_filepath, output_dir, force_unexpanded)
+                outfile = get_output_filename(template_filepath, output_dir,
+                                              force_unexpanded)
                 print('Copying {0} to {1}'.format(template_filepath, outfile))
-                generate_html_file(template_filepath, output_dir, env, context, force_unexpanded)
+                generate_html_file(template_filepath, output_dir, env, context,
+                                   force_unexpanded)
 
 
 def generate_context(context_dir):

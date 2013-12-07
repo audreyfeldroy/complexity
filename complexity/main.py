@@ -25,6 +25,7 @@ from .serve import serve_static_site
 
 logger = logging.getLogger(__name__)
 
+
 def complexity(project_dir, no_input=True):
     """
     API equivalent to using complexity at the command line.

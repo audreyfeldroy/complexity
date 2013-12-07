@@ -80,6 +80,62 @@ class TestGetOutputFilename(unittest.TestCase):
         self.assertEqual(outfile, 'www/art/color/index.html')
 
 
+class TestMinifyHTML(unittest.TestCase):
+    def test_minify(self):
+        raw_html = """<!DOCTYPE html>
+
+        <html>
+
+
+
+        <head>                   </head>
+
+
+
+        <body>
+            <p>Test!</p>
+
+
+        </body>
+
+
+        </html>"""
+        expected = '<!DOCTYPE html><html><head></head><body>' \
+                   '<p>Test!</p></body></html>'
+        self.assertEqual(generate.minify_html(raw_html), expected)
+
+    def test_minify_2(self):
+        raw_html = """<!DOCTYPE html>
+
+        <html>
+
+
+
+        <head>                   </head>
+
+
+
+        <body>
+            <p>Test!</p>
+            <p>Test2!</p>This should be left alone
+            <p>Test3!</p>
+
+                    As should this
+
+        </body>
+
+
+        </html>"""
+        expected = """<!DOCTYPE html><html><head></head><body><p>Test!</p>""" \
+            """<p>Test2!</p>This should be left alone
+            <p>Test3!</p>
+
+                    As should this
+
+        </body></html>"""
+        self.assertEqual(generate.minify_html(raw_html), expected)
+
+
 class TestGenerateHTMLFile(unittest.TestCase):
     def setUp(self):
         os.mkdir('tests/www/')
@@ -124,7 +180,8 @@ class TestGenerateHTMLFileUnicode(unittest.TestCase):
             template_filepath='unicode.html',
             output_dir='tests/www/',
             env=self.env,
-            context={}
+            context={},
+            minify=False
         )
         self.assertTrue(os.path.isfile('tests/www/unicode/index.html'))
         with open('tests/files/unicode.html') as infile:
@@ -136,7 +193,8 @@ class TestGenerateHTMLFileUnicode(unittest.TestCase):
             template_filepath='unicode2.html',
             output_dir='tests/www/',
             env=self.env,
-            context={}
+            context={},
+            minify=False
         )
         self.assertTrue(os.path.isfile('tests/www/unicode2/index.html'))
         expected = """<!DOCTYPE html>
@@ -152,6 +210,23 @@ class TestGenerateHTMLFileUnicode(unittest.TestCase):
 
 </body>
 </html>"""
+        with open('tests/www/unicode2/index.html') as outfile:
+            self.assertEqual(expected, outfile.read())
+
+    def test_generate_minified_html_file_unicode(self):
+        generate.generate_html_file(
+            template_filepath='unicode2.html',
+            output_dir='tests/www/',
+            env=self.env,
+            context={},
+            minify=True
+        )
+        self.assertTrue(os.path.isfile('tests/www/unicode2/index.html'))
+        expected = '<!DOCTYPE html><html><body><p>This is the unicode test ' \
+                   'page.</p><p>Polish: Ą Ł Ż</p><p>Chinese:' \
+                   ' 倀 倁 倂 倃 倄 倅 倆 倇 倈</p><p>Musical Notes:' \
+                   ' ♬ ♫ ♯</p><h3 class="panel-title">Paški sir</h3>' \
+                   '<p>Croatian: š š</p></body></html>'
         with open('tests/www/unicode2/index.html') as outfile:
             self.assertEqual(expected, outfile.read())
 
