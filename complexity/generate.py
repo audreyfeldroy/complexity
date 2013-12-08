@@ -67,7 +67,7 @@ def minify_html(html):
 
 def generate_html_file(template_filepath,
                        output_dir, env,
-                       context, force_unexpanded=False, minify=True):
+                       context, force_unexpanded=False, minify=False):
     """
     Renders and writes a single HTML file to its corresponding output location.
 
