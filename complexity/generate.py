@@ -48,7 +48,8 @@ def get_output_filename(template_filepath, output_dir, force_unexpanded):
         output_filename = os.path.join(
             output_dir,
             dirname,
-            '{0}/index.html'.format(stem)
+            stem,
+            'index.html'
         )
     return output_filename
 
