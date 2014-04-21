@@ -8,6 +8,7 @@ complexity.generate
 Functions for static site generation.
 """
 
+import json
 import logging
 import os
 import shutil
@@ -171,12 +172,22 @@ def generate_context(context_dir):
 
     for file_name in context_files:
 
-        if os.path.splitext(file_name)[1][1:] in ['json', 'yml', 'yaml']:
+        if os.path.splitext(file_name)[1][1:] in ['yml', 'yaml']:
 
-            # Open the JSON/YAML file and convert to Python object
+            # Open the YAML file and convert to Python object
             context_file = os.path.join(context_dir, file_name)
             with unicode_open(context_file) as f:
                 obj = yaml.load(f)
+
+            # Add the Python object to the context dictionary
+            context[os.path.splitext(file_name)[0]] = obj
+
+        elif os.path.splitext(file_name)[1][1:] in ['json']:
+
+            # Open the JSON file and convert to Python object
+            context_file = os.path.join(context_dir, file_name)
+            with unicode_open(context_file) as f:
+                obj = json.load(f)
 
             # Add the Python object to the context dictionary
             context[os.path.splitext(file_name)[0]] = obj
