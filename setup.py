@@ -20,7 +20,7 @@ with open('HISTORY.rst') as f:
 history = history.replace(".. :changelog:", "")
 
 requirements = [
-    'jinja2==2.7',
+    'jinja2>=2.7',
     'binaryornot>=0.1.1',
     'PyYAML>=3.10'
 ]
