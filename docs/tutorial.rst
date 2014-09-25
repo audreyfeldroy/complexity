@@ -5,6 +5,17 @@ Tutorial
 Part 0: Overview
 ----------------
 
+Complexity is a refreshingly simple static site generator, for those who like to 
+work in HTML. It allows you to quickly see how your changes affect your site.
+
+This quick tutorial will show you how to run this generator on your own using the 
+most basic structure possible. Just type the given instructions into your terminal.
+
+If you have any specific questions you may find help in the documentation: 
+http://complexity.readthedocs.org/en/latest/
+
+Or on the Github page: https://github.com/audreyr/complexity
+
 This is the directory structure for a minimal Complexity site::
 
     my_repo/
@@ -155,7 +166,7 @@ generation process:
 
 * CSS will be minified and concatenated.
 * SCSS and/or LESS will compiled to CSS, then minified and concatenated.
-* JS will minified, concatenated, and obfuscated.
+* JS will be minified, concatenated, and obfuscated.
 
 Development is happening at a rapid pace, so stay tuned. To keep updated, watch
 and star https://github.com/audreyr/complexity on GitHub.
@@ -185,4 +196,4 @@ Then deploy the `www/` directory to any S3 bucket that you own::
 Your site is now live! Go to the URL that `alotofeffort` prints out after
 it finishes uploading.
 
-Point your domain name at that URL, and you'll be done.
+Point your domain name at that URL, and you'll be done!
