@@ -1,12 +1,10 @@
-/*
- * complexity.css_t
+/* complexity.css_t
  * ~~~~~~~~~~~~
  *
  * :copyright: Copyright 2013 by Audrey Roy. Derived from flasky.css_t by
  *             Armin Ronacher. Modifications by Kenneth Reitz.
  * :license: Flask Design License, see LICENSE for details.
  */
-
 {% set page_width = '960px' %}
 {% set sidebar_width = '200px' %}
 
