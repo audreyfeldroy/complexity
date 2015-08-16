@@ -48,7 +48,8 @@ def get_output_filename(template_filepath, output_dir, force_unexpanded):
         output_filename = os.path.join(
             output_dir,
             dirname,
-            '{0}/index.html'.format(stem)
+            stem,
+            'index.html'
         )
     return output_filename
 
@@ -70,7 +71,11 @@ def generate_html_file(template_filepath, output_dir, env, context, force_unexpa
     if template_filepath.startswith('base'):
         return False
 
-    tmpl = env.get_template(template_filepath)
+    # Force fwd slashes on Windows for get_template
+    # This is a by-design Jinja issue
+    infile_fwd_slashes = template_filepath.replace(os.path.sep, '/')
+
+    tmpl = env.get_template(infile_fwd_slashes)
     rendered_html = tmpl.render(**context)
 
     output_filename = get_output_filename(template_filepath, output_dir, force_unexpanded)
