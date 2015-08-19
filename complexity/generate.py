@@ -12,6 +12,7 @@ import json
 import logging
 import os
 import shutil
+import yaml
 
 from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
@@ -144,14 +145,14 @@ def generate_context(context_dir):
     """
     Generates the context for all Complexity pages.
 
-    :param context_dir: Directory containing `.json` file(s) to be turned into
-                        context variables for Jinja2.
+    :param context_dir: Directory containing `.json` or '.yml'/'.yaml' file(s)
+                        to be turned into context variables for Jinja2.
 
     Description:
 
-        Iterates through the contents of `context_dir` and finds all JSON
-        files. Loads the JSON file as a Python object with the key being the
-        JSON file name.
+        Iterates through the contents of `context_dir` and finds all JSON/YAML
+        files. Loads the JSON/YAML file as a Python object with the key being
+        the file name.
 
     Example:
 
@@ -172,19 +173,29 @@ def generate_context(context_dir):
     """
     context = {}
 
-    json_files = os.listdir(context_dir)
+    context_files = os.listdir(context_dir)
 
-    for file_name in json_files:
+    for file_name in context_files:
 
-        if file_name.endswith('json'):
+        if os.path.splitext(file_name)[1][1:] in ['yml', 'yaml']:
+
+            # Open the YAML file and convert to Python object
+            context_file = os.path.join(context_dir, file_name)
+            with unicode_open(context_file) as f:
+                obj = yaml.load(f)
+
+            # Add the Python object to the context dictionary
+            context[os.path.splitext(file_name)[0]] = obj
+
+        elif os.path.splitext(file_name)[1][1:] in ['json']:
 
             # Open the JSON file and convert to Python object
-            json_file = os.path.join(context_dir, file_name)
-            with unicode_open(json_file) as f:
+            context_file = os.path.join(context_dir, file_name)
+            with unicode_open(context_file) as f:
                 obj = json.load(f)
 
             # Add the Python object to the context dictionary
-            context[file_name[:-5]] = obj
+            context[os.path.splitext(file_name)[0]] = obj
 
     return context
 

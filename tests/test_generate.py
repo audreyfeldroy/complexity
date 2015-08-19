@@ -213,11 +213,24 @@ class TestGenerateHTMLUnexpanded(unittest.TestCase):
 
 
 class TestGenerateContext(unittest.TestCase):
-    def test_generate_context(self):
+    def test_generate_context_json(self):
         context = generate.generate_context(
             context_dir='tests/project/context/'
         )
         self.assertEqual(context, {"test": {"1": 2}})
+
+    def test_generate_context_yaml(self):
+        context = generate.generate_context(
+            context_dir='tests/project/context-yaml/'
+        )
+        self.assertEqual(
+            context, {"test": {"1": 2, "a": "b", "multiple": ["c", "d", "e"]}})
+
+    def test_generate_empty_context_yaml(self):
+        context = generate.generate_context(
+            context_dir='tests/project/context-empty/'
+        )
+        self.assertEqual(context, {"test": None})
 
 
 class TestCopyAssets(unittest.TestCase):

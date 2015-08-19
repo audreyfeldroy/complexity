@@ -1,0 +1,6 @@
+{
+    # comment
+    "1": 2,
+    a: "b",
+    multiple: ["c", "d", "e",],
+}
