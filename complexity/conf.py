@@ -37,5 +37,5 @@ def get_unexpanded_list(conf_dict):
     Given a configuration dict, returns the list of templates that were
     specified as unexpanded.
     """
-    
+
     return conf_dict.get('unexpanded_templates', ())

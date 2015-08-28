@@ -8,7 +8,6 @@ test_main
 Tests for `complexity.main` module.
 """
 
-import logging
 import os
 import shutil
 import sys
