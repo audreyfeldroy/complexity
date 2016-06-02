@@ -12,7 +12,7 @@ This quick tutorial will show you how to run this generator on your own using th
 most basic structure possible. Just type the given instructions into your terminal.
 
 If you have any specific questions you may find help in the documentation: 
-http://complexity.readthedocs.org/en/latest/
+https://complexity.readthedocs.io/en/latest/
 
 Or on the Github page: https://github.com/audreyr/complexity
 

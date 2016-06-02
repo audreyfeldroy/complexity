@@ -16,7 +16,7 @@ A refreshingly simple static site generator, for those who like to work in HTML.
 Documentation
 -------------
 
-The full documentation is at http://complexity.rtfd.org.
+The full documentation is at https://complexity.readthedocs.io.
 
 Quickstart
 ----------
@@ -42,7 +42,7 @@ Features
 * Can optionally be used as a library instead of from the command line. See
   `Using Complexity as a Library`_ for details.
 
-.. _`Using Complexity as a Library`: http://complexity.readthedocs.org/en/latest/advanced_usage.html#using-complexity-as-a-library
+.. _`Using Complexity as a Library`: https://complexity.readthedocs.io/en/latest/advanced_usage.html#using-complexity-as-a-library
 
 Best Used With
 --------------
