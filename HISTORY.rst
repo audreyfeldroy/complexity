@@ -17,7 +17,7 @@ History
 * Support for non-HTML files in `templates/` (or whatever you set
   `templates_dir` to be).
 
-See http://complexity.readthedocs.org/en/latest/advanced_usage.html#config-using-complexity-yml
+See https://complexity.readthedocs.io/en/latest/advanced_usage.html#config-using-complexity-yml
 for more info.
 
 0.8.0 (2013-08-10)
@@ -34,7 +34,7 @@ for more info.
   - `assets_dir`
   - `context_dir`
 
-See http://complexity.readthedocs.org/en/latest/advanced_usage.html#config-using-complexity-json
+See https://complexity.readthedocs.io/en/latest/advanced_usage.html#config-using-complexity-json
 for more info.
 
 0.7 (2013-08-05)
