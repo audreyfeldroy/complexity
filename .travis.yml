@@ -1,13 +1,11 @@
 # Config file for automatic testing at travis-ci.org
 
 language: python
-
 python:
   - "3.3"
   - "2.7"
   - "2.6"
   - "pypy"
-
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install:
  - if [[ $TRAVIS_PYTHON_VERSION == '2.6' ]]; then pip install -r requirements/test_26.txt; fi
