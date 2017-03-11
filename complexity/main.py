@@ -19,14 +19,14 @@ import sys
 from .conf import read_conf, get_unexpanded_list
 from .exceptions import OutputDirExistsException
 from .generate import generate_context, copy_assets, generate_html
-from .prep import prompt_and_delete_cruft
+from .prep import prompt_and_delete_cruft, delete_cruft
 from .serve import serve_static_site
 
 
 logger = logging.getLogger(__name__)
 
 
-def complexity(project_dir, no_input=True):
+def complexity(project_dir, overwrite=False, no_input=True):
     """
     API equivalent to using complexity at the command line.
 
@@ -55,9 +55,11 @@ def complexity(project_dir, no_input=True):
         os.path.join(project_dir, conf_dict['output_dir'])
     )
 
-    # If output_dir exists, prompt before deleting.
-    # Abort if it can't be deleted.
-    if no_input:
+    if overwrite and os.path.exists(output_dir):
+        delete_cruft(output_dir)
+    elif no_input:
+        # If output_dir exists, prompt before deleting.
+        # Abort if it can't be deleted.
         if os.path.exists(output_dir):
             raise OutputDirExistsException(
                 'Please delete {0} manually and try again.'
@@ -116,6 +118,13 @@ def get_complexity_args():
         action='store_true',
         help='Don\'t run the server.'
     )
+    parser.add_argument(
+        '--overwrite',
+        default=False,
+        action='store_true',
+        help='Overwrite the output directory without prompting.'
+    )
+
     args = parser.parse_args()
     return args
 
@@ -125,7 +134,7 @@ def main():
 
     args = get_complexity_args()
 
-    output_dir = complexity(project_dir=args.project_dir, no_input=False)
+    output_dir = complexity(project_dir=args.project_dir, overwrite=args.overwrite, no_input=False)
     if not args.noserver:
         serve_static_site(output_dir=output_dir, address=args.address, port=args.port)
 

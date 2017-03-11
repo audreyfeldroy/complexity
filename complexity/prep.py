@@ -15,6 +15,10 @@ import shutil
 from . import utils
 
 
+def delete_cruft(output_dir):
+    print('Deleting {0}'.format(output_dir))
+    shutil.rmtree(output_dir)
+
 def prompt_and_delete_cruft(output_dir):
     """
     Asks if it's okay to delete `output_dir/`.
