@@ -85,7 +85,10 @@ def complexity(project_dir, overwrite=False, no_input=True, quiet=False, _leave_
     # Generate and serve the HTML site
     unexpanded_templates = get_unexpanded_list(conf_dict)
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
-    generate_html(templates_dir, output_dir, context, unexpanded_templates, conf_dict['expand'], quiet)
+    macros_dir = os.path.join(project_dir, conf_dict['macros_dir'])
+
+    generate_html(templates_dir, macros_dir, output_dir,
+                  context, unexpanded_templates, conf_dict['expand'], quiet)
 
     if 'assets_dir' in conf_dict:
         assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])

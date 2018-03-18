@@ -120,7 +120,7 @@ def _ignore(path):
     return False
 
 
-def generate_html(templates_dir, output_dir, context=None,
+def generate_html(templates_dir, macros_dir, output_dir, context=None,
                   unexpanded_templates=(), expand=True, quiet=False):
     """
     Renders the HTML templates from `templates_dir`, and writes them to
@@ -146,9 +146,7 @@ def generate_html(templates_dir, output_dir, context=None,
         )
 
     context = context or {}
-    env = Environment()
-    # os.chdir(templates_dir)
-    env.loader = FileSystemLoader(templates_dir)
+    env = Environment(loader = FileSystemLoader([templates_dir, macros_dir]))
 
     # Create the output dir if it doesn't already exist
     make_sure_path_exists(output_dir)
