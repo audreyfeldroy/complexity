@@ -2,16 +2,13 @@
 Complexity
 ==========
 
-.. image:: https://badge.fury.io/py/complexity.png
-    :target: http://badge.fury.io/py/complexity
-    
-.. image:: https://travis-ci.org/audreyr/complexity.png?branch=master
-        :target: https://travis-ci.org/audreyr/complexity
-
-.. image:: https://pypip.in/d/complexity/badge.png
-        :target: https://crate.io/packages/complexity?version=latest
-
 A refreshingly simple static site generator, for those who like to work in HTML.
+
+Changes
+-------
+
+- New url argument that allows you to (--watch) watch a folder for changes, and any changes will fire off complexity
+- New config variable to turn on/off the auto-expand system
 
 Documentation
 -------------
@@ -69,3 +66,4 @@ Community
 * We love contributions. Read about `how to contribute`_.
 
 .. _`how to contribute`: https://github.com/audreyr/complexity/blob/master/CONTRIBUTING.rst
+

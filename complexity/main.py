@@ -15,6 +15,7 @@ import argparse
 import logging
 import os
 import sys
+import time
 
 from .conf import read_conf, get_unexpanded_list
 from .exceptions import OutputDirExistsException
@@ -22,11 +23,14 @@ from .generate import generate_context, copy_assets, generate_html
 from .prep import prompt_and_delete_cruft, delete_cruft
 from .serve import serve_static_site
 
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+from time import gmtime, strftime
 
 logger = logging.getLogger(__name__)
 
 
-def complexity(project_dir, overwrite=False, no_input=True):
+def complexity(project_dir, overwrite=False, no_input=True, quiet=False):
     """
     API equivalent to using complexity at the command line.
 
@@ -40,6 +44,9 @@ def complexity(project_dir, overwrite=False, no_input=True):
     .. note:: You must delete `output_dir` before calling this. This also does
        not start the Complexity development server; you can do that from your
        code if desired.
+
+    :para quiet: if True, we won't alert the end user to anything, and we'll
+    `just run` until we are finished
     """
 
     # Get the configuration dictionary, if config exists
@@ -47,7 +54,8 @@ def complexity(project_dir, overwrite=False, no_input=True):
         "templates_dir": "templates/",
         "assets_dir": "assets/",
         "context_dir": "context/",
-        "output_dir": "../www/"
+        "output_dir": "../www/",
+        "expand": True
     }
     conf_dict = read_conf(project_dir) or defaults
 
@@ -55,7 +63,7 @@ def complexity(project_dir, overwrite=False, no_input=True):
         os.path.join(project_dir, conf_dict['output_dir'])
     )
 
-    if overwrite and os.path.exists(output_dir):
+    if quiet or (overwrite and os.path.exists(output_dir)):
         delete_cruft(output_dir)
     elif no_input:
         # If output_dir exists, prompt before deleting.
@@ -78,11 +86,11 @@ def complexity(project_dir, overwrite=False, no_input=True):
     # Generate and serve the HTML site
     unexpanded_templates = get_unexpanded_list(conf_dict)
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
-    generate_html(templates_dir, output_dir, context, unexpanded_templates)
+    generate_html(templates_dir, output_dir, context, unexpanded_templates, conf_dict['expand'], quiet)
 
     if 'assets_dir' in conf_dict:
         assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
-        copy_assets(assets_dir, output_dir)
+        copy_assets(assets_dir, output_dir, quiet)
 
     return output_dir
 
@@ -124,20 +132,60 @@ def get_complexity_args():
         action='store_true',
         help='Overwrite the output directory without prompting.'
     )
-
+    parser.add_argument(
+        '--watch',
+        action='store_true',
+        help='Will watch a folder for changes and then process if an event is fired'
+    )
     args = parser.parse_args()
     return args
 
+def watching_file_system():
+    """ 
+    Using watchdog, we'll monitor the filesystem for any changes, and if
+    we find any, we'll serve the output again (by running complexity)
+    """
+    # Get the path we'll need to monitor, it'll be part of the arg list
+    args = get_complexity_args()    
+    path = args.project_dir
 
+    # Lets observe the folder, and notify complexity when something bad happens
+    observer = Observer()
+    event_handler = MyHandler()
+    observer.schedule(event_handler, path, recursive=True)
+    observer.start()
+
+    # We'll now continue to look until we Ctrl-C finish
+    print("Watching folder " + path + " for changes:")
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop();
+
+    observer.join()
+
+"""
+This class handles at which points we should process the complexity system again. 
+We are targeting any events
+"""
+class MyHandler(FileSystemEventHandler):
+    def on_any_event(self, event):
+        args = get_complexity_args()
+        output_dir = complexity(project_dir=args.project_dir, no_input=False, quiet=True)
+        print("     [" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "] -> Completed")
+        
 def main():
     """ Entry point for the package, as defined in `setup.py`. """
 
     args = get_complexity_args()
 
-    output_dir = complexity(project_dir=args.project_dir, overwrite=args.overwrite, no_input=False)
-    if not args.noserver:
-        serve_static_site(output_dir=output_dir, address=args.address, port=args.port)
-
+    if args.watch == True:
+        watching_file_system()
+    else:
+        output_dir = complexity(project_dir=args.project_dir, overwrite=args.overwrite, no_input=False)
+        if not args.noserver:
+            serve_static_site(output_dir=output_dir, address=args.address, port=args.port)
 
 if __name__ == '__main__':
-    main()
+    watching_file_system()

@@ -22,7 +22,8 @@ history = history.replace(".. :changelog:", "")
 requirements = [
     'jinja2>=2.4',
     'binaryornot>=0.1.1',
-    'PyYAML>=3.10'
+    'PyYAML>=3.10',
+    'watchdog>=0.8.3'
 ]
 test_requirements = []
 

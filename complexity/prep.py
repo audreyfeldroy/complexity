@@ -42,3 +42,14 @@ def prompt_and_delete_cruft(output_dir):
             .format(output_dir)
         )
         return False
+
+def do_not_prompt_and_delete_cruft(output_dir):
+    """
+    Doesnt ask if it's okay to delete `output_dir/`.
+    Just go ahead and delete it.
+
+    :param output_dir: The Complexity output directory, e.g. `www/`.
+    :paramtype output_dir: directory
+    """
+    shutil.rmtree(output_dir)
+    return True
