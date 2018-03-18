@@ -10,7 +10,7 @@ Functions for static site generation.
 
 import json
 import logging
-import os
+import os.path
 import shutil
 import re
 
@@ -108,6 +108,18 @@ def generate_html_file(template_filepath,
             return True
 
 
+def _ignore(path):
+    fn = os.path.basename(path)
+    _, ext = os.path.splitext(path)
+    if is_binary(path):
+        return True
+    if fn == 'complexity.yml':
+        return True
+    if ext in ('.j2','.yml'):
+        return True
+    return False
+
+
 def generate_html(templates_dir, output_dir, context=None,
                   unexpanded_templates=(), expand=True, quiet=False):
     """
@@ -156,9 +168,9 @@ def generate_html(templates_dir, output_dir, context=None,
                 force_unexpanded
             ))
 
-            if is_binary(os.path.join(templates_dir, template_filepath)):
+            if _ignore(os.path.join(templates_dir, template_filepath)):
                 if quiet == False:
-                    print('Non-text file found: {0}. Skipping.'.
+                    print('Ignore: {0}. Skipping.'.
                         format(template_filepath))
             else:
                 outfile = get_output_filename(template_filepath, output_dir,
