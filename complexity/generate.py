@@ -41,7 +41,7 @@ def get_output_filename(template_filepath, output_dir, force_unexpanded, expand)
     if basename.startswith('base'):
         return False
     # Put index and unexpanded templates in the root.
-    elif force_unexpanded or basename == 'index.html' or expand == True:
+    elif force_unexpanded or basename == 'index.html' or not expand:
         output_filename = os.path.join(output_dir, template_filepath)
     # Put other pages in page/index.html, for better URL formatting.
     else:
