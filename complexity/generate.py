@@ -14,6 +14,7 @@ import os.path
 import shutil
 import re
 
+from yaml import safe_load
 from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
@@ -211,19 +212,22 @@ def generate_context(context_dir):
     """
     context = {}
 
-    json_files = os.listdir(context_dir)
+    all_files = os.listdir(context_dir)
+    for fn in all_files:
+        path = os.path.join(context_dir, fn)
+        name, ext = os.path.splitext(fn)
 
-    for file_name in json_files:
-
-        if file_name.endswith('json'):
-
-            # Open the JSON file and convert to Python object
-            json_file = os.path.join(context_dir, file_name)
-            with unicode_open(json_file) as f:
+        obj = None
+        if ext == '.json':
+            with unicode_open(path) as f:
                 obj = json.load(f)
+        elif ext in {'.yml', '.yaml'}:
+            with unicode_open(path) as f:
+                obj = safe_load(f)
 
-            # Add the Python object to the context dictionary
-            context[file_name[:-5]] = obj
+        if obj is not None:
+            print('Parsed {0} to context as {1}'.format(fn, name))
+            context[name] = obj
 
     return context
 
