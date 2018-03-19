@@ -30,12 +30,16 @@ from time import gmtime, strftime
 logger = logging.getLogger(__name__)
 
 
-def _get_output_dir(project_dir):
+def _get_dir(project_dir, conf_dir_name):
     conf_dict = read_conf(project_dir) or DEFAULTS
     output_dir = os.path.normpath(
-        os.path.join(project_dir, conf_dict['output_dir'])
+        os.path.join(project_dir, conf_dict[conf_dir_name])
     )
     return output_dir
+
+
+def _get_output_dir(project_dir):
+    return _get_dir(project_dir, 'output_dir')
 
 
 def complexity(project_dir, overwrite=False, no_input=True, quiet=False, _leave_output=False):
@@ -148,17 +152,22 @@ def watching_file_system():
     we find any, we'll serve the output again (by running complexity)
     """
     # Get the path we'll need to monitor, it'll be part of the arg list
-    args = get_complexity_args()    
-    path = os.path.abspath(args.project_dir)
+    args = get_complexity_args()
+
+    # make absolute because server chdirs
+    proj_dir = os.path.abspath(args.project_dir)
 
     # Lets observe the folder, and notify complexity when something bad happens
     observer = Observer()
-    event_handler = MyHandler(project_dir=path)
-    observer.schedule(event_handler, path, recursive=True)
+    event_handler = MyHandler(project_dir=proj_dir)
+
+    for dir_ in ("templates_dir", "macros_dir", "assets_dir", "context_dir"):
+        path = _get_dir(proj_dir, dir_)
+        print("Watching folder " + path + " for changes:")
+        observer.schedule(event_handler, path, recursive=True)
     observer.start()
 
     # We'll now continue to look until we Ctrl-C finish
-    print("Watching folder " + path + " for changes:")
     try:
         if args.noserver:
             while True:
