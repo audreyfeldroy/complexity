@@ -10,10 +10,11 @@ Functions for static site generation.
 
 import json
 import logging
-import os
+import os.path
 import shutil
 import re
 
+from yaml import safe_load
 from binaryornot.check import is_binary
 from jinja2 import FileSystemLoader
 from jinja2.environment import Environment
@@ -22,7 +23,7 @@ from .exceptions import MissingTemplateDirException
 from .utils import make_sure_path_exists, unicode_open
 
 
-def get_output_filename(template_filepath, output_dir, force_unexpanded):
+def get_output_filename(template_filepath, output_dir, force_unexpanded, expand):
     """
     Given an input filename, return the corresponding output filename.
 
@@ -41,7 +42,7 @@ def get_output_filename(template_filepath, output_dir, force_unexpanded):
     if basename.startswith('base'):
         return False
     # Put index and unexpanded templates in the root.
-    elif force_unexpanded or basename == 'index.html':
+    elif force_unexpanded or basename == 'index.html' or not expand:
         output_filename = os.path.join(output_dir, template_filepath)
     # Put other pages in page/index.html, for better URL formatting.
     else:
@@ -68,7 +69,7 @@ def minify_html(html):
 
 def generate_html_file(template_filepath,
                        output_dir, env,
-                       context, force_unexpanded=False, minify=False):
+                       context, force_unexpanded=False, minify=False, expand=True):
     """
     Renders and writes a single HTML file to its corresponding output location.
 
@@ -79,6 +80,8 @@ def generate_html_file(template_filepath,
     :param env: Jinja2 environment with a loader already set up.
     :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
+    :param expand: Shall we expand the filenames to folder/index.html
+        as pretty URLS?
     """
 
     # Ignore templates starting with "base". They're treated as special cases.
@@ -96,7 +99,7 @@ def generate_html_file(template_filepath,
         rendered_html = minify_html(rendered_html)
 
     output_filename = get_output_filename(template_filepath,
-                                          output_dir, force_unexpanded)
+                                          output_dir, force_unexpanded, expand)
     if output_filename:
         make_sure_path_exists(os.path.dirname(output_filename))
 
@@ -106,8 +109,20 @@ def generate_html_file(template_filepath,
             return True
 
 
-def generate_html(templates_dir, output_dir, context=None,
-                  unexpanded_templates=()):
+def _ignore(path):
+    fn = os.path.basename(path)
+    _, ext = os.path.splitext(path)
+    if is_binary(path):
+        return True
+    if fn == 'complexity.yml':
+        return True
+    if ext in ('.j2','.yml'):
+        return True
+    return False
+
+
+def generate_html(templates_dir, macro_dirs, output_dir, context=None,
+                  unexpanded_templates=(), expand=True, quiet=False):
     """
     Renders the HTML templates from `templates_dir`, and writes them to
     `output_dir`.
@@ -119,6 +134,9 @@ def generate_html(templates_dir, output_dir, context=None,
     :paramtype output_dir: directory
     :param context: Jinja2 context that holds template variables. See
         http://jinja.pocoo.org/docs/api/#the-context
+    :param expand: Shall we expand the filenames to folder/index.html
+        as pretty URLS?
+    :param quiet: show no output!
     """
 
     logging.debug('Templates dir is {0}'.format(templates_dir))
@@ -129,9 +147,11 @@ def generate_html(templates_dir, output_dir, context=None,
         )
 
     context = context or {}
-    env = Environment()
-    # os.chdir(templates_dir)
-    env.loader = FileSystemLoader(templates_dir)
+
+    _dirs = [templates_dir]
+    _dirs.extend(macro_dirs)
+
+    env = Environment(loader=FileSystemLoader(_dirs))
 
     # Create the output dir if it doesn't already exist
     make_sure_path_exists(output_dir)
@@ -151,15 +171,17 @@ def generate_html(templates_dir, output_dir, context=None,
                 force_unexpanded
             ))
 
-            if is_binary(os.path.join(templates_dir, template_filepath)):
-                print('Non-text file found: {0}. Skipping.'.
-                      format(template_filepath))
+            if _ignore(os.path.join(templates_dir, template_filepath)):
+                if quiet == False:
+                    print('Ignore: {0}. Skipping.'.
+                        format(template_filepath))
             else:
                 outfile = get_output_filename(template_filepath, output_dir,
-                                              force_unexpanded)
-                print('Copying {0} to {1}'.format(template_filepath, outfile))
+                                              force_unexpanded, expand)
+                if quiet == False:
+                    print('Copying {0} to {1}'.format(template_filepath, outfile))
                 generate_html_file(template_filepath, output_dir, env, context,
-                                   force_unexpanded)
+                                   force_unexpanded, expand)
 
 
 def generate_context(context_dir):
@@ -194,24 +216,27 @@ def generate_context(context_dir):
     """
     context = {}
 
-    json_files = os.listdir(context_dir)
+    all_files = os.listdir(context_dir)
+    for fn in all_files:
+        path = os.path.join(context_dir, fn)
+        name, ext = os.path.splitext(fn)
 
-    for file_name in json_files:
-
-        if file_name.endswith('json'):
-
-            # Open the JSON file and convert to Python object
-            json_file = os.path.join(context_dir, file_name)
-            with unicode_open(json_file) as f:
+        obj = None
+        if ext == '.json':
+            with unicode_open(path) as f:
                 obj = json.load(f)
+        elif ext in {'.yml', '.yaml'}:
+            with unicode_open(path) as f:
+                obj = safe_load(f)
 
-            # Add the Python object to the context dictionary
-            context[file_name[:-5]] = obj
+        if obj is not None:
+            print('Parsed {0} to context as {1}'.format(fn, name))
+            context[name] = obj
 
     return context
 
 
-def copy_assets(assets_dir, output_dir):
+def copy_assets(assets_dir, output_dir, quiet=False):
     """
     Copies static assets over from `assets_dir` to `output_dir`.
 
@@ -220,6 +245,7 @@ def copy_assets(assets_dir, output_dir):
     :paramtype assets_dir: directory
     :param output_dir: The Complexity output directory, e.g. `www/`.
     :paramtype output_dir: directory
+    :param quiet: output to user
     """
 
     assets = os.listdir(assets_dir)
@@ -229,11 +255,13 @@ def copy_assets(assets_dir, output_dir):
         # Only copy allowed dirs
         if os.path.isdir(item_path) and item != 'scss' and item != 'less':
             new_dir = os.path.join(output_dir, item)
-            print('Copying directory {0} to {1}'.format(item, new_dir))
+            if quiet == False:
+                print('Copying directory {0} to {1}'.format(item, new_dir))
             shutil.copytree(item_path, new_dir)
 
         # Copy over files in the root of assets_dir
         if os.path.isfile(item_path):
             new_file = os.path.join(output_dir, item)
-            print('Copying file {0} to {1}'.format(item, new_file))
+            if quiet == False:
+                print('Copying file {0} to {1}'.format(item, new_file))
             shutil.copyfile(item_path, new_file)

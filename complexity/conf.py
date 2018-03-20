@@ -14,6 +14,16 @@ import os
 import yaml
 
 
+DEFAULTS = {
+    "templates_dir": "templates/",
+    "assets_dir": "assets/",
+    "context_dir": "context/",
+    "output_dir": "../www/",
+    "macro_dirs": ["macros/"],
+    "expand": True
+}
+
+
 def read_conf(directory):
     """
     Reads and parses the `complexity.yml` configuration file from a

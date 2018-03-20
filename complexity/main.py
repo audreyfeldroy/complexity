@@ -15,18 +15,35 @@ import argparse
 import logging
 import os
 import sys
+import time
+import json
 
-from .conf import read_conf, get_unexpanded_list
+from .conf import read_conf, get_unexpanded_list, DEFAULTS
 from .exceptions import OutputDirExistsException
 from .generate import generate_context, copy_assets, generate_html
-from .prep import prompt_and_delete_cruft
+from .prep import prompt_and_delete_cruft, delete_cruft
 from .serve import serve_static_site
 
+from watchdog.observers import Observer
+from watchdog.events import FileSystemEventHandler
+from time import gmtime, strftime
 
 logger = logging.getLogger(__name__)
 
 
-def complexity(project_dir, no_input=True):
+def _get_dir(project_dir, conf_dir_name):
+    conf_dict = read_conf(project_dir) or DEFAULTS
+    output_dir = os.path.normpath(
+        os.path.join(project_dir, conf_dict[conf_dir_name])
+    )
+    return output_dir
+
+
+def _get_output_dir(project_dir):
+    return _get_dir(project_dir, 'output_dir')
+
+
+def complexity(project_dir, overwrite=False, no_input=True, quiet=False, settings_json=None, _leave_output=False):
     """
     API equivalent to using complexity at the command line.
 
@@ -40,24 +57,21 @@ def complexity(project_dir, no_input=True):
     .. note:: You must delete `output_dir` before calling this. This also does
        not start the Complexity development server; you can do that from your
        code if desired.
+
+    :para quiet: if True, we won't alert the end user to anything, and we'll
+    `just run` until we are finished
     """
 
     # Get the configuration dictionary, if config exists
-    defaults = {
-        "templates_dir": "templates/",
-        "assets_dir": "assets/",
-        "context_dir": "context/",
-        "output_dir": "../www/"
-    }
-    conf_dict = read_conf(project_dir) or defaults
+    conf_dict = read_conf(project_dir) or DEFAULTS
 
-    output_dir = os.path.normpath(
-        os.path.join(project_dir, conf_dict['output_dir'])
-    )
+    output_dir = _get_output_dir(project_dir)
 
-    # If output_dir exists, prompt before deleting.
-    # Abort if it can't be deleted.
-    if no_input:
+    if overwrite:
+        delete_cruft(output_dir, only_contents=_leave_output)
+    elif no_input:
+        # If output_dir exists, prompt before deleting.
+        # Abort if it can't be deleted.
         if os.path.exists(output_dir):
             raise OutputDirExistsException(
                 'Please delete {0} manually and try again.'
@@ -67,20 +81,40 @@ def complexity(project_dir, no_input=True):
             sys.exit()
 
     # Generate the context data
-    context = None
+    context = {}
     if 'context_dir' in conf_dict:
         context_dir = os.path.join(project_dir, conf_dict['context_dir'])
         if os.path.exists(context_dir):
-            context = generate_context(context_dir)
+            context.update(generate_context(context_dir))
+
+    # update the context with anything in the project conf
+    context.update(conf_dict.get('context', {}))
+
+    # json settings comes last
+    if settings_json:
+        # noinspection PyBroadException
+        try:
+            settings = json.loads(settings_json)
+            if isinstance(settings, dict) and settings:
+                if 'settings' in context:
+                    context['settings'].update(settings)
+                else:
+                    context['settings'] = settings
+                print("Updated settings from command-line")
+        except Exception as e:
+            pass
 
     # Generate and serve the HTML site
     unexpanded_templates = get_unexpanded_list(conf_dict)
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
-    generate_html(templates_dir, output_dir, context, unexpanded_templates)
+    macro_dirs = [os.path.join(project_dir, _dir) for _dir in conf_dict['macro_dirs']]
+
+    generate_html(templates_dir, macro_dirs, output_dir,
+                  context, unexpanded_templates, conf_dict['expand'], quiet)
 
     if 'assets_dir' in conf_dict:
         assets_dir = os.path.join(project_dir, conf_dict['assets_dir'])
-        copy_assets(assets_dir, output_dir)
+        copy_assets(assets_dir, output_dir, quiet)
 
     return output_dir
 
@@ -107,23 +141,109 @@ def get_complexity_args():
         help='Port number to serve files on.'
     )
     parser.add_argument(
+        '--address',
+        default='127.0.0.1',
+        help='IP to serve files on.'
+    )
+    parser.add_argument(
         '--noserver',
         action='store_true',
         help='Don\'t run the server.'
+    )
+    parser.add_argument(
+        '--overwrite',
+        default=False,
+        action='store_true',
+        help='Overwrite the output directory without prompting.'
+    )
+    parser.add_argument(
+        '--watch',
+        action='store_true',
+        help='Will watch a folder for changes and then process if an event is fired'
+    )
+    parser.add_argument(
+        '--settings',
+        type=str, default='{}',
+        help='JSON settings to apply (update) to the loaded context'
     )
     args = parser.parse_args()
     return args
 
 
+def watching_file_system():
+    """ 
+    Using watchdog, we'll monitor the filesystem for any changes, and if
+    we find any, we'll serve the output again (by running complexity)
+    """
+    # Get the path we'll need to monitor, it'll be part of the arg list
+    args = get_complexity_args()
+
+    # make absolute because server chdirs
+    proj_dir = os.path.abspath(args.project_dir)
+
+    # Lets observe the folder, and notify complexity when something bad happens
+    observer = Observer()
+    event_handler = MyHandler(project_dir=proj_dir)
+
+    paths = []
+    for _dir in ("templates_dir", "assets_dir", "context_dir"):
+        paths.append(_get_dir(proj_dir, _dir))
+
+    # from _get_dir above
+    cd = read_conf(proj_dir) or DEFAULTS
+    for _dir in cd['macro_dirs']:
+        _path = os.path.normpath(os.path.join(proj_dir, _dir))
+        paths.append(_path)
+
+    for path in paths:
+        print("Watching folder " + path + " for changes:")
+        observer.schedule(event_handler, path, recursive=True)
+    observer.start()
+
+    # We'll now continue to look until we Ctrl-C finish
+    try:
+        if args.noserver:
+            while True:
+                time.sleep(1)
+        else:
+            output_dir = _get_output_dir(args.project_dir)
+            serve_static_site(output_dir=output_dir, address=args.address, port=args.port)
+    except KeyboardInterrupt:
+        observer.stop();
+
+    observer.join()
+
+"""
+This class handles at which points we should process the complexity system again. 
+We are targeting any events
+"""
+class MyHandler(FileSystemEventHandler):
+
+    def __init__(self, project_dir, *args, **kwargs):
+        super(MyHandler, self).__init__(*args, **kwargs)
+        self._project_dir = project_dir
+
+    def on_any_event(self, event):
+        args = get_complexity_args()
+        complexity(project_dir=self._project_dir, no_input=False,
+                   quiet=True,
+                   overwrite=True,
+                   settings_json=args.settings,
+                   _leave_output=True)  # delete contents of www
+        print("     [" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "] -> Completed")
+        
 def main():
     """ Entry point for the package, as defined in `setup.py`. """
 
     args = get_complexity_args()
 
-    output_dir = complexity(project_dir=args.project_dir, no_input=False)
-    if not args.noserver:
-        serve_static_site(output_dir=output_dir, port=args.port)
-
+    if args.watch == True:
+        watching_file_system()
+    else:
+        output_dir = complexity(project_dir=args.project_dir, overwrite=args.overwrite, no_input=False,
+                                settings_json=args.settings)
+        if not args.noserver:
+            serve_static_site(output_dir=output_dir, address=args.address, port=args.port)
 
 if __name__ == '__main__':
-    main()
+    watching_file_system()

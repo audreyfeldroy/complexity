@@ -21,7 +21,7 @@ else:
     import SocketServer as socketserver
 
 
-def serve_static_site(output_dir, port=9090):
+def serve_static_site(output_dir, address='127.0.0.1', port=9090):
     """
     Serve a directory containing static HTML files, on a specified port.
 
@@ -34,8 +34,8 @@ def serve_static_site(output_dir, port=9090):
     #      of-errno-98-address-already-in-use
     socketserver.TCPServer.allow_reuse_address = True
 
-    httpd = socketserver.TCPServer(("", port), Handler)
-    print("serving at port", port)
+    httpd = socketserver.TCPServer((address, port), Handler)
+    print("serving ", address, port)
 
     try:
         httpd.serve_forever()
