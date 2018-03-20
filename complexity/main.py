@@ -95,7 +95,7 @@ def complexity(project_dir, overwrite=False, no_input=True, quiet=False, setting
         # noinspection PyBroadException
         try:
             settings = json.loads(settings_json)
-            if isinstance(settings, dict):
+            if isinstance(settings, dict) and settings:
                 if 'settings' in context:
                     context['settings'].update(settings)
                 else:
