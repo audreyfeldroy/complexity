@@ -16,10 +16,10 @@ import yaml
 
 DEFAULTS = {
     "templates_dir": "templates/",
-    "macros_dir": "macros/",
     "assets_dir": "assets/",
     "context_dir": "context/",
     "output_dir": "../www/",
+    "macro_dirs": ["macros/"],
     "expand": True
 }
 

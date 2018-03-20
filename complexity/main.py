@@ -107,9 +107,9 @@ def complexity(project_dir, overwrite=False, no_input=True, quiet=False, setting
     # Generate and serve the HTML site
     unexpanded_templates = get_unexpanded_list(conf_dict)
     templates_dir = os.path.join(project_dir, conf_dict['templates_dir'])
-    macros_dir = os.path.join(project_dir, conf_dict['macros_dir'])
+    macro_dirs = [os.path.join(project_dir, _dir) for _dir in conf_dict['macro_dirs']]
 
-    generate_html(templates_dir, macros_dir, output_dir,
+    generate_html(templates_dir, macro_dirs, output_dir,
                   context, unexpanded_templates, conf_dict['expand'], quiet)
 
     if 'assets_dir' in conf_dict:
@@ -169,6 +169,7 @@ def get_complexity_args():
     args = parser.parse_args()
     return args
 
+
 def watching_file_system():
     """ 
     Using watchdog, we'll monitor the filesystem for any changes, and if
@@ -184,8 +185,17 @@ def watching_file_system():
     observer = Observer()
     event_handler = MyHandler(project_dir=proj_dir)
 
-    for dir_ in ("templates_dir", "macros_dir", "assets_dir", "context_dir"):
-        path = _get_dir(proj_dir, dir_)
+    paths = []
+    for _dir in ("templates_dir", "assets_dir", "context_dir"):
+        paths.append(_get_dir(proj_dir, _dir))
+
+    # from _get_dir above
+    cd = read_conf(proj_dir) or DEFAULTS
+    for _dir in cd['macro_dirs']:
+        _path = os.path.normpath(os.path.join(proj_dir, _dir))
+        paths.append(_path)
+
+    for path in paths:
         print("Watching folder " + path + " for changes:")
         observer.schedule(event_handler, path, recursive=True)
     observer.start()
