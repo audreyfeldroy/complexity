@@ -16,6 +16,7 @@ import logging
 import os
 import sys
 import time
+import json
 
 from .conf import read_conf, get_unexpanded_list, DEFAULTS
 from .exceptions import OutputDirExistsException
@@ -42,7 +43,7 @@ def _get_output_dir(project_dir):
     return _get_dir(project_dir, 'output_dir')
 
 
-def complexity(project_dir, overwrite=False, no_input=True, quiet=False, _leave_output=False):
+def complexity(project_dir, overwrite=False, no_input=True, quiet=False, settings_json=None, _leave_output=False):
     """
     API equivalent to using complexity at the command line.
 
@@ -80,11 +81,28 @@ def complexity(project_dir, overwrite=False, no_input=True, quiet=False, _leave_
             sys.exit()
 
     # Generate the context data
-    context = None
+    context = {}
     if 'context_dir' in conf_dict:
         context_dir = os.path.join(project_dir, conf_dict['context_dir'])
         if os.path.exists(context_dir):
-            context = generate_context(context_dir)
+            context.update(generate_context(context_dir))
+
+    # update the context with anything in the project conf
+    context.update(conf_dict.get('context', {}))
+
+    # json settings comes last
+    if settings_json:
+        # noinspection PyBroadException
+        try:
+            settings = json.loads(settings_json)
+            if isinstance(settings, dict):
+                if 'settings' in context:
+                    context['settings'].update(settings)
+                else:
+                    context['settings'] = settings
+                print("Updated settings from command-line")
+        except Exception as e:
+            pass
 
     # Generate and serve the HTML site
     unexpanded_templates = get_unexpanded_list(conf_dict)
@@ -143,6 +161,11 @@ def get_complexity_args():
         action='store_true',
         help='Will watch a folder for changes and then process if an event is fired'
     )
+    parser.add_argument(
+        '--settings',
+        type=str, default='{}',
+        help='JSON settings to apply (update) to the loaded context'
+    )
     args = parser.parse_args()
     return args
 
@@ -195,6 +218,7 @@ class MyHandler(FileSystemEventHandler):
         complexity(project_dir=self._project_dir, no_input=False,
                    quiet=True,
                    overwrite=True,
+                   settings_json=args.settings,
                    _leave_output=True)  # delete contents of www
         print("     [" + strftime("%Y-%m-%d %H:%M:%S", gmtime()) + "] -> Completed")
         
@@ -206,7 +230,8 @@ def main():
     if args.watch == True:
         watching_file_system()
     else:
-        output_dir = complexity(project_dir=args.project_dir, overwrite=args.overwrite, no_input=False)
+        output_dir = complexity(project_dir=args.project_dir, overwrite=args.overwrite, no_input=False,
+                                settings_json=args.settings)
         if not args.noserver:
             serve_static_site(output_dir=output_dir, address=args.address, port=args.port)
 
