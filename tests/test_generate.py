@@ -85,20 +85,11 @@ class TestMinifyHTML(unittest.TestCase):
         raw_html = """<!DOCTYPE html>
 
         <html>
-
-
-
-        <head>                   </head>
-
-
-
+        <head>                   
+        </head>
         <body>
             <p>Test!</p>
-
-
         </body>
-
-
         </html>"""
         expected = '<!DOCTYPE html><html><head></head><body>' \
                    '<p>Test!</p></body></html>'
@@ -108,23 +99,14 @@ class TestMinifyHTML(unittest.TestCase):
         raw_html = """<!DOCTYPE html>
 
         <html>
-
-
-
-        <head>                   </head>
-
-
-
+        <head>
+        </head>
         <body>
             <p>Test!</p>
             <p>Test2!</p>This should be left alone
             <p>Test3!</p>
-
                     As should this
-
         </body>
-
-
         </html>"""
         expected = """<!DOCTYPE html><html><head></head><body><p>Test!</p>""" \
             """<p>Test2!</p>This should be left alone
